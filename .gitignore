@@ -1,2 +1,5 @@
 # Local workspace (not in repo)
 *.code-workspace
+
+# Dependencies (npm run generate-social-card)
+node_modules/

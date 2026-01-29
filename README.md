@@ -4,6 +4,7 @@ Static, mobile-friendly company website for **VPathing Enterprise LLC**. No fram
 
 - **Tagline:** “Building practical apps for real-world operations.”
 - **Contact email:** vpathingenterprise@gmail.com
+- **Live site:** https://vpathingenterprisellc.site
 
 ---
 
@@ -14,9 +15,12 @@ Static, mobile-friendly company website for **VPathing Enterprise LLC**. No fram
   index.html          # Home
   apps.html           # Portfolio (apps from data/apps.json)
   about.html          # About (mission, services, process)
-  contact.html        # Contact form (Formspree + Turnstile)
+  contact.html        # Contact form (FormSubmit.co + Turnstile)
+  404.html            # Custom not-found page (Cloudflare Pages)
+  robots.txt          # Crawler rules + sitemap reference
+  sitemap.xml         # SEO sitemap
   css/
-    styles.css        # Design system and layout
+    styles.css        # Design system, layout, skip-link
   js/
     main.js           # Nav, apps grid, filters, form submit
   data/
@@ -24,7 +28,11 @@ Static, mobile-friendly company website for **VPathing Enterprise LLC**. No fram
   assets/
     logo.svg          # VP monogram + wordmark
     favicon.svg       # Favicon (monogram)
-    social-card.svg   # OG design placeholder (add social-card.png 1200×630 for best OG support)
+    social-card.svg   # Source for OG image (edit then regenerate PNG)
+    social-card.png   # 1200×630 — generated from SVG for link previews
+  scripts/
+    generate-social-card.js   # npm run generate-social-card
+  package.json       # Dev script for social-card PNG only
   README.md
 ```
 
@@ -75,29 +83,45 @@ Then open `http://localhost:3000` (or the port shown).
 4. **Result**
    - Cloudflare will deploy the repo as-is (no build). Your site will be live at `https://<project-name>.pages.dev`.
 
-5. **Custom domain (optional)**
-   - In the Pages project → **Custom domains** → add your domain and follow DNS instructions.
+5. **Custom domain**
+   - In the Pages project → **Custom domains** → add your domain and follow DNS instructions (e.g. vpathingenterprisellc.site).
 
 ---
 
-## Form and spam protection setup
+## Form and spam protection
 
-### Formspree (contact form)
+### Contact form (FormSubmit.co)
 
-1. Go to [formspree.io](https://formspree.io) and sign up or log in.
-2. Create a new form. Formspree will give you an endpoint like `https://formspree.io/f/xyzabcde`.
-3. In **contact.html**, find the form and replace `REPLACE_WITH_FORM_ID` with your form ID (e.g. `xyzabcde`):
-   - In the form `action`: `action="https://formspree.io/f/REPLACE_WITH_FORM_ID"` → `action="https://formspree.io/f/xyzabcde"`.
-4. Formspree will send submissions to your account email (set the destination email in Formspree to **vpathingenterprise@gmail.com**).
+- The contact form uses [FormSubmit.co](https://formsubmit.co): no signup, submissions go to **vpathingenterprise@gmail.com**.
+- First time you submit, FormSubmit sends a one-time confirmation link to that email; after you confirm, all future submissions deliver normally.
+- To change the destination email, edit the form `action` in **contact.html** (e.g. `https://formsubmit.co/your@email.com`).
 
 ### Cloudflare Turnstile (spam protection)
 
-1. In [Cloudflare Dashboard](https://dash.cloudflare.com), go to **Turnstile** (in the left sidebar under “Web3” or search “Turnstile”).
-2. Click **Add site**. Enter your site name and domain (e.g. `your-site.pages.dev` or your custom domain). Choose a widget type (e.g. Managed).
+1. In [Cloudflare Dashboard](https://dash.cloudflare.com), go to **Turnstile** (search “Turnstile” in the sidebar).
+2. Click **Add site**. Enter your site name and domain (e.g. vpathingenterprisellc.site). Choose a widget type (e.g. Managed).
 3. Copy the **Site key**.
-4. In **contact.html**, find the Turnstile widget and replace `REPLACE_WITH_TURNSTILE_SITE_KEY` with your site key:
-   - `<div class="cf-turnstile" data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY">` → paste your key.
-5. **Secret key:** Cloudflare also gives you a **Secret key**. Do not put it in HTML. For server-side verification (recommended), you would verify the Turnstile token on a server or serverless function. Formspree does not verify Turnstile by default; you can use a [Formspree webhook](https://help.formspree.io/hc/en-us/articles/1500003018642-Webhooks) or another backend to verify the token using the secret. See [Cloudflare Turnstile server-side validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/). The form will still work without server-side verification; Turnstile will block many bots on the client side.
+4. In **contact.html**, find the Turnstile widget and set `data-sitekey="YOUR_SITE_KEY"`.
+5. **Secret key:** Keep it for server-side verification only (e.g. webhook). Do not put it in HTML. The form works with client-side Turnstile alone.
+
+---
+
+## Social preview image (OG / Twitter)
+
+- **assets/social-card.png** (1200×630) is used for link previews on all pages. It is generated from **assets/social-card.svg**.
+- **Five alternate variants** are also generated (same size) for A/B testing or different channels:
+  - **social-card-v1.png** — Original: light gray/blue gradient
+  - **social-card-v2.png** — Deep blue: navy background, white text
+  - **social-card-v3.png** — Warm: cream/amber gradient
+  - **social-card-v4.png** — Minimal dark: charcoal background, light text
+  - **social-card-v5.png** — Accent stripe: white with blue left bar
+- **Custom image:** If you replace `assets/social-card.png` with your own image, run `npm run resize-social-card` to resize it to 1200×630 (letterboxing with a light background if the aspect ratio differs).
+- To regenerate all PNGs from the SVG variants (default + v1–v5):
+  ```bash
+  npm install
+  npm run generate-social-card
+  ```
+- Then commit any updated `assets/social-card*.png` and push. To use a variant site-wide, point `og:image` and `twitter:image` in each page to the desired file (e.g. `assets/social-card-v2.png`).
 
 ---
 
@@ -130,28 +154,23 @@ After editing, commit and push; Cloudflare Pages will deploy the updated content
 
 ---
 
-## SEO and social
+## SEO and accessibility
 
-- Meta title and description are set on every page.
-- **robots.txt** allows crawlers and points to **sitemap.xml**.
-- **index.html** includes Open Graph and Twitter Card meta tags. The social image is **assets/social-card.svg** (1200×630). For platforms that prefer PNG, export the SVG to **assets/social-card.png** (1200×630) and update the `og:image` and `twitter:image` URLs in **index.html** to use it.
-
----
-
-## Sitemap
-
-Cloudflare Pages serves static files only; there is no sitemap generator in this repo. For SEO you can:
-
-- Add a static **sitemap.xml** in the project root listing your pages (e.g. `/`, `/apps.html`, `/about.html`, `/contact.html`), or
-- Use a sitemap generator or Cloudflare app later and point it at your live URL.
+- **Meta:** Title and description on every page. Open Graph and Twitter Card on index, about, apps, contact for link previews.
+- **Canonical URLs:** Set on index, about, apps, contact to avoid duplicate-content issues.
+- **robots.txt:** Allows crawlers and points to **sitemap.xml**.
+- **sitemap.xml:** Lists main pages (/, /apps.html, /about.html, /contact.html). 404 is not listed.
+- **Skip link:** “Skip to main content” is the first focusable element on every page (visible on keyboard focus) for screen reader and keyboard users.
+- **404:** Custom **404.html** is served by Cloudflare Pages for unknown paths; it is noindexed.
 
 ---
 
 ## Tech summary
 
-- **Stack:** HTML, CSS, JavaScript only. No frameworks, no build step.
+- **Stack:** HTML, CSS, JavaScript only. No frameworks, no build step for the site itself.
 - **Hosting:** Cloudflare Pages (GitHub → Pages, build command blank, output directory `/`).
-- **Form:** Formspree (form ID in `contact.html`).
-- **Spam:** Cloudflare Turnstile (site key in `contact.html`; secret key for optional server-side verification).
+- **Form:** FormSubmit.co (destination email in **contact.html** form `action`).
+- **Spam:** Cloudflare Turnstile (site key in **contact.html**).
+- **Optional dev:** `npm run generate-social-card` to regenerate **assets/social-card.png** from the SVG (requires Node and `sharp`).
 
 All set for a clean, professional, mobile-friendly static site you can push to GitHub and deploy to Cloudflare Pages.

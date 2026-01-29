@@ -1,0 +1,12 @@
+{
+  "name": "vpathing-website",
+  "private": true,
+  "description": "VPathing Enterprise LLC company website",
+  "scripts": {
+    "generate-social-card": "node scripts/generate-social-card.js",
+    "resize-social-card": "node scripts/resize-social-card.js"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5"
+  }
+}

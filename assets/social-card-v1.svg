@@ -1,23 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" aria-hidden="true">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#fafbfc"/>
       <stop offset="100%" style="stop-color:#e8eef5"/>
     </linearGradient>
-    <linearGradient id="vp-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="vp1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#1e3a5f"/>
       <stop offset="100%" style="stop-color:#2d4a73"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <!-- Title block: logo as "V" + text "Pathing Enterprise LLC" (centered as one unit) -->
+  <rect width="1200" height="630" fill="url(#bg1)"/>
   <g transform="translate(290, 195)">
-    <!-- Large VP monogram from logo (the "V" in VPathing) -->
-    <g fill="url(#vp-grad)" transform="scale(5.2)">
+    <g fill="url(#vp1)" transform="scale(5.2)">
       <path d="M8 8h10v6H14v18h-4V14H8V8z"/>
       <path d="M20 8h4l8 12 8-12h4v24h-4V18l-6 9-6-9v14h-4V8z"/>
     </g>
-    <!-- "Pathing Enterprise LLC" so it reads VPathing Enterprise LLC -->
     <text x="205" y="118" font-family="Segoe UI, system-ui, sans-serif" font-size="46" font-weight="700" fill="#1a202c">Pathing Enterprise LLC</text>
   </g>
   <text x="600" y="400" font-family="Segoe UI, system-ui, sans-serif" font-size="26" fill="#64748b" text-anchor="middle">Building practical apps for real-world operations.</text>
