@@ -179,9 +179,9 @@
       }
 
       var action = form.getAttribute('action');
-      if (!action || action.indexOf('REPLACE_WITH_FORM_ID') !== -1) {
+      if (!action || !action.startsWith('http')) {
         if (messageEl) {
-          messageEl.textContent = 'Form is not configured. Please set your Formspree form ID in the form action.';
+          messageEl.textContent = 'Form is not configured. Please set the form action URL.';
           messageEl.className = 'form-message error';
           messageEl.style.display = 'block';
         }

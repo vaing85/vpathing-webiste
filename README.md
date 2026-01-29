@@ -133,7 +133,8 @@ After editing, commit and push; Cloudflare Pages will deploy the updated content
 ## SEO and social
 
 - Meta title and description are set on every page.
-- **index.html** includes Open Graph meta tags. Add **assets/social-card.png** (1200×630 px) for social previews; the repo includes **assets/social-card.svg** as a design placeholder (you can export a PNG from it or create your own).
+- **robots.txt** allows crawlers and points to **sitemap.xml**.
+- **index.html** includes Open Graph and Twitter Card meta tags. The social image is **assets/social-card.svg** (1200×630). For platforms that prefer PNG, export the SVG to **assets/social-card.png** (1200×630) and update the `og:image` and `twitter:image` URLs in **index.html** to use it.
 
 ---
 
