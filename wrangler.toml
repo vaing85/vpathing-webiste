@@ -1,6 +1,6 @@
 # Cloudflare Workers / Pages — static site (no Worker script)
 # Tells Wrangler to deploy the repo root as static assets so your project builds successfully.
-name = "vpathing-webiste"
+name = "vpathing-website"
 compatibility_date = "2024-01-01"
 
 [assets]
