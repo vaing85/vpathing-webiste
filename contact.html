@@ -41,22 +41,17 @@
       <p class="section-subtitle">Send a message using the form below. All messages are delivered to vpathingenterprise@gmail.com.</p>
 
       <div class="contact-form-wrap">
-        <!--
-          FORMSPREE: Replace REPLACE_WITH_FORM_ID with your Formspree form ID.
-          Get it at https://formspree.io — create a form, then use the form endpoint ID (e.g. xyzabcde).
-          TURNSTILE: Replace REPLACE_WITH_TURNSTILE_SITE_KEY with your Cloudflare Turnstile site key.
-          Get it at: Cloudflare Dashboard → Turnstile → Add site → copy Site key.
-          For server-side verification with the Secret key, see: https://developers.cloudflare.com/turnstile/get-started/server-side-validation/
-          Formspree can receive the Turnstile token; you may need to verify it server-side (e.g. Formspree webhook or custom backend). Document your secret key in a secure place; do not paste it in HTML.
-        -->
+        <!-- FormSubmit.co: free, no signup. First time they send a confirmation link to the email below; click it once, then submissions deliver. -->
         <form
           id="contact-form"
           class="contact-form"
           method="POST"
-          action="https://formspree.io/f/2925089513610935585"
+          action="https://formsubmit.co/vpathingenterprise@gmail.com"
           aria-label="Contact form"
         >
           <input type="hidden" name="_subject" value="New message from VPathing Enterprise LLC website" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="box" />
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Your name">
           <label for="contact-email">Email</label>
