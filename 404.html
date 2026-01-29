@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found — VPathing Enterprise LLC</title>
+  <meta name="description" content="The page you're looking for doesn't exist. Return to VPathing Enterprise LLC.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.svg" alt="" class="logo-img" width="36" height="36">
+        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <span class="logo-wordmark-mobile">VPathing</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+      <h1 class="section-title" style="margin-top: 0;">Page not found</h1>
+      <p class="section-subtitle">The page you're looking for doesn't exist or has been moved.</p>
+      <p style="margin-top: var(--space-6);">
+        <a href="/" class="btn btn-primary">Back to home</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
