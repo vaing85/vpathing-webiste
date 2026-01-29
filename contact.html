@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — VPathing Enterprise LLC</title>
+  <meta name="description" content="Contact VPathing Enterprise LLC. Send a message or email vpathingenterprise@gmail.com.">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <!-- Cloudflare Turnstile (spam protection). Get your keys at: https://dash.cloudflare.com/?to=/:account/turnstile -->
+  <!-- Paste your Turnstile SITE KEY in the data-sitekey attribute of .cf-turnstile below. Secret key is for server-side verification (e.g. Formspree or your backend). -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.svg" alt="" class="logo-img" width="36" height="36">
+        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <span class="logo-wordmark-mobile">VPathing</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+      <h1 class="section-title" style="margin-top: 0;">Contact</h1>
+      <p class="contact-email">
+        Email: <a href="mailto:vpathingenterprise@gmail.com">vpathingenterprise@gmail.com</a>
+      </p>
+      <p class="section-subtitle">Send a message using the form below. All messages are delivered to vpathingenterprise@gmail.com.</p>
+
+      <div class="contact-form-wrap">
+        <!--
+          FORMSPREE: Replace REPLACE_WITH_FORM_ID with your Formspree form ID.
+          Get it at https://formspree.io — create a form, then use the form endpoint ID (e.g. xyzabcde).
+          TURNSTILE: Replace REPLACE_WITH_TURNSTILE_SITE_KEY with your Cloudflare Turnstile site key.
+          Get it at: Cloudflare Dashboard → Turnstile → Add site → copy Site key.
+          For server-side verification with the Secret key, see: https://developers.cloudflare.com/turnstile/get-started/server-side-validation/
+          Formspree can receive the Turnstile token; you may need to verify it server-side (e.g. Formspree webhook or custom backend). Document your secret key in a secure place; do not paste it in HTML.
+        -->
+        <form
+          id="contact-form"
+          class="contact-form"
+          method="POST"
+          action="https://formspree.io/f/REPLACE_WITH_FORM_ID"
+          aria-label="Contact form"
+        >
+          <input type="hidden" name="_subject" value="New message from VPathing Enterprise LLC website" />
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Your name">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" name="email" required autocomplete="email" placeholder="your@email.com">
+          <label for="contact-subject">Subject</label>
+          <input type="text" id="contact-subject" name="subject" placeholder="Subject of your message">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" required placeholder="Your message"></textarea>
+          <!-- Cloudflare Turnstile widget: paste your SITE KEY in data-sitekey (replace REPLACE_WITH_TURNSTILE_SITE_KEY) -->
+          <div class="cf-turnstile" data-sitekey="REPLACE_WITH_TURNSTILE_SITE_KEY"></div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Send message</button>
+          </div>
+          <div id="form-message" class="form-message" role="status" aria-live="polite" style="display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+    if (window.initContactForm) {
+      window.initContactForm();
+    }
+  </script>
+</body>
+</html>

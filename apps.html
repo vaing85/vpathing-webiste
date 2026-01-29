@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apps & Projects — VPathing Enterprise LLC</title>
+  <meta name="description" content="Apps and projects by VPathing Enterprise LLC. Web apps, logistics, booking, payments, and more.">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.svg" alt="" class="logo-img" width="36" height="36">
+        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <span class="logo-wordmark-mobile">VPathing</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+      <h1 class="section-title" style="margin-top: 0;">Apps & Projects</h1>
+      <p class="section-subtitle">Our current and in-progress applications. Filter by status or search by name or description.</p>
+
+      <div class="filters">
+        <label for="apps-search" class="visually-hidden">Search apps</label>
+        <input type="search" id="apps-search" placeholder="Search apps…" aria-label="Search apps by name or description">
+        <label for="apps-status">Status</label>
+        <select id="apps-status" aria-label="Filter by status">
+          <option value="">All</option>
+          <option value="Live">Live</option>
+          <option value="MVP">MVP</option>
+          <option value="In development">In development</option>
+        </select>
+      </div>
+
+      <div id="apps-grid" class="apps-grid">
+        <!-- Populated by main.js from data/apps.json -->
+      </div>
+      <p id="apps-empty" class="apps-empty" style="display: none;">No apps match your filters.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    (function () {
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      if (window.initAppsPage) {
+        window.initAppsPage();
+      }
+    })();
+  </script>
+</body>
+</html>

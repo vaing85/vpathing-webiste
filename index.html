@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VPathing Enterprise LLC — Building practical apps for real-world operations</title>
+  <meta name="description" content="VPathing Enterprise LLC builds practical apps for real-world operations. Web development, automation, dashboards, integrations, and MVP builds.">
+  <!-- Open Graph (social sharing) — replace image path with your final social-card.png URL when deployed -->
+  <meta property="og:title" content="VPathing Enterprise LLC">
+  <meta property="og:description" content="Building practical apps for real-world operations.">
+  <meta property="og:image" content="/assets/social-card.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.svg" alt="" class="logo-img" width="36" height="36">
+        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <span class="logo-wordmark-mobile">VPathing</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+      <section class="hero">
+        <h1>VPathing Enterprise LLC</h1>
+        <p class="tagline">Building practical apps for real-world operations.</p>
+        <p class="intro">We design and build web applications, automation tools, dashboards, and integrations that help teams and businesses run more effectively.</p>
+        <div class="hero-ctas">
+          <a href="/apps.html" class="btn btn-primary">View Apps</a>
+          <a href="/contact.html" class="btn btn-secondary">Contact</a>
+        </div>
+      </section>
+
+      <section class="section" id="what-we-do" aria-labelledby="what-we-do-heading">
+        <h2 id="what-we-do-heading" class="section-title">What we do</h2>
+        <p class="section-subtitle">From web apps to integrations and MVPs — we focus on solutions that work in the real world.</p>
+        <div class="services-grid">
+          <article class="service-card">
+            <h3>Web development</h3>
+            <p>Custom web applications built for performance, accessibility, and maintainability.</p>
+          </article>
+          <article class="service-card">
+            <h3>Automation</h3>
+            <p>Workflows and tools that reduce manual work and streamline operations.</p>
+          </article>
+          <article class="service-card">
+            <h3>Dashboards</h3>
+            <p>Clear, actionable dashboards for monitoring and decision-making.</p>
+          </article>
+          <article class="service-card">
+            <h3>Integrations</h3>
+            <p>Connecting your systems and third-party services so data flows where it’s needed.</p>
+          </article>
+          <article class="service-card">
+            <h3>MVP builds</h3>
+            <p>Fast, focused minimum viable products to validate ideas and get to market sooner.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="featured-apps" aria-labelledby="featured-apps-heading">
+        <h2 id="featured-apps-heading" class="section-title">Featured apps</h2>
+        <p class="section-subtitle">A selection of our current apps and projects.</p>
+        <div id="featured-apps-grid" class="apps-grid">
+          <!-- Populated by main.js from data/apps.json (top 3–4) -->
+        </div>
+        <p style="margin-top: var(--space-6);">
+          <a href="/apps.html" class="btn btn-secondary">View all apps</a>
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    (function () {
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      var grid = document.getElementById('featured-apps-grid');
+      if (grid && window.renderFeaturedApps) {
+        window.renderFeaturedApps(grid, 4);
+      }
+    })();
+  </script>
+</body>
+</html>

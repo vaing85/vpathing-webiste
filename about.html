@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — VPathing Enterprise LLC</title>
+  <meta name="description" content="About VPathing Enterprise LLC. Mission, services, and how we work — Discover, Build, Launch, Improve.">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <img src="/assets/logo.svg" alt="" class="logo-img" width="36" height="36">
+        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <span class="logo-wordmark-mobile">VPathing</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+      <h1 class="section-title" style="margin-top: 0;">About VPathing Enterprise LLC</h1>
+
+      <section class="mission-block" aria-labelledby="mission-heading">
+        <h2 id="mission-heading" class="section-title">Mission</h2>
+        <p>We build practical software for real-world operations. Our focus is on web applications, automation, dashboards, and integrations that help teams and businesses run more effectively — without unnecessary complexity.</p>
+      </section>
+
+      <section class="section" id="services" aria-labelledby="services-heading">
+        <h2 id="services-heading" class="section-title">Services</h2>
+        <ul class="services-grid" style="list-style: none; padding: 0; margin: 0;">
+          <li class="service-card">
+            <h3>Web development</h3>
+            <p>Custom web apps built for performance, accessibility, and long-term maintainability.</p>
+          </li>
+          <li class="service-card">
+            <h3>Automation</h3>
+            <p>Workflows and tools that reduce manual work and streamline day-to-day operations.</p>
+          </li>
+          <li class="service-card">
+            <h3>Integrations</h3>
+            <p>Connecting your systems and third-party services so data flows where it’s needed.</p>
+          </li>
+          <li class="service-card">
+            <h3>Dashboards</h3>
+            <p>Clear, actionable dashboards for monitoring, reporting, and decision-making.</p>
+          </li>
+          <li class="service-card">
+            <h3>MVP builds</h3>
+            <p>Focused minimum viable products to validate ideas and get to market faster.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="process" aria-labelledby="process-heading">
+        <h2 id="process-heading" class="section-title">How we work</h2>
+        <p class="section-subtitle">A simple, repeatable process from discovery to launch and beyond.</p>
+        <ol class="process-list">
+          <li>
+            <strong>Discover</strong>
+            <span>Understand your goals, constraints, and users so we build the right thing.</span>
+          </li>
+          <li>
+            <strong>Build</strong>
+            <span>Develop in clear phases with regular check-ins and feedback.</span>
+          </li>
+          <li>
+            <strong>Launch</strong>
+            <span>Deploy and hand off with documentation and support so you can run it yourself.</span>
+          </li>
+          <li>
+            <strong>Improve</strong>
+            <span>Iterate based on real usage and new requirements.</span>
+          </li>
+        </ol>
+      </section>
+
+      <p style="margin-top: var(--space-8);">
+        <a href="/contact.html" class="btn btn-primary">Get in touch</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

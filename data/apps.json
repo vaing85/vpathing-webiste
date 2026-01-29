@@ -1,0 +1,30 @@
+[
+  {
+    "name": "ZapRoute",
+    "description": "Delivery-driver logistics platform for route planning, dispatch, and real-time tracking.",
+    "status": "In development",
+    "tags": ["logistics", "delivery", "operations"],
+    "links": {}
+  },
+  {
+    "name": "Nestura",
+    "description": "Peer-to-peer accommodation booking platform with property management, payments, and real-time messaging.",
+    "status": "In development",
+    "tags": ["booking", "rentals", "accommodation"],
+    "links": {}
+  },
+  {
+    "name": "Zappay",
+    "description": "Payments app concept with Stripe integration, subscriptions, and compliance features.",
+    "status": "In development",
+    "tags": ["payments", "fintech", "subscriptions"],
+    "links": {}
+  },
+  {
+    "name": "Civic Platform",
+    "description": "SaaS for small towns — tools for local government and community operations.",
+    "status": "In development",
+    "tags": ["civic", "government", "saas"],
+    "links": {}
+  }
+]
