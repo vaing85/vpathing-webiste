@@ -7,9 +7,8 @@
   <meta name="description" content="Contact VPathing Enterprise LLC. Send a message or email vpathingenterprise@gmail.com.">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="stylesheet" href="/css/styles.css">
-  <!-- Cloudflare Turnstile (spam protection). Get your keys at: https://dash.cloudflare.com/?to=/:account/turnstile. -->
-  <!-- Paste your Turnstile SITE KEY in the data-sitekey attribute of .cf-turnstile below. Secret key is for server-side verification (e.g. Formspree or your backend). -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <!-- Cloudflare Turnstile (spam protection). Re-enable after adding your domain in Turnstile dashboard (Domains). -->
+  <!-- <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> -->
 </head>
 <body>
   <header class="site-header" role="banner">
@@ -66,8 +65,8 @@
           <input type="text" id="contact-subject" name="subject" placeholder="Subject of your message">
           <label for="contact-message">Message</label>
           <textarea id="contact-message" name="message" required placeholder="Your message"></textarea>
-          <!-- Cloudflare Turnstile widget: paste your SITE KEY in data-sitekey (replace REPLACE_WITH_TURNSTILE_SITE_KEY) -->
-          <div class="cf-turnstile" data-sitekey="2925089513610935585"></div>
+          <!-- Turnstile disabled until domain is added in Cloudflare Turnstile. Re-enable: uncomment script in head and this div. -->
+          <!-- <div class="cf-turnstile" data-sitekey="2925089513610935585"></div> -->
           <div class="form-actions">
             <button type="submit" class="btn btn-primary">Send message</button>
           </div>
