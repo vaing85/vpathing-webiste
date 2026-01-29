@@ -1,30 +1,79 @@
 [
   {
     "name": "ZapRoute",
-    "description": "Delivery-driver logistics platform for route planning, dispatch, and real-time tracking.",
+    "description": "Logistics platform for delivery drivers: route planning, dispatch, and real-time tracking to streamline last-mile operations.",
     "status": "In development",
-    "tags": ["logistics", "delivery", "operations"],
+    "tags": ["logistics", "delivery", "operations", "tracking"],
     "links": {}
   },
   {
     "name": "Nestura",
-    "description": "Peer-to-peer accommodation booking platform with property management, payments, and real-time messaging.",
+    "description": "Peer-to-peer accommodation booking: property listings, reservations, payments, and host–guest messaging in one platform.",
     "status": "In development",
-    "tags": ["booking", "rentals", "accommodation"],
+    "tags": ["booking", "rentals", "accommodation", "payments"],
     "links": {}
   },
   {
     "name": "Zappay",
-    "description": "Payments app concept with Stripe integration, subscriptions, and compliance features.",
+    "description": "Payments and subscription app with Stripe integration, built with compliance and reporting in mind.",
     "status": "In development",
-    "tags": ["payments", "fintech", "subscriptions"],
+    "tags": ["payments", "fintech", "subscriptions", "Stripe"],
     "links": {}
   },
   {
     "name": "Civic Platform",
-    "description": "SaaS for small towns — tools for local government and community operations.",
+    "description": "SaaS for small towns and local government: tools to run community and civic operations more efficiently.",
     "status": "In development",
-    "tags": ["civic", "government", "saas"],
+    "tags": ["civic", "government", "saas", "local"],
+    "links": {}
+  },
+  {
+    "name": "Pharmacy Delivery",
+    "description": "Last-mile pharmacy delivery: product catalog, orders, driver assignment, and real-time delivery tracking.",
+    "status": "In development",
+    "tags": ["delivery", "pharmacy", "operations", "tracking"],
+    "links": {}
+  },
+  {
+    "name": "RMM",
+    "description": "Remote monitoring and management: device dashboard, system metrics, and remote viewing for endpoints.",
+    "status": "In development",
+    "tags": ["monitoring", "devices", "dashboard", "operations"],
+    "links": {}
+  },
+  {
+    "name": "Rewards & Cashback",
+    "description": "Rewards and cashback system for web and mobile apps: points, redemptions, and user engagement.",
+    "status": "In development",
+    "tags": ["rewards", "cashback", "engagement", "loyalty"],
+    "links": {}
+  },
+  {
+    "name": "NewGame",
+    "description": "Game platform with tournaments, achievements, transactions, and leaderboards for multiple game types.",
+    "status": "In development",
+    "tags": ["games", "tournaments", "achievements", "platform"],
+    "links": {}
+  },
+  {
+    "name": "Greenwoods Games",
+    "description": "Gaming platform: slots, table games, tournaments, live dealer, and mobile-friendly casino experience.",
+    "status": "In development",
+    "tags": ["gaming", "casino", "slots", "tournaments"],
+    "links": {}
+  },
+  {
+    "name": "River777",
+    "description": "Game suite and clone project for web-based gaming experiences.",
+    "status": "In development",
+    "tags": ["games", "web", "suite"],
+    "links": {}
+  },
+  {
+    "name": "Steam Browser Extension",
+    "description": "Browser extension for Steam (steampowered.com): enhances the Steam experience in the browser.",
+    "status": "In development",
+    "tags": ["browser extension", "Steam", "Chrome", "Firefox"],
     "links": {}
   }
 ]
