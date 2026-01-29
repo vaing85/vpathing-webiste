@@ -96,6 +96,26 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
+/* Skip to main content — visible on focus for keyboard/screen reader users */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: var(--space-4);
+  z-index: 1001;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-surface);
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+}
+.skip-link:focus {
+  left: var(--space-4);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
 /* ========== Layout ========== */
 .site-header {
   background: var(--color-surface);
