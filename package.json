@@ -4,7 +4,8 @@
   "description": "VPathing Enterprise LLC company website",
   "scripts": {
     "generate-social-card": "node scripts/generate-social-card.js",
-    "resize-social-card": "node scripts/resize-social-card.js"
+    "resize-social-card": "node scripts/resize-social-card.js",
+    "social-card-1.1": "node scripts/create-social-card-1-1.js"
   },
   "devDependencies": {
     "sharp": "^0.33.5"
