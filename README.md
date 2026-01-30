@@ -108,20 +108,22 @@ Then open `http://localhost:3000` (or the port shown).
 
 ## Social preview image (OG / Twitter)
 
-- **assets/social-card.png** (1200×630) is used for link previews on all pages. It is generated from **assets/social-card.svg**.
-- **Five alternate variants** are also generated (same size) for A/B testing or different channels:
+- **assets/social-card.png** (1200×630) is used for link previews on all pages. You can either:
+  - **Use your own image:** Replace `assets/social-card.png` with your image, then run `npm run resize-social-card` to resize to 1200×630 (letterboxing if needed).
+  - **Generate from SVG:** Run `npm run generate-social-card` to build it from **assets/social-card.svg** (and the v1–v5 variants).
+- **social-card-1.1.png** — Version with your image plus an overlay: VP logo as the “V” + “Pathing Enterprise LLC” + tagline. After updating `social-card.png`, run `npm run social-card-1.1` to regenerate **assets/social-card-1.1.png**.
+- **Five alternate variants** (same size) for A/B testing or different channels:
   - **social-card-v1.png** — Original: light gray/blue gradient
-  - **social-card-v2.png** — Deep blue: navy background, white text
+  - **social-card-v2.png** — Deep blue: navy background, teal VP, white text
   - **social-card-v3.png** — Warm: cream/amber gradient
   - **social-card-v4.png** — Minimal dark: charcoal background, light text
   - **social-card-v5.png** — Accent stripe: white with blue left bar
-- **Custom image:** If you replace `assets/social-card.png` with your own image, run `npm run resize-social-card` to resize it to 1200×630 (letterboxing with a light background if the aspect ratio differs).
 - To regenerate all PNGs from the SVG variants (default + v1–v5):
   ```bash
   npm install
   npm run generate-social-card
   ```
-- Then commit any updated `assets/social-card*.png` and push. To use a variant site-wide, point `og:image` and `twitter:image` in each page to the desired file (e.g. `assets/social-card-v2.png`).
+- Then commit any updated `assets/social-card*.png` and push. To use a variant or social-card-1.1 site-wide, point `og:image` and `twitter:image` in each page to the desired file (e.g. `assets/social-card-1.1.png` or `assets/social-card-v2.png`).
 
 ---
 
