@@ -1,5 +1,14 @@
 [
   {
+    "name": "Tower Defense",
+    "description": "Tower defense game: build towers, defend against waves of enemies, and strategize to survive.",
+    "status": "Deployment",
+    "tags": ["games", "tower defense", "strategy"],
+    "links": {
+      "github": "https://github.com/vaing85/tower-defense"
+    }
+  },
+  {
     "name": "ZapRoute",
     "description": "Logistics platform for delivery drivers: route planning, dispatch, and real-time tracking to streamline last-mile operations.",
     "status": "In development",
