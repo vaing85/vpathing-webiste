@@ -679,6 +679,55 @@ a:focus-visible {
   color: var(--color-text);
 }
 
+/* ========== Logo expand (lightbox) ========== */
+.logo-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  padding: var(--space-4);
+}
+.logo-modal.is-open {
+  display: flex;
+}
+.logo-modal img {
+  max-width: 90vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.logo-modal-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-modal-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.logo-modal-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 /* ========== Utility ========== */
 .visually-hidden {
   position: absolute;

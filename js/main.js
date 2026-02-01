@@ -238,9 +238,37 @@
     });
   }
 
+  // ——— Logo expand (click header logo to show larger) ———
+  function initLogoExpand() {
+    var logoImg = document.querySelector('.logo-link .logo-img');
+    var modal = document.getElementById('logo-modal');
+    var closeBtn = modal && modal.querySelector('.logo-modal-close');
+    if (!logoImg || !modal) return;
+
+    logoImg.addEventListener('click', function (e) {
+      e.preventDefault();
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+    });
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  }
+
   // ——— Init ———
   document.addEventListener('DOMContentLoaded', function () {
     initNav();
+    initLogoExpand();
   });
 
   window.renderFeaturedApps = renderFeaturedApps;
