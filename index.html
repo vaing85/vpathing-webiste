@@ -50,48 +50,6 @@
         <h1>VPathing Enterprise LLC</h1>
         <p class="tagline">Building practical apps for real-world operations.</p>
         <p class="intro">We design and build web applications, automation tools, dashboards, and integrations that help teams and businesses run more effectively.</p>
-        <div class="hero-ctas">
-          <a href="/apps.html" class="btn btn-primary">View Apps</a>
-          <a href="/contact.html" class="btn btn-secondary">Contact</a>
-        </div>
-      </section>
-
-      <section class="section" id="what-we-do" aria-labelledby="what-we-do-heading">
-        <h2 id="what-we-do-heading" class="section-title">What we do</h2>
-        <p class="section-subtitle">From web apps to integrations and MVPs — we focus on solutions that work in the real world.</p>
-        <div class="services-grid">
-          <article class="service-card">
-            <h3>Web development</h3>
-            <p>Custom web applications built for performance, accessibility, and maintainability.</p>
-          </article>
-          <article class="service-card">
-            <h3>Automation</h3>
-            <p>Workflows and tools that reduce manual work and streamline operations.</p>
-          </article>
-          <article class="service-card">
-            <h3>Dashboards</h3>
-            <p>Clear, actionable dashboards for monitoring and decision-making.</p>
-          </article>
-          <article class="service-card">
-            <h3>Integrations</h3>
-            <p>Connecting your systems and third-party services so data flows where it’s needed.</p>
-          </article>
-          <article class="service-card">
-            <h3>MVP builds</h3>
-            <p>Fast, focused minimum viable products to validate ideas and get to market sooner.</p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section" id="featured-apps" aria-labelledby="featured-apps-heading">
-        <h2 id="featured-apps-heading" class="section-title">Featured apps</h2>
-        <p class="section-subtitle">A selection of our current apps and projects.</p>
-        <div id="featured-apps-grid" class="apps-grid">
-          <!-- Populated by main.js from data/apps.json (top 3–4) -->
-        </div>
-        <p style="margin-top: var(--space-6);">
-          <a href="/apps.html" class="btn btn-secondary">View all apps</a>
-        </p>
       </section>
     </div>
   </main>
@@ -108,13 +66,7 @@
   </div>
   <script src="/js/main.js"></script>
   <script>
-    (function () {
-      document.getElementById('footer-year').textContent = new Date().getFullYear();
-      var grid = document.getElementById('featured-apps-grid');
-      if (grid && window.renderFeaturedApps) {
-        window.renderFeaturedApps(grid, 4);
-      }
-    })();
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>

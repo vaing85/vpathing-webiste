@@ -44,8 +44,18 @@
   <main class="main" id="main-content">
     <div class="container">
       <h1 class="section-title" style="margin-top: 0;">Apps & Projects</h1>
-      <p class="section-subtitle">Our current and in-progress applications. Filter by status or search by name or description.</p>
+      <p class="section-subtitle">Our current and in-progress applications.</p>
 
+      <section class="section" id="featured-apps" aria-labelledby="featured-apps-heading">
+        <h2 id="featured-apps-heading" class="section-title">Featured apps</h2>
+        <p class="section-subtitle">A selection of our current apps and projects.</p>
+        <div id="featured-apps-grid" class="apps-grid">
+          <!-- Populated by main.js (first 4 from data/apps.json) -->
+        </div>
+      </section>
+
+      <h2 class="section-title">All apps</h2>
+      <p class="section-subtitle">Filter by status or search by name or description.</p>
       <div class="filters">
         <label for="apps-search" class="visually-hidden">Search apps</label>
         <input type="search" id="apps-search" placeholder="Search apps…" aria-label="Search apps by name or description">
@@ -54,6 +64,7 @@
           <option value="">All</option>
           <option value="Live">Live</option>
           <option value="MVP">MVP</option>
+          <option value="Deployment">Deployment</option>
           <option value="In development">In development</option>
         </select>
       </div>
@@ -79,6 +90,10 @@
   <script>
     (function () {
       document.getElementById('footer-year').textContent = new Date().getFullYear();
+      var featuredGrid = document.getElementById('featured-apps-grid');
+      if (featuredGrid && window.renderFeaturedApps) {
+        window.renderFeaturedApps(featuredGrid, 4);
+      }
       if (window.initAppsPage) {
         window.initAppsPage();
       }
