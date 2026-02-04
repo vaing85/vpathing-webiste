@@ -3,7 +3,7 @@
 Static, mobile-friendly company website for **VPathing Enterprise LLC**. No frameworks, no build step. Deploy to Cloudflare Pages from GitHub.
 
 - **Tagline:** “Building practical apps for real-world operations.”
-- **Contact email:** vpathingenterprise@gmail.com
+- **Contact email:** villa.aing@vpathingenterprisellc.site
 - **Live site:** https://vpathingenterprisellc.site
 
 ---
@@ -92,7 +92,7 @@ Then open `http://localhost:3000` (or the port shown).
 
 ### Contact form (FormSubmit.co)
 
-- The contact form uses [FormSubmit.co](https://formsubmit.co): no signup, submissions go to **vpathingenterprise@gmail.com**.
+- The contact form uses [FormSubmit.co](https://formsubmit.co): no signup, submissions go to **villa.aing@vpathingenterprisellc.site**.
 - First time you submit, FormSubmit sends a one-time confirmation link to that email; after you confirm, all future submissions deliver normally.
 - To change the destination email, edit the form `action` in **contact.html** (e.g. `https://formsubmit.co/your@email.com`).
 
