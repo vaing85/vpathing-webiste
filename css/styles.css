@@ -695,6 +695,25 @@ a:focus-visible {
 .coming-soon-list li {
   margin-bottom: var(--space-2);
 }
+.coming-soon-app-name {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: var(--space-2) 0 var(--space-4);
+}
+.coming-soon-more {
+  display: inline-block;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-surface);
+  font-weight: 600;
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+.coming-soon-more:hover {
+  background: var(--color-accent-hover);
+  text-decoration: none;
+}
 
 /* ========== Logo expand (lightbox) ========== */
 .logo-modal {
