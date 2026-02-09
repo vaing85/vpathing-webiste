@@ -679,6 +679,23 @@ a:focus-visible {
   color: var(--color-text);
 }
 
+/* ========== Home: Coming soon section ========== */
+.coming-soon-section {
+  margin-top: var(--space-12);
+  padding: var(--space-8);
+  background: var(--color-accent-light);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+.coming-soon-list {
+  margin: var(--space-4) 0;
+  padding-left: var(--space-6);
+  line-height: var(--leading-relaxed);
+}
+.coming-soon-list li {
+  margin-bottom: var(--space-2);
+}
+
 /* ========== Logo expand (lightbox) ========== */
 .logo-modal {
   display: none;
