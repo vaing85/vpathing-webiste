@@ -686,6 +686,30 @@ a:focus-visible {
   background: var(--color-accent-light);
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
+  text-align: center;
+}
+.coming-soon-desc {
+  color: var(--color-text-muted);
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-4);
+}
+.coming-soon-page {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.coming-soon-page .coming-soon-hero {
+  margin-bottom: var(--space-8);
+}
+.coming-soon-page .section {
+  text-align: left;
+  margin-bottom: var(--space-6);
+}
+.coming-soon-page .coming-soon-more {
+  margin-top: var(--space-4);
 }
 .coming-soon-list {
   margin: var(--space-4) 0;
