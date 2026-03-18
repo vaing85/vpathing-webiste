@@ -505,6 +505,10 @@ a:focus-visible {
   background: var(--color-accent-light);
   color: var(--color-badge-live);
 }
+.badge--deployment {
+  background: rgba(13, 148, 136, 0.12);
+  color: var(--color-badge-mvp);
+}
 
 .tags {
   display: flex;
@@ -737,6 +741,32 @@ a:focus-visible {
 .coming-soon-more:hover {
   background: var(--color-accent-hover);
   text-decoration: none;
+}
+
+/* ========== Home: Studio section ========== */
+.studio-section {
+  margin-top: var(--space-8);
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+.studio-app-name {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text);
+  margin: var(--space-2) 0 var(--space-4);
+}
+.studio-desc {
+  color: var(--color-text-muted);
+  max-width: 36rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: var(--space-4);
+}
+.studio-badge {
+  display: inline-block;
 }
 
 /* ========== Logo expand (lightbox) ========== */

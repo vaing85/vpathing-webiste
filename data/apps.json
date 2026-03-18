@@ -1,5 +1,12 @@
 [
   {
+    "name": "VPathing Studio",
+    "description": "A music persona powered by Suno, built for an upcoming sing-along and competition app. Create, compete, and perform.",
+    "status": "In development",
+    "tags": ["music", "sing-along", "competition", "suno"],
+    "links": {}
+  },
+  {
     "name": "Tower Defense",
     "description": "Tower defense game: build towers, defend against waves of enemies, and strategize to survive.",
     "status": "Deployment",
@@ -51,11 +58,13 @@
     "links": {}
   },
   {
-    "name": "Rewards & Cashback",
-    "description": "Rewards and cashback system for web and mobile apps: points, redemptions, and user engagement.",
+    "name": "VPathing Rewards",
+    "description": "Our upcoming cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
     "status": "In development",
     "tags": ["rewards", "cashback", "engagement", "loyalty"],
-    "links": {}
+    "links": {
+      "website": "/coming-soon.html"
+    }
   },
   {
     "name": "NewGame",
