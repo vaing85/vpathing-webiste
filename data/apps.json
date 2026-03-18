@@ -1,5 +1,12 @@
 [
   {
+    "name": "VPathing Studio",
+    "description": "A music persona powered by Suno, built for an upcoming sing-along and competition app. Create, compete, and perform.",
+    "status": "In development",
+    "tags": ["music", "sing-along", "competition", "suno"],
+    "links": {}
+  },
+  {
     "name": "Tower Defense",
     "description": "Tower defense game: build towers, defend against waves of enemies, and strategize to survive.",
     "status": "Deployment",
