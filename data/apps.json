@@ -51,11 +51,13 @@
     "links": {}
   },
   {
-    "name": "Rewards & Cashback",
-    "description": "Rewards and cashback system for web and mobile apps: points, redemptions, and user engagement.",
+    "name": "VPathing Rewards",
+    "description": "Our upcoming cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
     "status": "In development",
     "tags": ["rewards", "cashback", "engagement", "loyalty"],
-    "links": {}
+    "links": {
+      "website": "/coming-soon.html"
+    }
   },
   {
     "name": "NewGame",

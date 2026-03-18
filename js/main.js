@@ -25,16 +25,51 @@
         nav.classList.remove('is-open');
       }
     });
+
+    // Mark active page
+    var currentHref = window.location.pathname;
+    nav.querySelectorAll('a').forEach(function (link) {
+      var linkPath = new URL(link.href, window.location.origin).pathname;
+      if (linkPath === currentHref || (currentHref === '/' && linkPath === '/')) {
+        link.setAttribute('aria-current', 'page');
+      }
+    });
   }
 
   // ——— Apps data (fetch from data/apps.json) ———
   var APPS_URL = '/data/apps.json';
+  var _appsCache = null;
+  var _appsFetchPromise = null;
+
+  function fetchApps() {
+    if (_appsCache !== null) return Promise.resolve(_appsCache);
+    if (_appsFetchPromise) return _appsFetchPromise;
+    _appsFetchPromise = fetch(APPS_URL)
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .catch(function () { return []; })
+      .then(function (apps) {
+        _appsCache = Array.isArray(apps) ? apps : [];
+        return _appsCache;
+      });
+    return _appsFetchPromise;
+  }
+
+  function debounce(fn, delay) {
+    var timer;
+    return function () {
+      var args = arguments;
+      var ctx = this;
+      clearTimeout(timer);
+      timer = setTimeout(function () { fn.apply(ctx, args); }, delay);
+    };
+  }
 
   function getStatusClass(status) {
     if (!status) return 'badge--dev';
     var s = (status + '').toLowerCase();
     if (s === 'live') return 'badge--live';
     if (s === 'mvp') return 'badge--mvp';
+    if (s === 'deployment') return 'badge--deployment';
     return 'badge--dev';
   }
 
@@ -99,13 +134,10 @@
    */
   function renderFeaturedApps(container, limit) {
     if (!container) return;
-    fetch(APPS_URL)
-      .then(function (res) { return res.ok ? res.json() : []; })
-      .catch(function () { return []; })
-      .then(function (apps) {
-        var list = Array.isArray(apps) ? apps.slice(0, limit || 4) : [];
-        container.innerHTML = list.map(renderAppCard).join('');
-      });
+    fetchApps().then(function (apps) {
+      var list = apps.slice(0, limit || 4);
+      container.innerHTML = list.map(renderAppCard).join('');
+    });
   }
 
   /**
@@ -128,29 +160,28 @@
     function applyFilters() {
       var search = (searchInput && searchInput.value) ? searchInput.value.trim().toLowerCase() : '';
       var statusFilter = (statusSelect && statusSelect.value) ? statusSelect.value.trim() : '';
-      fetch(APPS_URL)
-        .then(function (res) { return res.ok ? res.json() : []; })
-        .catch(function () { return []; })
-        .then(function (apps) {
-          var list = Array.isArray(apps) ? apps : [];
-          if (search) {
-            list = list.filter(function (app) {
-              var name = (app.name || '').toLowerCase();
-              var desc = (app.description || '').toLowerCase();
-              return name.indexOf(search) !== -1 || desc.indexOf(search) !== -1;
-            });
-          }
-          if (statusFilter) {
-            list = list.filter(function (app) {
-              return (app.status || '').trim() === statusFilter;
-            });
-          }
-          render(list);
-        });
+      fetchApps().then(function (apps) {
+        var list = apps.slice();
+        if (search) {
+          list = list.filter(function (app) {
+            var name = (app.name || '').toLowerCase();
+            var desc = (app.description || '').toLowerCase();
+            return name.indexOf(search) !== -1 || desc.indexOf(search) !== -1;
+          });
+        }
+        if (statusFilter) {
+          list = list.filter(function (app) {
+            return (app.status || '').trim() === statusFilter;
+          });
+        }
+        render(list);
+      });
     }
 
+    var debouncedApplyFilters = debounce(applyFilters, 200);
+
     if (searchInput) {
-      searchInput.addEventListener('input', applyFilters);
+      searchInput.addEventListener('input', debouncedApplyFilters);
       searchInput.addEventListener('change', applyFilters);
     }
     if (statusSelect) {

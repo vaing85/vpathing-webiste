@@ -505,6 +505,10 @@ a:focus-visible {
   background: var(--color-accent-light);
   color: var(--color-badge-live);
 }
+.badge--deployment {
+  background: rgba(13, 148, 136, 0.12);
+  color: var(--color-badge-mvp);
+}
 
 .tags {
   display: flex;
