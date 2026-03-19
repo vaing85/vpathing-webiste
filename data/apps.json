@@ -1,9 +1,9 @@
 [
   {
-    "name": "VPathing Studio",
-    "description": "A music persona powered by Suno, built for an upcoming sing-along and competition app. Create, compete, and perform.",
+    "name": "VoxArena",
+    "description": "Competitive singing game: sing along, battle other players, and climb the leaderboard in a live vocal showdown.",
     "status": "In development",
-    "tags": ["music", "sing-along", "competition", "suno"],
+    "tags": ["music", "singing", "competition", "game"],
     "links": {}
   },
   {
