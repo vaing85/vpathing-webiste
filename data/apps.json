@@ -9,6 +9,24 @@
     }
   },
   {
+    "name": "UMechanics",
+    "description": "Your trusted companion for DIY vehicle maintenance — repair guides, vehicle management, and step-by-step support for car owners.",
+    "status": "In development",
+    "tags": ["automotive", "DIY", "vehicle", "maintenance", "repair"],
+    "links": {
+      "website": "https://www.umechanics.site"
+    }
+  },
+  {
+    "name": "Open Source Connections",
+    "description": "Platform for building meaningful connections within the open source community.",
+    "status": "In development",
+    "tags": ["community", "networking", "open source", "connections"],
+    "links": {
+      "website": "https://www.opensourceconnection.site"
+    }
+  },
+  {
     "name": "VoxArena",
     "description": "Competitive singing game: sing along, battle other players, and climb the leaderboard in a live vocal showdown.",
     "status": "In development",
