@@ -62,9 +62,7 @@
     "description": "Our upcoming cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
     "status": "In development",
     "tags": ["rewards", "cashback", "engagement", "loyalty"],
-    "links": {
-      "website": "/coming-soon.html"
-    }
+    "links": {}
   },
   {
     "name": "NewGame",
