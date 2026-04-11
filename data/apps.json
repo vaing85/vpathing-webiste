@@ -1,5 +1,14 @@
 [
   {
+    "name": "VPathing Rewards",
+    "description": "Cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
+    "status": "Live",
+    "tags": ["rewards", "cashback", "engagement", "loyalty"],
+    "links": {
+      "website": "https://www.vpathrewards.store"
+    }
+  },
+  {
     "name": "VoxArena",
     "description": "Competitive singing game: sing along, battle other players, and climb the leaderboard in a live vocal showdown.",
     "status": "In development",
@@ -9,7 +18,7 @@
   {
     "name": "Tower Defense",
     "description": "Tower defense game: build towers, defend against waves of enemies, and strategize to survive.",
-    "status": "Deployment",
+    "status": "In development",
     "tags": ["games", "tower defense", "strategy"],
     "links": {
       "github": "https://github.com/vaing85/tower-defense"
@@ -56,15 +65,6 @@
     "status": "In development",
     "tags": ["monitoring", "devices", "dashboard", "operations"],
     "links": {}
-  },
-  {
-    "name": "VPathing Rewards",
-    "description": "Cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
-    "status": "Live",
-    "tags": ["rewards", "cashback", "engagement", "loyalty"],
-    "links": {
-      "website": "https://www.vpathrewards.store"
-    }
   },
   {
     "name": "NewGame",
