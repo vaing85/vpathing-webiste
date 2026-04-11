@@ -59,10 +59,12 @@
   },
   {
     "name": "VPathing Rewards",
-    "description": "Our upcoming cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
-    "status": "In development",
+    "description": "Cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
+    "status": "Live",
     "tags": ["rewards", "cashback", "engagement", "loyalty"],
-    "links": {}
+    "links": {
+      "website": "https://www.vpathrewards.store"
+    }
   },
   {
     "name": "NewGame",
