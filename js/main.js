@@ -36,6 +36,33 @@
     });
   }
 
+  // ——— Scroll reveal (fade/slide elements in on scroll) ———
+  var _revealObserver = null;
+
+  function observeReveal(el) {
+    if (!el || !_revealObserver) return;
+    el.classList.add('reveal');
+    _revealObserver.observe(el);
+  }
+
+  function initReveal() {
+    if (!('IntersectionObserver' in window)) return;
+    _revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          _revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+
+    var selectors = [
+      '.hero', '.studio-section', '.coming-soon-section', '.mission-block',
+      '.service-card', '.app-card', '.contact-form-wrap', '.process-list li'
+    ];
+    document.querySelectorAll(selectors.join(',')).forEach(observeReveal);
+  }
+
   // ——— Apps data (fetch from data/apps.json) ———
   var APPS_URL = '/data/apps.json';
   var _appsCache = null;
@@ -137,6 +164,7 @@
     fetchApps().then(function (apps) {
       var list = apps.slice(0, limit || 4);
       container.innerHTML = list.map(renderAppCard).join('');
+      container.querySelectorAll('.app-card').forEach(observeReveal);
     });
   }
 
@@ -152,6 +180,7 @@
 
     function render(list) {
       grid.innerHTML = list.map(renderAppCard).join('');
+      grid.querySelectorAll('.app-card').forEach(observeReveal);
       if (emptyEl) {
         emptyEl.style.display = list.length ? 'none' : 'block';
       }
@@ -300,8 +329,10 @@
   document.addEventListener('DOMContentLoaded', function () {
     initNav();
     initLogoExpand();
+    initReveal();
   });
 
+  window.observeReveal = observeReveal;
   window.renderFeaturedApps = renderFeaturedApps;
   window.initAppsPage = initAppsPage;
   window.initContactForm = initContactForm;
