@@ -85,7 +85,7 @@
     "links": {}
   },
   {
-    "name": "PathFam MDM",
+    "name": "PathFam",
     "description": "A lightweight, family-friendly mobile device management platform: enroll Android, iOS, and Windows devices, apply policies, track inventory, and remotely lock, message, or wipe — built to be affordable for families and small teams.",
     "status": "In development",
     "tags": ["MDM", "device management", "mobile", "security", "family"],
