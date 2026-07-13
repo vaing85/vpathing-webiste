@@ -16,9 +16,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://vpathingenterprisellc.site/pricing.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://vpathingenterprisellc.site/contact.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://vpathingenterprisellc.site/refund.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://vpathingenterprisellc.site/privacy.html</loc>
