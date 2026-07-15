@@ -219,11 +219,41 @@
     applyFilters();
   }
 
-  // ——— Contact form (Formspree + Turnstile) ———
+  // ——— Contact form (Worker /api/contact + Turnstile) ———
+  var CONTACT_URL = '/api/contact';
+
+  /**
+   * Posts to our own Worker rather than to the form backend directly. The
+   * Worker verifies the Turnstile token before forwarding anything, which is
+   * what makes the widget on contact.html more than decoration, and it answers
+   * with a JSON {ok} the reply below can actually trust.
+   *
+   * The previous version posted to FormSubmit's non-AJAX endpoint and treated
+   * any 200 as delivered. That endpoint answers 200 with an HTML page — the
+   * captcha challenge, or the "confirm your address" prompt — so the form
+   * reported "your message has been sent" for submissions that were never sent.
+   */
   function initContactForm() {
     var form = document.getElementById('contact-form');
     var messageEl = document.getElementById('form-message');
     if (!form) return;
+
+    function say(text, kind) {
+      if (!messageEl) return;
+      messageEl.textContent = text;
+      messageEl.className = 'form-message ' + kind;
+      messageEl.style.display = 'block';
+    }
+
+    function resetTurnstile() {
+      var widget = form.querySelector('.cf-turnstile');
+      if (!widget || typeof window.turnstile === 'undefined') return;
+      // reset() takes the widget's container element. The old code passed the
+      // id of the hidden cf-turnstile-response input, which is not a widget id,
+      // so every reset threw and was swallowed — leaving a spent token behind
+      // and making a second send fail with timeout-or-duplicate.
+      try { window.turnstile.reset(widget); } catch (_) {}
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -238,56 +268,48 @@
         messageEl.textContent = '';
       }
 
-      var action = form.getAttribute('action');
-      if (!action || !action.startsWith('http')) {
-        if (messageEl) {
-          messageEl.textContent = 'Form is not configured. Please set the form action URL.';
-          messageEl.className = 'form-message error';
-          messageEl.style.display = 'block';
-        }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Send message';
-        }
-        return;
-      }
+      var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
+      var payload = {
+        name: fieldValue(form, 'name'),
+        email: fieldValue(form, 'email'),
+        subject: fieldValue(form, 'subject'),
+        message: fieldValue(form, 'message'),
+        turnstileToken: tokenEl ? tokenEl.value : ''
+      };
 
-      var formData = new FormData(form);
-      fetch(action, {
+      fetch(CONTACT_URL, {
         method: 'POST',
-        body: formData,
-        headers: { Accept: 'application/json' }
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
       })
         .then(function (res) {
-          if (res.ok) {
-            if (messageEl) {
-              messageEl.textContent = 'Thank you. Your message has been sent.';
-              messageEl.className = 'form-message success';
-              messageEl.style.display = 'block';
-            }
-            form.reset();
-            // Reset Turnstile if present
-            if (typeof window.turnstile !== 'undefined' && form.querySelector('.cf-turnstile')) {
-              var widget = form.querySelector('[name="cf-turnstile-response"]');
-              if (widget && widget.id) {
-                try { window.turnstile.reset(widget.id); } catch (_) {}
-              }
-            }
-          } else {
-            return res.json().then(function (data) {
-              throw new Error(data.error || 'Something went wrong. Please try again.');
-            }).catch(function (err) {
-              if (err.message) throw err;
-              throw new Error('Something went wrong. Please try again.');
-            });
-          }
+          // Read the body regardless of status: the Worker returns its reason
+          // in JSON on 4xx and 5xx alike. A non-JSON body means something
+          // upstream answered instead, which is not a delivery.
+          return res.json().then(
+            function (data) { return { ok: res.ok, data: data }; },
+            function () { return { ok: false, data: null }; }
+          );
         })
-        .catch(function (err) {
-          if (messageEl) {
-            messageEl.textContent = err.message || 'Something went wrong. Please try again or email us directly.';
-            messageEl.className = 'form-message error';
-            messageEl.style.display = 'block';
+        .then(function (result) {
+          var data = result.data;
+          if (result.ok && data && data.ok === true) {
+            say('Thank you. Your message has been sent.', 'success');
+            form.reset();
+            resetTurnstile();
+            return;
           }
+          say(
+            (data && data.error) || 'Something went wrong. Please try again, or email us directly.',
+            'error'
+          );
+          // The token is spent whether or not delivery succeeded; without this
+          // a retry always fails as a duplicate.
+          resetTurnstile();
+        })
+        .catch(function () {
+          say('Could not reach the server. Please check your connection, or email us directly.', 'error');
+          resetTurnstile();
         })
         .finally(function () {
           if (submitBtn) {
@@ -296,6 +318,11 @@
           }
         });
     });
+  }
+
+  function fieldValue(form, name) {
+    var el = form.querySelector('[name="' + name + '"]');
+    return el ? el.value : '';
   }
 
   // ——— Logo expand (click header logo to show larger) ———

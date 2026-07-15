@@ -6,6 +6,19 @@
       "runtimeExecutable": "python",
       "runtimeArgs": ["-m", "http.server", "8788"],
       "port": 8788
+    },
+    {
+      "name": "worker",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "wrangler",
+        "dev",
+        "--port",
+        "8789",
+        "--persist-to",
+        "../.vpathing-wrangler-state"
+      ],
+      "port": 8789
     }
   ]
 }

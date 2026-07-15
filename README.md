@@ -15,8 +15,8 @@ Static, mobile-friendly company website for **VPathing Enterprise LLC**. No fram
   index.html          # Home
   apps.html           # Portfolio (apps from data/apps.json)
   about.html          # About (mission, services, process)
-  contact.html        # Contact form (FormSubmit.co + Turnstile)
-  404.html            # Custom not-found page (Cloudflare Pages)
+  contact.html        # Contact form (posts to /api/contact)
+  404.html            # Custom not-found page (served by not_found_handling)
   robots.txt          # Crawler rules + sitemap reference
   sitemap.xml         # SEO sitemap
   css/
@@ -92,19 +92,62 @@ Then open `http://localhost:3000` (or the port shown).
 
 ## Form and spam protection
 
-### Contact form (FormSubmit.co)
+The contact form posts to **`/api/contact`**, handled by the Worker in
+**src/index.js**. The Worker verifies the Turnstile token with Cloudflare, and
+only forwards to [FormSubmit.co](https://formsubmit.co) if that check passes.
 
-- The contact form uses [FormSubmit.co](https://formsubmit.co): no signup, submissions go to **villa.aing@vpathingenterprisellc.site**.
-- First time you submit, FormSubmit sends a one-time confirmation link to that email; after you confirm, all future submissions deliver normally.
-- To change the destination email, edit the form `action` in **contact.html** (e.g. `https://formsubmit.co/your@email.com`).
+It routes through a Worker rather than posting to FormSubmit directly for two
+reasons. Turnstile is only real if something checks the token server-side, and
+that requires a secret key a static page cannot hold. And the form backend stays
+out of the HTML, so a bot cannot post straight to it and skip the check.
 
-### Cloudflare Turnstile (spam protection)
+### Required secrets
 
-1. In [Cloudflare Dashboard](https://dash.cloudflare.com), go to **Turnstile** (search “Turnstile” in the sidebar).
-2. Click **Add site**. Enter your site name and domain (e.g. vpathingenterprisellc.site). Choose a widget type (e.g. Managed).
-3. Copy the **Site key**.
-4. In **contact.html**, find the Turnstile widget and set `data-sitekey="YOUR_SITE_KEY"`.
-5. **Secret key:** Keep it for server-side verification only (e.g. webhook). Do not put it in HTML. The form works with client-side Turnstile alone.
+Neither value belongs in the repo. Set both with `wrangler secret put` — they
+are stored by Cloudflare and never printed back:
+
+```sh
+npx wrangler secret put TURNSTILE_SECRET_KEY   # paste when prompted
+npx wrangler secret put FORMSUBMIT_CODE
+```
+
+| Secret | Where it comes from |
+|---|---|
+| `TURNSTILE_SECRET_KEY` | Cloudflare Dashboard → **Turnstile** → your widget → **Secret key**. Pairs with the `data-sitekey` in contact.html. |
+| `FORMSUBMIT_CODE` | FormSubmit dashboard, after activating the destination address. Prefer their **hash** (e.g. `abc123…`) over the raw email: the hash is not guessable, so bots cannot post to your FormSubmit endpoint directly. |
+
+**Activation:** FormSubmit needs one confirmed submission before it delivers
+anything. The first send triggers a confirmation link to the destination
+address — click it once, and later sends go through.
+
+Without either secret the endpoint returns a 500 and the form tells the visitor
+to email instead. It never claims a message was sent when it was not.
+
+### Turnstile widget
+
+The site key is public and lives in **contact.html** (`data-sitekey`). To point
+it at a different widget: Cloudflare Dashboard → **Turnstile** → **Add site**,
+copy the **Site key** into `data-sitekey`, then set the matching secret key with
+`wrangler secret put TURNSTILE_SECRET_KEY`.
+
+### Local development
+
+`wrangler dev` reads secrets from **.dev.vars** (gitignored). Cloudflare
+publishes [dummy test keys](https://developers.cloudflare.com/turnstile/troubleshooting/testing/)
+so you never need the real secret locally — `1x0000000000000000000000000000000AA`
+always passes and `2x0000000000000000000000000000000AA` always fails:
+
+```sh
+# .dev.vars
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+FORMSUBMIT_CODE=local-dev-placeholder
+```
+
+The `worker` config in `.claude/launch.json` passes `--persist-to` a directory
+outside the repo. That is not optional: `[assets] directory = "."` makes
+`wrangler dev` watch the repo root, and wrangler's own state under `.wrangler/`
+lives there too — so it sees its own writes, reloads, writes again, and the
+server never finishes starting.
 
 ---
 
@@ -183,8 +226,8 @@ After editing, commit and push; Cloudflare Pages will deploy the updated content
 
 - **Stack:** HTML, CSS, JavaScript only. No frameworks, no build step for the site itself.
 - **Hosting:** Cloudflare Pages (GitHub → Pages, build command blank, output directory `/`).
-- **Form:** FormSubmit.co (destination email in **contact.html** form `action`).
-- **Spam:** Cloudflare Turnstile (site key in **contact.html**).
+- **Form:** posts to `/api/contact` (**src/index.js**), which verifies Turnstile then forwards to FormSubmit.co. Needs the `TURNSTILE_SECRET_KEY` and `FORMSUBMIT_CODE` secrets — see [Form and spam protection](#form-and-spam-protection).
+- **Spam:** Cloudflare Turnstile, verified server-side in the Worker (site key in **contact.html**).
 - **Optional dev:** `npm run build-social-card` to regenerate **assets/social-card.png** from the brand kit (requires Node + `sharp`, and Python + `fonttools`).
 
 All set for a clean, professional, mobile-friendly static site you can push to GitHub and deploy to Cloudflare Pages.
