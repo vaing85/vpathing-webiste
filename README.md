@@ -26,13 +26,15 @@ Static, mobile-friendly company website for **VPathing Enterprise LLC**. No fram
   data/
     apps.json         # Apps list (edit to add/change apps)
   assets/
-    logo.svg          # VP monogram + wordmark
-    favicon.svg       # Favicon (monogram)
-    social-card.svg   # Source for OG image (edit then regenerate PNG)
-    social-card.png   # 1200×630 — generated from SVG for link previews
+    favicon.svg       # Favicon (VPE glyph on the brand Ink tile)
+    social-card.svg   # Generated OG image source — see build-social-card
+    social-card.png   # 1200×630 — rasterised from the SVG for link previews
+    brand/            # VPE brand kit (marks, lockups, icons, email variants)
+    fonts/            # Self-hosted Inter / Space Grotesk / IBM Plex Mono (woff2)
   scripts/
-    generate-social-card.js   # npm run generate-social-card
-  package.json       # Dev script for social-card PNG only
+    build-social-card.py      # Composes social-card.svg from the brand kit
+    build-brand-assets.js     # Rasterises it to PNG  — npm run build-social-card
+  package.json       # Dev scripts (social card build only)
   README.md
 ```
 
@@ -108,22 +110,32 @@ Then open `http://localhost:3000` (or the port shown).
 
 ## Social preview image (OG / Twitter)
 
-- **assets/social-card.png** (1200×630) is used for link previews on all pages. You can either:
-  - **Use your own image:** Replace `assets/social-card.png` with your image, then run `npm run resize-social-card` to resize to 1200×630 (letterboxing if needed).
-  - **Generate from SVG:** Run `npm run generate-social-card` to build it from **assets/social-card.svg** (and the v1–v5 variants).
-- **social-card-1.1.png** — Version with your image plus an overlay: VP logo as the “V” + “Pathing Enterprise LLC” + tagline. After updating `social-card.png`, run `npm run social-card-1.1` to regenerate **assets/social-card-1.1.png**.
-- **Five alternate variants** (same size) for A/B testing or different channels:
-  - **social-card-v1.png** — Original: light gray/blue gradient
-  - **social-card-v2.png** — Deep blue: navy background, teal VP, white text
-  - **social-card-v3.png** — Warm: cream/amber gradient
-  - **social-card-v4.png** — Minimal dark: charcoal background, light text
-  - **social-card-v5.png** — Accent stripe: white with blue left bar
-- To regenerate all PNGs from the SVG variants (default + v1–v5):
-  ```bash
-  npm install
-  npm run generate-social-card
-  ```
-- Then commit any updated `assets/social-card*.png` and push. To use a variant or social-card-1.1 site-wide, point `og:image` and `twitter:image` in each page to the desired file (e.g. `assets/social-card-1.1.png` or `assets/social-card-v2.png`).
+**assets/social-card.png** (1200×630) is the link preview for every page. It is
+generated from the VPE brand kit — do not hand-edit it.
+
+```bash
+npm install
+npm run build-social-card
+```
+
+That runs two steps:
+
+1. **scripts/build-social-card.py** — composes **assets/social-card.svg** from
+   `assets/brand/`, converting the IBM Plex Mono wordmark to **vector outlines**.
+2. **scripts/build-brand-assets.js** — rasterises that SVG to
+   **assets/social-card.png** via sharp.
+
+Requires Node (`sharp`) and Python (`pip install fonttools brotli`).
+
+**Why the wordmark is outlined and not `<text>`:** sharp rasterises SVG through
+librsvg, which resolves fonts from the *system* font list and cannot read our
+self-hosted `.woff2`. An SVG `<text font-family="IBM Plex Mono">` would silently
+render as Courier anywhere Plex isn't installed — including CI. Outlines remove
+the font dependency entirely.
+
+Then commit the updated `assets/social-card.svg` and `assets/social-card.png`.
+The build is reproducible: re-running it on unchanged sources produces an
+identical file.
 
 ---
 
@@ -173,6 +185,6 @@ After editing, commit and push; Cloudflare Pages will deploy the updated content
 - **Hosting:** Cloudflare Pages (GitHub → Pages, build command blank, output directory `/`).
 - **Form:** FormSubmit.co (destination email in **contact.html** form `action`).
 - **Spam:** Cloudflare Turnstile (site key in **contact.html**).
-- **Optional dev:** `npm run generate-social-card` to regenerate **assets/social-card.png** from the SVG (requires Node and `sharp`).
+- **Optional dev:** `npm run build-social-card` to regenerate **assets/social-card.png** from the brand kit (requires Node + `sharp`, and Python + `fonttools`).
 
 All set for a clean, professional, mobile-friendly static site you can push to GitHub and deploy to Cloudflare Pages.
