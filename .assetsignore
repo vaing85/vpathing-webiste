@@ -1,0 +1,36 @@
+# Files in the repo root that are SOURCE, not the published site.
+#
+# [assets] directory = "." means the repo root is the deployable, so without
+# this every one of these is served publicly — /.git/config and /.git/index
+# included, which lets anyone reconstruct the repository. Harmless while the
+# repo is public and holds no secrets; a real leak the day it isn't.
+#
+# Syntax is gitignore-style. Anything not listed here IS published.
+
+# Version control — the important one
+.git
+
+# CI / tooling config
+.github
+.claude
+.wrangler
+wrangler.toml
+.assetsignore
+.gitignore
+
+# Build tooling (never needed at runtime — the site is static)
+node_modules
+scripts
+package.json
+package-lock.json
+
+# Docs
+README.md
+
+# Local editor workspace (gitignored, so never in a build — listed so local
+# `wrangler deploy --dry-run` matches what CI actually publishes)
+*.code-workspace
+
+# GitHub Pages artifacts (Pages is configured but Cloudflare serves this domain)
+CNAME
+.nojekyll

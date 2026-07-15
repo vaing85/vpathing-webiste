@@ -4,6 +4,9 @@ name = "vpathing-webiste"
 compatibility_date = "2024-01-01"
 
 [assets]
+# The repo root is the deployable, so everything here is public unless excluded.
+# See .assetsignore — without it, /.git/config and /.git/index are served, which
+# lets anyone reconstruct the repository.
 directory = "."
 
 # Serve 404.html (with a 404 status) for any path that matches no file.
