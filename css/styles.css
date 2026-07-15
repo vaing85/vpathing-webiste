@@ -289,7 +289,7 @@ a:focus-visible {
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   border-bottom: 1px solid var(--color-border);
-  padding: var(--space-4) var(--space-4) var(--space-4) var(--space-6);
+  padding: var(--space-5) var(--space-4) var(--space-5) var(--space-6);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -307,7 +307,7 @@ a:focus-visible {
 .logo-link {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   text-decoration: none;
   color: var(--color-text);
   font-family: var(--font-display);
@@ -325,12 +325,15 @@ a:focus-visible {
   border-radius: var(--radius);
 }
 
+/* 3.5rem = 56px, so a 2x display needs 112px of source. vpe-icon-header.png is
+   rebuilt to 192px from the 1024px master (vpe-icon-dark.png) to cover it — the
+   original 96px copy sufficed only for the old 2.4rem size. */
 .logo-img {
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   flex-shrink: 0;
   object-fit: cover;
-  border-radius: 9px;
+  border-radius: 13px;
   cursor: pointer;
   box-shadow: 0 0 0 1px var(--color-border-strong), 0 4px 14px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -355,7 +358,7 @@ a:focus-visible {
 .logo-name {
   font-family: var(--font-mono);
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: 1.6rem;
   letter-spacing: -0.02em;
   color: #fff;
 }
@@ -365,19 +368,35 @@ a:focus-visible {
   color: var(--brand-cyan);
 }
 
+/* Kept at the same fraction of .logo-name as before (0.6/1.15), which is what
+   makes "enterprise_llc" track the width of "vpathing/" above it. Change one
+   size without the other and the lockup stops lining up. */
 .logo-sub {
   font-family: var(--font-mono);
   font-weight: 400;
-  font-size: 0.6rem;
+  font-size: 0.835rem;
   letter-spacing: 0.115em;
   color: var(--color-text-muted);
 }
 
 /* Below 640px the mark plus "vpathing/" is enough; the sub-line would crowd
-   the nav toggle. The mark still carries the brand, so nothing is lost. */
+   the nav toggle. The mark still carries the brand, so nothing is lost.
+   The mark and name also step down from their desktop sizes — at full size the
+   lockup pushes the nav toggle off the row. */
 @media (max-width: 640px) {
   .logo-sub {
     display: none;
+  }
+  .logo-img {
+    width: 2.9rem;
+    height: 2.9rem;
+    border-radius: 11px;
+  }
+  .logo-name {
+    font-size: 1.35rem;
+  }
+  .site-header {
+    padding: var(--space-4) var(--space-4);
   }
 }
 
