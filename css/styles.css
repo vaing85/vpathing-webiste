@@ -340,25 +340,45 @@ a:focus-visible {
   box-shadow: var(--glow);
 }
 
+/* Header lockup — matches vpe-lockup-dark.svg and brand sheet 01:
+   white "vpathing", cyan node slash, muted "enterprise_llc" stacked beneath.
+   Set as real HTML rather than the kit's lockup SVG: an SVG loaded via <img>
+   cannot see page webfonts and would fall back to Courier. */
 .logo-wordmark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   white-space: nowrap;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  line-height: 1.1;
 }
 
+.logo-name {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* The cyan node, carried through from the mark */
+.logo-slash {
+  color: var(--brand-cyan);
+}
+
+.logo-sub {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: 0.115em;
+  color: var(--color-text-muted);
+}
+
+/* Below 640px the mark plus "vpathing/" is enough; the sub-line would crowd
+   the nav toggle. The mark still carries the brand, so nothing is lost. */
 @media (max-width: 640px) {
-  .logo-wordmark {
+  .logo-sub {
     display: none;
   }
-  .logo-wordmark-mobile {
-    display: inline;
-  }
-}
-.logo-wordmark-mobile {
-  display: none;
 }
 
 /* Navigation */
@@ -468,7 +488,7 @@ a:focus-visible {
   font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: -0.02em;
-  background: linear-gradient(120deg, #ffffff 0%, #c7d2fe 45%, #67e8f9 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #a5c3ff 45%, #67e8f9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -579,7 +599,7 @@ a:focus-visible {
 
 /* Page-title H1s carry a gradient */
 h1.section-title {
-  background: linear-gradient(120deg, #ffffff 0%, #c7d2fe 60%, #67e8f9 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #a5c3ff 60%, #67e8f9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
