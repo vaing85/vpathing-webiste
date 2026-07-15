@@ -1,5 +1,8 @@
 # Local workspace (not in repo)
 *.code-workspace
 
-# Dependencies (npm run generate-social-card)
+# Dependencies (npm run build-social-card)
 node_modules/
+
+# Per-machine Claude Code settings (launch.json is shared, this is not)
+.claude/settings.local.json
