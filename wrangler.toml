@@ -5,3 +5,8 @@ compatibility_date = "2024-01-01"
 
 [assets]
 directory = "."
+
+# Serve 404.html (with a 404 status) for any path that matches no file.
+# The default is "none", which returns an empty 0-byte body — a blank white
+# page on every mistyped URL, with 404.html never reached.
+not_found_handling = "404-page"

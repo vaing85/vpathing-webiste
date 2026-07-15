@@ -3,3 +3,10 @@
 
 # Dependencies (npm run generate-social-card)
 node_modules/
+
+# Wrangler writes local state/tmp into the project root — which is also the
+# assets directory ([assets] directory = "."), so it must never be committed.
+.wrangler/
+
+# Per-machine Claude Code settings (launch.json is shared; this is not)
+.claude/settings.local.json
