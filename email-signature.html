@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email signature — VPathing Enterprise LLC</title>
+  <meta name="theme-color" content="#0b1220">
+  <!-- Internal tool: contains direct contact details, so keep it out of search results. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    /* IBM Plex Mono is the brand's wordmark/label face (brand sheet 05) but is not
+       loaded site-wide, so it is self-hosted and scoped to this page. Overriding
+       --font-mono here only affects this document. */
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url("/assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url("/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "IBM Plex Mono";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("/assets/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+    }
+    :root {
+      --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", monospace;
+      /* Brand sheet 04 · Color */
+      --brand-cyan: #22d3ee;
+      --brand-ink: #0b1220;
+      --brand-ice: #a9c4f5;
+    }
+
+    /* The signature must be judged on white — that's the background it lands on
+       in Gmail, Outlook and Apple Mail. These styles are for this preview page
+       only and are NOT part of what you copy.
+       Mimic a mail client's defaults, not this page's: if the stage inherited the
+       site's dark-theme text colour, any signature rule missing an explicit colour
+       would look fine here and break in a real inbox. */
+    .sig-stage {
+      background: #ffffff;
+      color: #222222;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      line-height: normal;
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-md);
+      overflow-x: auto;
+    }
+    .sig-block { margin-bottom: var(--space-12); }
+    .sig-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: var(--space-4) 0; align-items: center; }
+    .sig-status { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--brand-cyan); }
+    .sig-source {
+      width: 100%;
+      min-height: 13rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--color-text);
+      background: rgba(5, 9, 18, 0.6);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: var(--space-4);
+      resize: vertical;
+      white-space: pre;
+    }
+    .sig-note {
+      border-left: 2px solid var(--brand-cyan);
+      padding: var(--space-3) var(--space-4);
+      margin: var(--space-4) 0;
+      background: rgba(34, 211, 238, 0.06);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+      line-height: var(--leading-relaxed);
+    }
+    .sig-note strong { color: var(--color-text); }
+    /* The URLs in these notes have no spaces to break at, so they'd blow out
+       the page on narrow screens. Allow a break anywhere. */
+    .sig-note code, .steps code {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    .sig-note code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: rgba(122, 162, 247, 0.1);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: var(--brand-ice);
+    }
+    .steps { color: var(--color-text-muted); line-height: var(--leading-relaxed); padding-left: var(--space-6); }
+    .steps li { margin-bottom: var(--space-2); }
+    .steps code {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: rgba(122, 162, 247, 0.1);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 1px 5px;
+      color: var(--brand-ice);
+    }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link">
+        <img src="/assets/brand/vpe-icon-header.png" alt="" class="logo-img" width="96" height="96">
+        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <span class="logo-wordmark-mobile">VPathing</span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps.html">Apps</a></li>
+          <li><a href="/pricing.html">Pricing</a></li>
+          <li><a href="/about.html">About</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+      <h1 class="section-title" style="margin-top: 0;">Email signature</h1>
+      <p class="section-subtitle">Table-based HTML with web-safe fonts and a hosted raster logo, so it survives Gmail, Outlook and Apple Mail. Two versions.</p>
+
+      <div class="sig-note" id="deploy-note">
+        <strong>Deploy the site before you send with this.</strong> The copied signatures point at
+        <code>vpe-mark-email.png</code> (full) and <code>vpe-glyph-email.png</code> (compact)
+        under <code>https://www.vpathingenterprisellc.site/assets/brand/</code>. Neither exists
+        yet — <code>assets/brand/</code> is new and unpublished. Until you deploy, the logo will
+        be a broken image in sent mail. The previews below use local files, so they render here
+        regardless.
+        <br><br>
+        The <code>www</code> is deliberate: the bare domain answers <code>308</code> and
+        redirects to <code>www</code>, and some mail clients' image proxies will not follow a
+        redirect. Pointing straight at <code>www</code> avoids the hop.
+      </div>
+
+      <!-- ============ FULL ============ -->
+      <section class="section sig-block" aria-labelledby="sig-full-heading">
+        <h2 id="sig-full-heading" class="section-title">Full</h2>
+        <p class="section-subtitle">The default. Use for new conversations and outbound mail.</p>
+
+        <div class="sig-stage">
+          <div id="sig-full">
+<!-- ===== COPY FROM HERE ===== -->
+<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">
+  <tr>
+    <td style="vertical-align:middle;padding-right:20px;">
+      <img src="/assets/brand/vpe-mark-email.png" data-email-src="https://www.vpathingenterprisellc.site/assets/brand/vpe-mark-email.png" width="78" height="57" alt="VPathing Enterprise LLC" style="display:block;width:78px;height:57px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
+    </td>
+    <td style="vertical-align:middle;border-left:2px solid #2F6BFF;padding-left:20px;">
+      <div style="font-size:17px;font-weight:700;color:#12151b;letter-spacing:-0.2px;">Villa Aing</div>
+      <div style="font-size:12.5px;color:#2F6BFF;font-weight:600;padding-top:2px;">Founder &amp; Principal Engineer</div>
+      <div style="font-size:12px;color:#6b7078;padding-top:2px;font-family:'Courier New',Courier,monospace;">VPathing Enterprise LLC</div>
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr><td style="font-size:12px;color:#3a3f47;padding-top:15px;font-family:Arial,Helvetica,sans-serif;"><span style="color:#22D3EE;">&#9679;</span>&nbsp;&nbsp;<a href="mailto:villa.aing@vpathingenterprisellc.site" style="color:#3a3f47;text-decoration:none;">villa.aing@vpathingenterprisellc.site</a></td></tr>
+        <tr><td style="font-size:12px;color:#3a3f47;padding-top:5px;font-family:Arial,Helvetica,sans-serif;"><span style="color:#22D3EE;">&#9679;</span>&nbsp;&nbsp;<a href="tel:+13464911200" style="color:#3a3f47;text-decoration:none;">346 491 1200</a></td></tr>
+        <tr><td style="font-size:12px;color:#3a3f47;padding-top:5px;font-family:Arial,Helvetica,sans-serif;"><span style="color:#22D3EE;">&#9679;</span>&nbsp;&nbsp;<a href="https://www.vpathingenterprisellc.site" style="color:#2F6BFF;text-decoration:none;">vpathingenterprisellc.site</a></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ===== COPY TO HERE ===== -->
+          </div>
+        </div>
+
+        <div class="sig-actions">
+          <button type="button" class="btn btn-primary" data-copy="sig-full">Copy signature</button>
+          <button type="button" class="btn btn-secondary" data-copy-source="sig-full">Copy HTML source</button>
+          <span class="sig-status" id="status-sig-full" role="status" aria-live="polite"></span>
+        </div>
+
+        <label for="src-sig-full" class="visually-hidden">Full signature HTML source</label>
+        <textarea id="src-sig-full" class="sig-source" spellcheck="false" readonly></textarea>
+      </section>
+
+      <!-- ============ COMPACT ============ -->
+      <section class="section sig-block" aria-labelledby="sig-compact-heading">
+        <h2 id="sig-compact-heading" class="section-title">Compact — one line</h2>
+        <p class="section-subtitle">For replies and ongoing threads, where the full block gets repetitive.</p>
+
+        <div class="sig-stage">
+          <div id="sig-compact">
+<!-- ===== COPY FROM HERE ===== -->
+<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;">
+  <tr>
+    <td style="vertical-align:middle;padding-right:14px;">
+      <img src="/assets/brand/vpe-glyph-email.png" data-email-src="https://www.vpathingenterprisellc.site/assets/brand/vpe-glyph-email.png" width="40" height="40" alt="VPathing Enterprise LLC" style="display:block;width:40px;height:40px;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic;">
+    </td>
+    <td style="vertical-align:middle;">
+      <div style="font-size:14px;color:#12151b;"><strong>Villa Aing</strong>&nbsp;&nbsp;<span style="color:#c8ced6;">|</span>&nbsp;&nbsp;<span style="color:#2F6BFF;">VPathing Enterprise LLC</span></div>
+      <div style="font-size:12px;color:#6b7078;padding-top:3px;"><a href="mailto:villa.aing@vpathingenterprisellc.site" style="color:#6b7078;text-decoration:none;">villa.aing@vpathingenterprisellc.site</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="tel:+13464911200" style="color:#6b7078;text-decoration:none;">346 491 1200</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="https://www.vpathingenterprisellc.site" style="color:#2F6BFF;text-decoration:none;">vpathingenterprisellc.site</a></div>
+    </td>
+  </tr>
+</table>
+<!-- ===== COPY TO HERE ===== -->
+          </div>
+        </div>
+
+        <div class="sig-actions">
+          <button type="button" class="btn btn-primary" data-copy="sig-compact">Copy signature</button>
+          <button type="button" class="btn btn-secondary" data-copy-source="sig-compact">Copy HTML source</button>
+          <span class="sig-status" id="status-sig-compact" role="status" aria-live="polite"></span>
+        </div>
+
+        <label for="src-sig-compact" class="visually-hidden">Compact signature HTML source</label>
+        <textarea id="src-sig-compact" class="sig-source" spellcheck="false" readonly></textarea>
+      </section>
+
+      <!-- ============ HOW TO INSTALL ============ -->
+      <section class="section" aria-labelledby="install-heading">
+        <h2 id="install-heading" class="section-title">Installing it</h2>
+        <p class="section-subtitle">“Copy signature” puts the formatted version on your clipboard — paste it straight in. Use “Copy HTML source” only where a client asks for raw HTML.</p>
+
+        <h3 class="section-title" style="font-size: var(--text-base);">Gmail</h3>
+        <ol class="steps">
+          <li>Settings (gear) → <code>See all settings</code> → <code>General</code> tab.</li>
+          <li>Scroll to <code>Signature</code> → <code>Create new</code>, and name it.</li>
+          <li>Click into the signature box and paste with <code>Ctrl+V</code>. Do not use “paste as plain text” — it strips the layout.</li>
+          <li>Set the “For new emails use” and “On reply/forward use” dropdowns.</li>
+          <li><code>Save Changes</code> at the bottom. Gmail does not save until you do.</li>
+        </ol>
+
+        <h3 class="section-title" style="font-size: var(--text-base);">Outlook (web / new Outlook)</h3>
+        <ol class="steps">
+          <li>Settings (gear) → <code>Mail</code> → <code>Compose and reply</code>.</li>
+          <li>Paste into the signature editor and save.</li>
+        </ol>
+
+        <h3 class="section-title" style="font-size: var(--text-base);">Apple Mail</h3>
+        <ol class="steps">
+          <li><code>Mail</code> → <code>Settings</code> → <code>Signatures</code>.</li>
+          <li>Create a signature, then untick <code>Always match my default message font</code> — leaving it on flattens the formatting.</li>
+          <li>Paste into the signature pane.</li>
+        </ol>
+
+        <div class="sig-note">
+          <strong>If the logo does not appear:</strong> most clients block remote images until the
+          recipient allows them — that is normal and not a fault in the signature. The
+          <code>alt</code> text keeps the company name readable meanwhile. But if it never
+          loads for you either, check that
+          <code>/assets/brand/vpe-mark-email.png</code> is actually live on the deployed site.
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    (function () {
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+      // The markup between the COPY markers, tidied for display.
+      //
+      // The preview <img> uses a site-relative path so this page renders the real
+      // logo. Email clients can't resolve relative paths, so every copied copy has
+      // its src rewritten to the absolute data-email-src. Copy therefore never
+      // emits the relative path, regardless of what the preview shows.
+      function sourceOf(id) {
+        var host = document.getElementById(id);
+        var clone = host.cloneNode(true);
+        clone.querySelectorAll('img[data-email-src]').forEach(function (img) {
+          img.setAttribute('src', img.getAttribute('data-email-src'));
+          img.removeAttribute('data-email-src');
+        });
+        var html = clone.innerHTML;
+        html = html.replace(/<!--[\s\S]*?-->/g, '');
+        // Strip the common leading indent this page's nesting adds.
+        var lines = html.replace(/\r/g, '').split('\n').filter(function (l) { return l.trim() !== ''; });
+        var indent = lines.reduce(function (min, l) {
+          var m = l.match(/^\s*/)[0].length;
+          return l.trim() ? Math.min(min, m) : min;
+        }, Infinity);
+        return lines.map(function (l) { return l.slice(indent); }).join('\n').trim();
+      }
+
+      function say(id, msg) {
+        var el = document.getElementById('status-' + id);
+        if (!el) return;
+        el.textContent = msg;
+        setTimeout(function () { el.textContent = ''; }, 4000);
+      }
+
+      // Fill the source textareas.
+      ['sig-full', 'sig-compact'].forEach(function (id) {
+        var ta = document.getElementById('src-' + id);
+        if (ta) ta.value = sourceOf(id);
+      });
+
+      // Rich copy: put text/html on the clipboard so pasting into Gmail keeps formatting.
+      document.querySelectorAll('[data-copy]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-copy');
+          var html = sourceOf(id);
+          var plain = document.getElementById(id).innerText.trim();
+
+          function fallback() {
+            // Select the rendered node and use execCommand — works where the
+            // async Clipboard API is unavailable or blocked. This copies the
+            // live DOM, so swap in the absolute image URL for the duration of
+            // the copy, then restore it so the preview keeps rendering.
+            var node = document.getElementById(id);
+            var imgs = [].slice.call(node.querySelectorAll('img[data-email-src]'));
+            var restore = imgs.map(function (img) {
+              var was = img.getAttribute('src');
+              img.setAttribute('src', img.getAttribute('data-email-src'));
+              return function () { img.setAttribute('src', was); };
+            });
+            var range = document.createRange();
+            range.selectNodeContents(node);
+            var sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            var ok = false;
+            try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+            sel.removeAllRanges();
+            restore.forEach(function (fn) { fn(); });
+            say(id, ok ? 'Copied — paste into your mail client.' : 'Copy failed. Use the HTML source box below.');
+          }
+
+          if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+            var item = new window.ClipboardItem({
+              'text/html': new Blob([html], { type: 'text/html' }),
+              'text/plain': new Blob([plain], { type: 'text/plain' })
+            });
+            navigator.clipboard.write([item]).then(function () {
+              say(id, 'Copied — paste into your mail client.');
+            }).catch(fallback);
+          } else {
+            fallback();
+          }
+        });
+      });
+
+      // Plain copy of the raw markup.
+      document.querySelectorAll('[data-copy-source]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var id = btn.getAttribute('data-copy-source');
+          var ta = document.getElementById('src-' + id);
+          var done = function () { say(id, 'HTML source copied.'); };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(ta.value).then(done).catch(function () {
+              ta.select(); document.execCommand('copy'); done();
+            });
+          } else {
+            ta.select(); document.execCommand('copy'); done();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -3,11 +3,13 @@
   "private": true,
   "description": "VPathing Enterprise LLC company website",
   "scripts": {
+    "build-social-card": "python scripts/build-social-card.py && node scripts/build-brand-assets.js",
     "generate-social-card": "node scripts/generate-social-card.js",
     "resize-social-card": "node scripts/resize-social-card.js",
     "social-card-1.1": "node scripts/create-social-card-1-1.js"
   },
   "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.2.7",
     "sharp": "^0.33.5"
   }
 }
