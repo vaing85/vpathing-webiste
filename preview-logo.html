@@ -6,23 +6,27 @@
   <title>Header logo size preview</title>
   <link rel="stylesheet" href="css/styles.css">
   <style>
-    .preview-section { margin: 2rem 0; padding: 1rem; background: #f0f4f8; border-radius: 8px; }
-    .preview-section h2 { margin-top: 0; font-size: 1rem; color: #64748b; }
+    .preview-section { margin: 2rem 0; padding: 1rem; background: var(--color-surface-raised); border-radius: 8px; }
+    .preview-section h2 { margin-top: 0; font-size: 1rem; color: var(--color-text-muted); }
     .preview-header { background: var(--color-surface); border-bottom: 1px solid var(--color-border); padding: 1rem 1.5rem; }
     .preview-header .header-inner { max-width: 72rem; margin: 0 auto; display: flex; align-items: center; gap: 0.75rem; }
-    .preview-header .logo-img { display: block; height: auto; }
   </style>
 </head>
 <body>
   <h1 style="padding: 1rem 1.5rem; margin: 0;">Header logo size preview</h1>
-  <p style="padding: 0 1.5rem; color: #64748b;">Header logo at <strong>69×36 px</strong> (used on site).</p>
+  <p style="padding: 0 1.5rem; color: var(--color-text-muted);">The VPE mark at a <strong>2rem</strong> height, beside the HTML wordmark (used on site).</p>
 
   <div class="preview-section">
-    <h2>Current (69×36 px) — used on site now</h2>
+    <h2>Current — used on site now</h2>
     <div class="preview-header">
       <div class="header-inner">
-        <img src="assets/social-card.png" alt="" class="logo-img" width="69" height="36">
-        <span class="logo-wordmark">VPathing Enterprise LLC</span>
+        <a href="/" class="logo-link" aria-label="VPathing Enterprise LLC — home">
+          <img src="assets/brand/vpe-mark-gradient-bright.svg" alt="" class="logo-img" width="124" height="90">
+          <span class="logo-wordmark" aria-hidden="true">
+            <span class="logo-name">vpathing<span class="logo-slash">/</span></span>
+            <span class="logo-sub">enterprise_llc</span>
+          </span>
+        </a>
       </div>
     </div>
   </div>
