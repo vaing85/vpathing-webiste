@@ -1,15 +1,100 @@
 /* ============================================
    VPathing Enterprise LLC — Design System
    Modern dark theme · gradient accents · glassmorphism
+
+   Palette conforms to brand sheet v1.0 (see /brand.html).
    ============================================ */
 
+/* Self-hosted brand fonts — same families and weights previously pulled from
+   Google Fonts, minus the two preconnects and the render-blocking stylesheet.
+   IBM Plex Mono is declared here rather than per-page now that it is used
+   site-wide for labels. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/inter-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/inter-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/inter-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/inter-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/space-grotesk-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/space-grotesk-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/space-grotesk-latin-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/assets/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
+}
+
 :root {
+  /* ---- Brand source colours (brand sheet 04 · Color) ----
+     Change these and the theme follows. */
+  --brand-blue: #2f6bff;            /* Electric Blue — canonical */
+  --brand-blue-bright: #4c86ff;     /* dark-background variant, per the kit */
+  --brand-cyan: #22d3ee;            /* Cyan Node */
+  --brand-ink: #0b1220;             /* Ink */
+  --brand-paper: #f6f6f3;           /* Paper — light surfaces */
+
   /* Base surfaces — deep navy / near-black */
-  --color-bg: #070b16;
-  --color-bg-soft: #0b1120;
-  --color-surface: rgba(20, 28, 48, 0.72);
-  --color-surface-solid: #121a2e;
-  --color-surface-2: #16203a;
+  --color-bg: var(--brand-ink);
+  --color-bg-soft: #101a30;
+  --color-surface: rgba(20, 30, 54, 0.72);
+  --color-surface-solid: #131d34;
+  --color-surface-2: #17233f;
 
   /* Borders & lines */
   --color-border: rgba(148, 163, 184, 0.14);
@@ -18,20 +103,26 @@
   /* Text */
   --color-text: #e8edf7;
   --color-text-muted: #98a4bb;
-  --color-text-faint: #6b7895;
+  /* Lifted from #6b7895, which measured 3.89:1 on the card surface and failed
+     WCAG AA. Pre-existing; corrected here since the palette was being measured. */
+  --color-text-faint: #7d8cad;
 
-  /* Accents */
-  --color-accent: #818cf8;          /* indigo */
-  --color-accent-strong: #6366f1;
-  --color-accent-2: #22d3ee;        /* cyan */
-  --color-accent-3: #c084fc;        /* violet */
-  --color-accent-hover: #a5b4fc;
-  --color-accent-light: rgba(99, 102, 241, 0.14);
+  /* ---- Accents ----
+     Text/link accents use the brightened variant: Electric Blue #2F6BFF sits at
+     only 4.41:1 on Ink and fails WCAG AA, which is precisely why the kit ships
+     #4C86FF for dark backgrounds (5.51:1). The canonical blue is still used
+     where it is a *background* beneath white text. */
+  --color-accent: var(--brand-blue-bright);
+  --color-accent-strong: var(--brand-blue);
+  --color-accent-2: var(--brand-cyan);
+  --color-accent-hover: #7fb0ff;
+  --color-accent-light: rgba(47, 107, 255, 0.14);
 
-  /* Gradients */
-  --grad-brand: linear-gradient(120deg, #818cf8 0%, #22d3ee 100%);
-  --grad-brand-strong: linear-gradient(120deg, #6366f1 0%, #06b6d4 100%);
-  --grad-violet: linear-gradient(120deg, #a855f7 0%, #6366f1 100%);
+  /* Gradients — brand sheet 04 specifies 90° · #2F6BFF → #22D3EE.
+     --grad-brand paints under text, so it uses the bright variant;
+     --grad-brand-strong sits beneath white text and uses the canonical. */
+  --grad-brand: linear-gradient(90deg, var(--brand-blue-bright) 0%, var(--brand-cyan) 100%);
+  --grad-brand-strong: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-cyan) 100%);
 
   /* Status */
   --color-success: #2dd4bf;
@@ -43,7 +134,7 @@
   /* Typography */
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
   --text-base: 1rem;
   --text-sm: 0.875rem;
   --text-xs: 0.75rem;
@@ -78,7 +169,7 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   --shadow-md: 0 20px 50px rgba(0, 0, 0, 0.45);
-  --glow: 0 0 0 1px rgba(129, 140, 248, 0.35), 0 12px 40px rgba(99, 102, 241, 0.28);
+  --glow: 0 0 0 1px rgba(76, 134, 255, 0.35), 0 12px 40px rgba(47, 107, 255, 0.28);
 }
 
 *,
@@ -125,7 +216,7 @@ body::before {
   height: 55vw;
   max-width: 720px;
   max-height: 720px;
-  background: radial-gradient(circle at 30% 30%, rgba(99, 102, 241, 0.55), transparent 70%);
+  background: radial-gradient(circle at 30% 30%, rgba(47, 107, 255, 0.55), transparent 70%);
 }
 body::after {
   bottom: -22vh;
@@ -167,7 +258,7 @@ a:focus-visible {
 }
 
 ::selection {
-  background: rgba(129, 140, 248, 0.35);
+  background: rgba(76, 134, 255, 0.35);
   color: #fff;
 }
 
@@ -249,25 +340,45 @@ a:focus-visible {
   box-shadow: var(--glow);
 }
 
+/* Header lockup — matches vpe-lockup-dark.svg and brand sheet 01:
+   white "vpathing", cyan node slash, muted "enterprise_llc" stacked beneath.
+   Set as real HTML rather than the kit's lockup SVG: an SVG loaded via <img>
+   cannot see page webfonts and would fall back to Courier. */
 .logo-wordmark {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   white-space: nowrap;
-  background: var(--grad-brand);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  line-height: 1.1;
 }
 
+.logo-name {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* The cyan node, carried through from the mark */
+.logo-slash {
+  color: var(--brand-cyan);
+}
+
+.logo-sub {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.6rem;
+  letter-spacing: 0.115em;
+  color: var(--color-text-muted);
+}
+
+/* Below 640px the mark plus "vpathing/" is enough; the sub-line would crowd
+   the nav toggle. The mark still carries the brand, so nothing is lost. */
 @media (max-width: 640px) {
-  .logo-wordmark {
+  .logo-sub {
     display: none;
   }
-  .logo-wordmark-mobile {
-    display: inline;
-  }
-}
-.logo-wordmark-mobile {
-  display: none;
 }
 
 /* Navigation */
@@ -297,7 +408,7 @@ a:focus-visible {
 .nav-list a[aria-current="page"] {
   color: var(--color-text);
   background: var(--color-accent-light);
-  box-shadow: inset 0 0 0 1px rgba(129, 140, 248, 0.3);
+  box-shadow: inset 0 0 0 1px rgba(76, 134, 255, 0.3);
 }
 .nav-list a:focus-visible {
   outline: 2px solid var(--color-accent);
@@ -377,7 +488,7 @@ a:focus-visible {
   font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: -0.02em;
-  background: linear-gradient(120deg, #ffffff 0%, #c7d2fe 45%, #67e8f9 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #a5c3ff 45%, #67e8f9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -420,7 +531,7 @@ a:focus-visible {
   text-transform: uppercase;
   color: var(--color-accent-hover);
   background: var(--color-accent-light);
-  border: 1px solid rgba(129, 140, 248, 0.28);
+  border: 1px solid rgba(76, 134, 255, 0.28);
   border-radius: 999px;
 }
 
@@ -449,13 +560,13 @@ a:focus-visible {
   background: var(--grad-brand-strong);
   color: #fff;
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 8px 24px rgba(47, 107, 255, 0.35);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
   color: #fff;
   text-decoration: none;
-  box-shadow: 0 14px 34px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 14px 34px rgba(47, 107, 255, 0.5);
 }
 
 .btn-secondary {
@@ -467,7 +578,7 @@ a:focus-visible {
 .btn-secondary:hover {
   transform: translateY(-2px);
   background: var(--color-accent-light);
-  border-color: rgba(129, 140, 248, 0.5);
+  border-color: rgba(76, 134, 255, 0.5);
   color: var(--color-text);
   text-decoration: none;
 }
@@ -488,7 +599,7 @@ a:focus-visible {
 
 /* Page-title H1s carry a gradient */
 h1.section-title {
-  background: linear-gradient(120deg, #ffffff 0%, #c7d2fe 60%, #67e8f9 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #a5c3ff 60%, #67e8f9 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -531,7 +642,7 @@ h1.section-title {
 }
 .service-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(129, 140, 248, 0.4);
+  border-color: rgba(76, 134, 255, 0.4);
   box-shadow: var(--shadow);
 }
 .service-card:hover::before {
@@ -585,7 +696,7 @@ h1.section-title {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 6px 18px rgba(47, 107, 255, 0.4);
 }
 
 .process-list li strong {
@@ -633,7 +744,7 @@ h1.section-title {
 }
 .app-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(129, 140, 248, 0.4);
+  border-color: rgba(76, 134, 255, 0.4);
   box-shadow: var(--shadow);
 }
 .app-card:hover::before {
@@ -966,7 +1077,7 @@ h1.section-title {
   font-weight: 600;
   border-radius: var(--radius);
   text-decoration: none;
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 8px 24px rgba(47, 107, 255, 0.35);
 }
 .coming-soon-more:hover {
   transform: translateY(-2px);
@@ -979,10 +1090,10 @@ h1.section-title {
   position: relative;
   margin-top: var(--space-8);
   padding: var(--space-12) var(--space-10);
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.16), rgba(34, 211, 238, 0.1)),
+  background: linear-gradient(135deg, rgba(47, 107, 255, 0.16), rgba(34, 211, 238, 0.1)),
     var(--color-surface);
   border-radius: var(--radius-xl);
-  border: 1px solid rgba(129, 140, 248, 0.28);
+  border: 1px solid rgba(76, 134, 255, 0.28);
   text-align: center;
   overflow: hidden;
   backdrop-filter: blur(10px);

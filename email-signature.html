@@ -8,40 +8,11 @@
   <!-- Internal tool: contains direct contact details, so keep it out of search results. -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="/css/styles.css">
   <style>
-    /* IBM Plex Mono is the brand's wordmark/label face (brand sheet 05) but is not
-       loaded site-wide, so it is self-hosted and scoped to this page. Overriding
-       --font-mono here only affects this document. */
-    @font-face {
-      font-family: "IBM Plex Mono";
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url("/assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
-    }
-    @font-face {
-      font-family: "IBM Plex Mono";
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url("/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
-    }
-    @font-face {
-      font-family: "IBM Plex Mono";
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url("/assets/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
-    }
     :root {
-      --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", monospace;
-      /* Brand sheet 04 · Color */
-      --brand-cyan: #22d3ee;
-      --brand-ink: #0b1220;
+      /* --brand-cyan / --brand-ink and the brand fonts come from css/styles.css.
+         --brand-ice is only used by this page's code chips. */
       --brand-ice: #a9c4f5;
     }
 
@@ -122,10 +93,12 @@
   <a href="#main-content" class="skip-link">Skip to main content</a>
   <header class="site-header" role="banner">
     <div class="header-inner">
-      <a href="/" class="logo-link">
+      <a href="/" class="logo-link" aria-label="VPathing Enterprise LLC — home">
         <img src="/assets/brand/vpe-icon-header.png" alt="" class="logo-img" width="96" height="96">
-        <span class="logo-wordmark">VPathing Enterprise LLC</span>
-        <span class="logo-wordmark-mobile">VPathing</span>
+        <span class="logo-wordmark" aria-hidden="true">
+          <span class="logo-name">vpathing<span class="logo-slash">/</span></span>
+          <span class="logo-sub">enterprise_llc</span>
+        </span>
       </a>
       <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span aria-hidden="true">☰</span>
