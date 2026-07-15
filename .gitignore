@@ -10,3 +10,7 @@ node_modules/
 
 # Per-machine Claude Code settings (launch.json is shared; this is not)
 .claude/settings.local.json
+
+# Local Worker secrets for `wrangler dev` (real secrets live in
+# `wrangler secret put`, never in the repo)
+.dev.vars

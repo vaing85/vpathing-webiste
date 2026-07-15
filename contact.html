@@ -75,19 +75,17 @@
 
       <h2 class="section-title">Send us a message</h2>
       <div class="contact-form-wrap">
-        <!-- FormSubmit.co: free, no signup. First submit sends a confirmation link to the destination email; click it once to activate.
-             TODO: Replace the plain email address in action= with the FormSubmit hash URL after activation to avoid
-             exposing the raw address (e.g. https://formsubmit.co/abc123... from the FormSubmit dashboard). -->
+        <!-- Posts to our own Worker (src/index.js), which verifies the Turnstile
+             token before forwarding to FormSubmit. The form backend and its
+             options live server-side now: keeping the endpoint out of the page
+             is what stops a bot posting straight to it and skipping Turnstile. -->
         <form
           id="contact-form"
           class="contact-form"
           method="POST"
-          action="https://formsubmit.co/villa.aing@vpathingenterprisellc.site"
+          action="/api/contact"
           aria-label="Contact form"
         >
-          <input type="hidden" name="_subject" value="New message from VPathing Enterprise LLC website" />
-          <input type="hidden" name="_captcha" value="true" />
-          <input type="hidden" name="_template" value="box" />
           <label for="contact-name">Name</label>
           <input type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Your name">
           <label for="contact-email">Email</label>

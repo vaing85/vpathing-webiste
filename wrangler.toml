@@ -1,15 +1,33 @@
-# Cloudflare Workers / Pages — static site (no Worker script)
-# Tells Wrangler to deploy the repo root as static assets so your project builds successfully.
+# Cloudflare Workers — static site plus a single contact endpoint.
+# The site itself is still just files; src/index.js exists only to verify
+# Turnstile server-side for POST /api/contact. See src/index.js for why.
 name = "vpathing-webiste"
-compatibility_date = "2024-01-01"
+main = "src/index.js"
+compatibility_date = "2026-07-15"
+
+[observability]
+enabled = true
 
 [assets]
 # The repo root is the deployable, so everything here is public unless excluded.
 # See .assetsignore — without it, /.git/config and /.git/index are served, which
-# lets anyone reconstruct the repository.
+# lets anyone reconstruct the repository. src/ is excluded there too: it is the
+# Worker's source, not part of the site.
 directory = "."
+
+# Lets the Worker fall back to serving assets. Only reached for paths outside
+# run_worker_first, which in practice means never — kept as a safety net.
+binding = "ASSETS"
 
 # Serve 404.html (with a 404 status) for any path that matches no file.
 # The default is "none", which returns an empty 0-byte body — a blank white
 # page on every mistyped URL, with 404.html never reached.
 not_found_handling = "404-page"
+
+# Required, and easy to miss: not_found_handling = "404-page" *overrides* the
+# default behaviour of invoking the Worker when no asset matches. Without this
+# line, POST /api/contact matches no file and is answered with 404.html — the
+# Worker never runs and the contact form silently 404s. Listing /api/* routes
+# those requests to the Worker first; every other path keeps the asset-first
+# behaviour above.
+run_worker_first = ["/api/*"]

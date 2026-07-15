@@ -15,8 +15,13 @@
 .claude
 .wrangler
 wrangler.toml
+.dev.vars
 .assetsignore
 .gitignore
+
+# Worker source. `main` compiles this into the Worker; it is not part of the
+# site, and without this line it would also be served at /src/index.js.
+src
 
 # Build tooling (never needed at runtime — the site is static)
 node_modules
