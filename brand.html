@@ -9,45 +9,12 @@
   <!-- Internal reference. Linkable, but not something to rank in search. -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="/css/styles.css">
   <style>
-    /* IBM Plex Mono is the brand's wordmark/label face (brand sheet 05) but is not
-       loaded site-wide, so it is self-hosted and scoped to this page. Overriding
-       --font-mono here only affects this document. */
-    @font-face {
-      font-family: "IBM Plex Mono";
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url("/assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");
-    }
-    @font-face {
-      font-family: "IBM Plex Mono";
-      font-style: normal;
-      font-weight: 500;
-      font-display: swap;
-      src: url("/assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");
-    }
-    @font-face {
-      font-family: "IBM Plex Mono";
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url("/assets/fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");
-    }
-    :root {
-      --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", monospace;
-      /* Brand sheet 04 · Color */
-      --brand-blue: #2f6bff;
-      --brand-cyan: #22d3ee;
-      --brand-ink: #0b1220;
-      --brand-paper: #f6f6f3;
-    }
+    /* --brand-blue / --brand-cyan / --brand-ink / --brand-paper and the brand
+       fonts all come from css/styles.css now.
 
-    /* The sheet is a document on Paper. It deliberately does not inherit the
+       The sheet is a document on Paper. It deliberately does not inherit the
        site's dark theme — these are the brand's light-surface values. */
     .sheet {
       max-width: 1100px;
@@ -169,7 +136,8 @@
     .rule-stage { height: 92px; display: flex; align-items: center; justify-content: center; background: #fff; }
     .rule-stage--dark { background: var(--brand-ink); }
     .rule-caption { padding: 10px 12px; font-family: var(--font-mono); font-size: 11px; }
-    .rule-caption--do { color: #1a8f5a; }
+    /* Source sheet uses #1a8f5a, which is 3.79:1 on white and fails WCAG AA. */
+    .rule-caption--do { color: #157a4c; }
     .rule-caption--dont { color: #c0392b; }
 
     /* The source sheet uses #9aa0a8 here, which is only 2.43:1 on Paper at 11px.
