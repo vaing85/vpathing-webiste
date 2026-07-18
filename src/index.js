@@ -25,6 +25,12 @@
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/';
 
+// Where Call Assistant waitlist signups are delivered — the support inbox, which
+// the helpdesk ingests into tickets. Public address, so it lives in code (not a
+// secret). FormSubmit accepts a raw email as the target (needs a one-time
+// activation click on first send).
+const WAITLIST_TO = 'support@vpathingenterprisellc.site';
+
 /* A name, email, subject and message have no business exceeding this. The cap
    is what lets us read the body as text without risking the 128 MB limit. */
 const MAX_BODY_BYTES = 16 * 1024;
@@ -40,11 +46,23 @@ export default {
 
     if (url.pathname === '/api/contact') {
       try {
-        return await handleContact(request, env);
+        return await handleForm(request, env, env.FORMSUBMIT_CODE, 'contact');
       } catch (err) {
         // Never let an exception surface as a Workers 1101 page: this endpoint
         // is only ever read as JSON by the client.
         console.error('contact: unhandled', err && err.stack ? err.stack : String(err));
+        return json({ ok: false, error: GENERIC_FAILURE }, 500);
+      }
+    }
+
+    // Call Assistant waitlist signups → the support inbox (helpdesk intake).
+    // Same Turnstile-verified path as contact; the destination is a fixed public
+    // address, not a secret, so it's inline rather than a binding.
+    if (url.pathname === '/api/waitlist') {
+      try {
+        return await handleForm(request, env, WAITLIST_TO, 'waitlist');
+      } catch (err) {
+        console.error('waitlist: unhandled', err && err.stack ? err.stack : String(err));
         return json({ ok: false, error: GENERIC_FAILURE }, 500);
       }
     }
@@ -59,17 +77,22 @@ export default {
   },
 };
 
-async function handleContact(request, env) {
+/**
+ * Shared form handler for /api/contact and /api/waitlist. Verifies Turnstile,
+ * then forwards to FormSubmit at `target` (a FormSubmit hash for contact, or the
+ * raw support address for the waitlist). `label` is only used for log lines.
+ */
+async function handleForm(request, env, target, label) {
   if (request.method !== 'POST') {
     return json({ ok: false, error: 'Method not allowed.' }, 405, { Allow: 'POST' });
   }
 
   // Fail loudly in the log but blandly to the caller: which binding is missing
   // is operator information, not visitor information.
-  if (!env.TURNSTILE_SECRET_KEY || !env.FORMSUBMIT_CODE) {
-    console.error('contact: missing binding', {
+  if (!env.TURNSTILE_SECRET_KEY || !target) {
+    console.error(label + ': missing binding', {
       turnstileSecret: Boolean(env.TURNSTILE_SECRET_KEY),
-      formsubmitCode: Boolean(env.FORMSUBMIT_CODE),
+      target: Boolean(target),
     });
     return json({ ok: false, error: GENERIC_FAILURE }, 500);
   }
@@ -99,7 +122,7 @@ async function handleContact(request, env) {
   const verdict = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, request.headers.get('CF-Connecting-IP'));
   if (!verdict.success) {
     const codes = verdict['error-codes'] || [];
-    console.warn('contact: turnstile rejected', codes.join(',') || 'unknown');
+    console.warn(label + ': turnstile rejected', codes.join(',') || 'unknown');
     // A stale token is the one failure a visitor can actually act on — the
     // widget expires them after 300s, which a slowly-filled form will hit.
     const expired = codes.indexOf('timeout-or-duplicate') !== -1;
@@ -114,7 +137,7 @@ async function handleContact(request, env) {
     );
   }
 
-  return await forwardToFormSubmit(fields, env.FORMSUBMIT_CODE);
+  return await forwardToFormSubmit(fields, target);
 }
 
 /**
@@ -190,7 +213,9 @@ async function forwardToFormSubmit(fields, code) {
         email: fields.email,
         subject: fields.subject || '(no subject)',
         message: fields.message,
-        _subject: 'New message from VPathing Enterprise LLC website',
+        // Use the submitted subject as the email Subject so helpdesk tickets get
+        // a meaningful title (e.g. "Call Assistant — Waitlist signup").
+        _subject: fields.subject || 'New message from VPathing Enterprise LLC website',
         _template: 'box',
         // FormSubmit's own captcha renders an HTML challenge page, which cannot
         // work over AJAX. Turnstile above is the real check.
