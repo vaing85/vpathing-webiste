@@ -25,12 +25,6 @@
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/';
 
-// Where Call Assistant waitlist signups are delivered — the support inbox, which
-// the helpdesk ingests into tickets. Public address, so it lives in code (not a
-// secret). FormSubmit accepts a raw email as the target (needs a one-time
-// activation click on first send).
-const WAITLIST_TO = 'support@vpathingenterprisellc.site';
-
 /* A name, email, subject and message have no business exceeding this. The cap
    is what lets us read the body as text without risking the 128 MB limit. */
 const MAX_BODY_BYTES = 16 * 1024;
@@ -55,18 +49,6 @@ export default {
       }
     }
 
-    // Call Assistant waitlist signups → the support inbox (helpdesk intake).
-    // Same Turnstile-verified path as contact; the destination is a fixed public
-    // address, not a secret, so it's inline rather than a binding.
-    if (url.pathname === '/api/waitlist') {
-      try {
-        return await handleForm(request, env, WAITLIST_TO, 'waitlist');
-      } catch (err) {
-        console.error('waitlist: unhandled', err && err.stack ? err.stack : String(err));
-        return json({ ok: false, error: GENERIC_FAILURE }, 500);
-      }
-    }
-
     if (url.pathname.startsWith('/api/')) {
       return json({ ok: false, error: 'Not found.' }, 404);
     }
@@ -78,9 +60,9 @@ export default {
 };
 
 /**
- * Shared form handler for /api/contact and /api/waitlist. Verifies Turnstile,
- * then forwards to FormSubmit at `target` (a FormSubmit hash for contact, or the
- * raw support address for the waitlist). `label` is only used for log lines.
+ * Contact form handler. Verifies Turnstile, then forwards to FormSubmit at
+ * `target` (the FormSubmit hash). `label` is only used for log lines. (The
+ * waitlist form posts directly to FormSubmit.cloud, so it doesn't use this.)
  */
 async function handleForm(request, env, target, label) {
   if (request.method !== 'POST') {
