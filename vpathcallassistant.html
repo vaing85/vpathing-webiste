@@ -166,7 +166,7 @@
         <h2 id="waitlist-heading" class="section-title">Join the waitlist</h2>
         <p class="section-subtitle">We're opening access in stages. Leave your email and we'll let you know the moment your spot is ready.</p>
         <div class="contact-form-wrap">
-          <form id="waitlist-form" class="contact-form ca-waitlist" method="POST" action="/api/contact" aria-label="Call Assistant waitlist">
+          <form id="waitlist-form" class="contact-form ca-waitlist" method="POST" action="/api/waitlist" aria-label="Call Assistant waitlist">
             <label for="wl-name">Name <span class="ca-note">(optional)</span></label>
             <input type="text" id="wl-name" name="name" autocomplete="name" placeholder="Your name">
             <label for="wl-email">Email</label>
@@ -209,9 +209,9 @@
       });
     });
 
-    // Waitlist submit — reuses the existing /api/contact Worker (Turnstile +
-    // FormSubmit). We shape a name/subject/message so signups arrive as a clearly
-    // labelled email, without any new server code.
+    // Waitlist submit — posts to the /api/waitlist Worker route (Turnstile +
+    // FormSubmit), which delivers to the support inbox (helpdesk intake). We shape
+    // a name/subject/message so signups arrive as a clearly labelled ticket.
     (function () {
       var form = document.getElementById('waitlist-form');
       var messageEl = document.getElementById('waitlist-message');
@@ -245,7 +245,7 @@
           'Use case: ' + (use || 'Not specified') + '\n' +
           'Interested plan: ' + (plan || 'Not specified');
 
-        fetch('/api/contact', {
+        fetch('/api/waitlist', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           body: JSON.stringify({
