@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call Assistant — AI call screening &amp; virtual receptionist</title>
+  <meta name="description" content="Call Assistant is an AI that answers and screens your calls, takes messages, and texts you a summary — a personal spam screener and a full business receptionist in one. Join the waitlist.">
+  <meta property="og:title" content="Call Assistant — AI call screening &amp; virtual receptionist">
+  <meta property="og:description" content="An AI that answers and screens your calls, takes messages, and connects the ones that matter. Personal screener and business receptionist in one.">
+  <meta property="og:image" content="https://www.vpathingenterprisellc.site/assets/social-card.png">
+  <meta property="og:url" content="https://www.vpathingenterprisellc.site/vpathcallassistant">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Call Assistant — AI call screening &amp; virtual receptionist">
+  <meta name="twitter:description" content="An AI that answers and screens your calls, takes messages, and connects the ones that matter.">
+  <meta name="twitter:image" content="https://www.vpathingenterprisellc.site/assets/social-card.png">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="canonical" href="https://www.vpathingenterprisellc.site/vpathcallassistant">
+  <!-- Cloudflare Turnstile (spam protection for the waitlist form) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    /* Page-scoped styles so styles.css stays untouched. */
+    .ca-hero { text-align: center; }
+    .ca-hero .tagline { max-width: 46ch; margin-left: auto; margin-right: auto; }
+    .ca-hero .intro { max-width: 60ch; margin-left: auto; margin-right: auto; }
+    .ca-hero-actions { margin-top: var(--space-6); display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+    .ca-steps { counter-reset: step; }
+    .ca-step h3::before {
+      counter-increment: step; content: counter(step);
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.7em; height: 1.7em; margin-right: .5em; border-radius: 50%;
+      background: var(--color-accent, #5B8CFF); color: #fff; font-size: .85em;
+    }
+    .ca-pricing { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); list-style: none; padding: 0; margin: 0; }
+    .ca-plan { display: flex; flex-direction: column; position: relative; }
+    .ca-plan.is-featured { outline: 2px solid var(--color-accent, #5B8CFF); }
+    .ca-badge { position: absolute; top: -0.8em; left: 50%; transform: translateX(-50%);
+      background: var(--color-accent, #5B8CFF); color: #fff; font-size: .72rem; font-weight: 700;
+      letter-spacing: .04em; text-transform: uppercase; padding: .25em .8em; border-radius: 999px; white-space: nowrap; }
+    .ca-price { font-size: 2.1rem; font-weight: 800; line-height: 1; margin: .3em 0 .1em; }
+    .ca-price small { font-size: .95rem; font-weight: 500; opacity: .7; }
+    .ca-plan-tag { font-size: .85rem; opacity: .75; margin: 0 0 var(--space-3); }
+    .ca-features { list-style: none; padding: 0; margin: 0 0 var(--space-4); flex: 1; }
+    .ca-features li { padding: .35em 0 .35em 1.6em; position: relative; }
+    .ca-features li::before { content: "✓"; position: absolute; left: 0; color: var(--color-accent, #35C46B); font-weight: 700; }
+    .ca-waitlist { max-width: 560px; }
+    .ca-waitlist label { display: block; font-weight: 600; margin-top: var(--space-3); }
+    .ca-waitlist input, .ca-waitlist select {
+      width: 100%; padding: .7em .8em; margin-top: .35em; box-sizing: border-box;
+      border: 1px solid var(--color-border, #2a2f3a); border-radius: 8px;
+      background: var(--color-surface, #12141c); color: inherit; font: inherit;
+    }
+    .ca-waitlist .cf-turnstile { margin-top: var(--space-4); }
+    .ca-note { font-size: .85rem; opacity: .7; }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <a href="/" class="logo-link" aria-label="VPathing Enterprise LLC — home">
+        <img src="/assets/brand/vpe-icon-header.png" alt="" class="logo-img" width="192" height="192">
+        <span class="logo-wordmark" aria-hidden="true">
+          <span class="logo-name">vpathing<span class="logo-slash">/</span></span>
+          <span class="logo-sub">enterprise_llc</span>
+        </span>
+      </a>
+      <button type="button" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span aria-hidden="true">☰</span>
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
+        <ul class="nav-list">
+          <li><a href="/">Home</a></li>
+          <li><a href="/apps">Apps</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main" id="main-content">
+    <div class="container">
+
+      <section class="hero ca-hero">
+        <h1>Call Assistant</h1>
+        <p class="tagline">An AI that answers and screens your calls — so you never miss what matters, and never pick up what doesn't.</p>
+        <p class="intro">It picks up the calls you'd otherwise miss, finds out who's calling and why, texts you a summary, and connects the ones worth your time. A personal spam screener and a full business receptionist in one.</p>
+        <div class="ca-hero-actions">
+          <a href="#waitlist" class="btn btn-primary">Join the waitlist</a>
+          <a href="#how" class="btn">See how it works</a>
+        </div>
+      </section>
+
+      <section class="section ca-steps" id="how" aria-labelledby="how-heading">
+        <h2 id="how-heading" class="section-title">How it works</h2>
+        <ul class="services-grid" style="list-style:none;padding:0;margin:0;">
+          <li class="service-card ca-step"><h3>You keep your number</h3><p>Set up simple carrier forwarding so only your <em>missed, busy, or unreachable</em> calls go to the assistant. Your phone still rings first — no loops, nothing to install for callers.</p></li>
+          <li class="service-card ca-step"><h3>The AI answers &amp; screens</h3><p>It greets the caller, asks who's calling and why, and handles it — takes a message, filters spam, or connects a real caller straight to you.</p></li>
+          <li class="service-card ca-step"><h3>You get the summary</h3><p>A text and push notification tell you who called and what they needed, with a full transcript and recording in the app. Nothing important slips through.</p></li>
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="who-heading">
+        <h2 id="who-heading" class="section-title">Built for two jobs</h2>
+        <ul class="services-grid" style="list-style:none;padding:0;margin:0;">
+          <li class="service-card">
+            <h3>For you</h3>
+            <p>Stop answering spam and robocalls. The assistant screens unknown callers, filters junk, and hands you a plain-English summary of the ones that are real — so your phone stops interrupting you.</p>
+          </li>
+          <li class="service-card">
+            <h3>For your business</h3>
+            <p>A professional receptionist that never misses a call. It answers as your business, screens and takes messages, connects live callers to you, and can run multiple lines with a department menu — at a fraction of an answering service.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" id="pricing" aria-labelledby="pricing-heading">
+        <h2 id="pricing-heading" class="section-title">Plans</h2>
+        <p class="section-subtitle">Simple monthly pricing in U.S. dollars. 6-month and annual plans will also be available. Prices shown are planned launch pricing.</p>
+        <ul class="ca-pricing">
+          <li class="service-card ca-plan">
+            <h3>Basic</h3>
+            <p class="ca-plan-tag">Personal call screening</p>
+            <p class="ca-price">$25<small> / month</small></p>
+            <ul class="ca-features">
+              <li>AI answers &amp; screens every missed call</li>
+              <li>Takes messages, filters spam</li>
+              <li>Text &amp; push summaries of who called</li>
+              <li>Call transcripts &amp; recordings in the app</li>
+            </ul>
+            <a href="#waitlist" class="btn btn-primary" data-plan="Basic">Join waitlist</a>
+          </li>
+          <li class="service-card ca-plan is-featured">
+            <span class="ca-badge">Most popular</span>
+            <h3>Pro</h3>
+            <p class="ca-plan-tag">Business receptionist</p>
+            <p class="ca-price">$50<small> / month</small></p>
+            <ul class="ca-features">
+              <li>Everything in Basic</li>
+              <li>Branded greeting — “You've reached {your business}”</li>
+              <li>Live handoff — connect real callers to your phone</li>
+              <li>Availability modes: in a meeting, busy, call back</li>
+            </ul>
+            <a href="#waitlist" class="btn btn-primary" data-plan="Pro">Join waitlist</a>
+          </li>
+          <li class="service-card ca-plan">
+            <h3>Secretary</h3>
+            <p class="ca-plan-tag">Full front desk</p>
+            <p class="ca-price">$75<small> / month</small></p>
+            <ul class="ca-features">
+              <li>Everything in Pro</li>
+              <li>Multiple numbers + department menu (“press 1 for Sales”)</li>
+              <li>Listen in, steer, or take over live calls</li>
+              <li>Priority support</li>
+            </ul>
+            <a href="#waitlist" class="btn btn-primary" data-plan="Secretary">Join waitlist</a>
+          </li>
+        </ul>
+        <p class="ca-note" style="margin-top:var(--space-4);">Payments are processed by Stripe. Subscriptions renew until canceled; see our <a href="/refund">Refund &amp; Cancellation Policy</a>. Full pricing details are on our <a href="/pricing">Pricing</a> page.</p>
+      </section>
+
+      <section class="section" id="waitlist" aria-labelledby="waitlist-heading">
+        <h2 id="waitlist-heading" class="section-title">Join the waitlist</h2>
+        <p class="section-subtitle">We're opening access in stages. Leave your email and we'll let you know the moment your spot is ready.</p>
+        <div class="contact-form-wrap">
+          <form id="waitlist-form" class="contact-form ca-waitlist" method="POST" action="/api/contact" aria-label="Call Assistant waitlist">
+            <label for="wl-name">Name <span class="ca-note">(optional)</span></label>
+            <input type="text" id="wl-name" name="name" autocomplete="name" placeholder="Your name">
+            <label for="wl-email">Email</label>
+            <input type="email" id="wl-email" name="email" required autocomplete="email" placeholder="your@email.com">
+            <label for="wl-use">I'd use it for</label>
+            <select id="wl-use" name="use">
+              <option value="Personal">Personal — screen my own calls</option>
+              <option value="Business">Business — receptionist for my company</option>
+              <option value="Both">Both</option>
+            </select>
+            <input type="hidden" id="wl-plan" name="plan" value="">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAACVbKovU6RLgw8Zu"></div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Join the waitlist</button>
+            </div>
+            <div id="waitlist-message" class="form-message" role="status" aria-live="polite" style="display:none;"></div>
+          </form>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
+      <p><a href="/pricing">Pricing</a> · <a href="/refund">Refund &amp; Cancellation Policy</a> · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms &amp; Conditions</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // Plan buttons pre-fill the hidden plan field before jumping to the form.
+    document.querySelectorAll('a[data-plan]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var planEl = document.getElementById('wl-plan');
+        if (planEl) planEl.value = a.getAttribute('data-plan') || '';
+      });
+    });
+
+    // Waitlist submit — reuses the existing /api/contact Worker (Turnstile +
+    // FormSubmit). We shape a name/subject/message so signups arrive as a clearly
+    // labelled email, without any new server code.
+    (function () {
+      var form = document.getElementById('waitlist-form');
+      var messageEl = document.getElementById('waitlist-message');
+      if (!form) return;
+
+      function say(text, kind) {
+        if (!messageEl) return;
+        messageEl.textContent = text;
+        messageEl.className = 'form-message ' + kind;
+        messageEl.style.display = 'block';
+      }
+      function resetTurnstile() {
+        var widget = form.querySelector('.cf-turnstile');
+        if (!widget || typeof window.turnstile === 'undefined') return;
+        try { window.turnstile.reset(widget); } catch (_) {}
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var btn = form.querySelector('button[type="submit"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'Joining…'; }
+        if (messageEl) { messageEl.style.display = 'none'; }
+
+        var email = (form.querySelector('[name="email"]').value || '').trim();
+        var name = (form.querySelector('[name="name"]').value || '').trim();
+        var use = (form.querySelector('[name="use"]').value || '').trim();
+        var plan = (form.querySelector('[name="plan"]').value || '').trim();
+        var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
+
+        var message = 'Call Assistant waitlist signup.\n' +
+          'Use case: ' + (use || 'Not specified') + '\n' +
+          'Interested plan: ' + (plan || 'Not specified');
+
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            name: name || 'Waitlist signup',
+            email: email,
+            subject: 'Call Assistant — Waitlist signup',
+            message: message,
+            turnstileToken: tokenEl ? tokenEl.value : ''
+          })
+        })
+          .then(function (res) {
+            return res.json().then(function (d) { return { ok: res.ok, data: d }; }, function () { return { ok: false, data: null }; });
+          })
+          .then(function (r) {
+            if (r.ok && r.data && r.data.ok === true) {
+              say("You're on the list — we'll be in touch. Thanks!", 'success');
+              form.reset();
+            } else {
+              say((r.data && r.data.error) || 'Something went wrong. Please try again, or email us directly.', 'error');
+            }
+            resetTurnstile();
+          })
+          .catch(function () {
+            say('Could not reach the server. Please check your connection and try again.', 'error');
+            resetTurnstile();
+          })
+          .finally(function () {
+            if (btn) { btn.disabled = false; btn.textContent = 'Join the waitlist'; }
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
