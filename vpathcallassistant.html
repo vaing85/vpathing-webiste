@@ -17,8 +17,6 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="canonical" href="https://www.vpathingenterprisellc.site/vpathcallassistant">
-  <!-- Cloudflare Turnstile (spam protection for the waitlist form) -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     /* Page-scoped styles so styles.css stays untouched. */
     .ca-hero { text-align: center; }
@@ -51,7 +49,6 @@
       border: 1px solid var(--color-border, #2a2f3a); border-radius: 8px;
       background: var(--color-surface, #12141c); color: inherit; font: inherit;
     }
-    .ca-waitlist .cf-turnstile { margin-top: var(--space-4); }
     .ca-note { font-size: .85rem; opacity: .7; }
   </style>
 </head>
@@ -166,7 +163,18 @@
         <h2 id="waitlist-heading" class="section-title">Join the waitlist</h2>
         <p class="section-subtitle">We're opening access in stages. Leave your email and we'll let you know the moment your spot is ready.</p>
         <div class="contact-form-wrap">
-          <form id="waitlist-form" class="contact-form ca-waitlist" method="POST" action="/api/waitlist" aria-label="Call Assistant waitlist">
+          <!-- FormSubmit.cloud handles delivery and runs its own captcha on submit.
+               It has no AJAX/JSON endpoint, so this is a native form POST: it
+               navigates to FormSubmit, the visitor completes the captcha, then
+               returns to _next. Spam is covered by that captcha + the _gotcha
+               honeypot. -->
+          <form class="contact-form ca-waitlist" method="POST"
+                action="https://formsubmit.cloud/f/82c14528-aed4-47bb-9ba1-ecab04c5a54d/"
+                aria-label="Call Assistant waitlist">
+            <!-- Honeypot: bots fill this hidden field; real visitors never see it. -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
+            <input type="hidden" name="_subject" value="Call Assistant — Waitlist signup">
+            <input type="hidden" name="_next" value="https://www.vpathingenterprisellc.site/vpathcallassistant?joined=1">
             <label for="wl-name">Name <span class="ca-note">(optional)</span></label>
             <input type="text" id="wl-name" name="name" autocomplete="name" placeholder="Your name">
             <label for="wl-email">Email</label>
@@ -178,7 +186,6 @@
               <option value="Both">Both</option>
             </select>
             <input type="hidden" id="wl-plan" name="plan" value="">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAD2kE9SbYOzT4JP1"></div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary">Join the waitlist</button>
             </div>
@@ -209,73 +216,18 @@
       });
     });
 
-    // Waitlist submit — posts to the /api/waitlist Worker route (Turnstile +
-    // FormSubmit), which delivers to the support inbox (helpdesk intake). We shape
-    // a name/subject/message so signups arrive as a clearly labelled ticket.
+    // FormSubmit returns here via _next with ?joined=1 after a successful signup —
+    // show the confirmation and scroll to it.
     (function () {
-      var form = document.getElementById('waitlist-form');
-      var messageEl = document.getElementById('waitlist-message');
-      if (!form) return;
-
-      function say(text, kind) {
-        if (!messageEl) return;
-        messageEl.textContent = text;
-        messageEl.className = 'form-message ' + kind;
-        messageEl.style.display = 'block';
+      if (!/[?&]joined=1/.test(window.location.search)) return;
+      var msg = document.getElementById('waitlist-message');
+      if (msg) {
+        msg.textContent = "You're on the list — we'll be in touch. Thanks!";
+        msg.className = 'form-message success';
+        msg.style.display = 'block';
       }
-      function resetTurnstile() {
-        var widget = form.querySelector('.cf-turnstile');
-        if (!widget || typeof window.turnstile === 'undefined') return;
-        try { window.turnstile.reset(widget); } catch (_) {}
-      }
-
-      form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var btn = form.querySelector('button[type="submit"]');
-        if (btn) { btn.disabled = true; btn.textContent = 'Joining…'; }
-        if (messageEl) { messageEl.style.display = 'none'; }
-
-        var email = (form.querySelector('[name="email"]').value || '').trim();
-        var name = (form.querySelector('[name="name"]').value || '').trim();
-        var use = (form.querySelector('[name="use"]').value || '').trim();
-        var plan = (form.querySelector('[name="plan"]').value || '').trim();
-        var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
-
-        var message = 'Call Assistant waitlist signup.\n' +
-          'Use case: ' + (use || 'Not specified') + '\n' +
-          'Interested plan: ' + (plan || 'Not specified');
-
-        fetch('/api/waitlist', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({
-            name: name || 'Waitlist signup',
-            email: email,
-            subject: 'Call Assistant — Waitlist signup',
-            message: message,
-            turnstileToken: tokenEl ? tokenEl.value : ''
-          })
-        })
-          .then(function (res) {
-            return res.json().then(function (d) { return { ok: res.ok, data: d }; }, function () { return { ok: false, data: null }; });
-          })
-          .then(function (r) {
-            if (r.ok && r.data && r.data.ok === true) {
-              say("You're on the list — we'll be in touch. Thanks!", 'success');
-              form.reset();
-            } else {
-              say((r.data && r.data.error) || 'Something went wrong. Please try again, or email us directly.', 'error');
-            }
-            resetTurnstile();
-          })
-          .catch(function () {
-            say('Could not reach the server. Please check your connection and try again.', 'error');
-            resetTurnstile();
-          })
-          .finally(function () {
-            if (btn) { btn.disabled = false; btn.textContent = 'Join the waitlist'; }
-          });
-      });
+      var wl = document.getElementById('waitlist');
+      if (wl) wl.scrollIntoView();
     })();
   </script>
 </body>
