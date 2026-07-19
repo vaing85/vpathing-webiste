@@ -434,6 +434,85 @@
     return el ? el.value : '';
   }
 
+  // ——— Waitlist form (Worker /api/contact + Turnstile) ———
+  /**
+   * The Call Assistant waitlist reuses the proven contact path: it POSTs to the
+   * same /api/contact Worker (Turnstile-verified, FormSubmit-backed) with a
+   * fixed "Waitlist signup" subject, instead of the old direct-to-FormSubmit
+   * post that bypassed Turnstile server-side verification and silently failed.
+   */
+  function initWaitlistForm() {
+    var form = document.getElementById('waitlist-form');
+    var messageEl = document.getElementById('waitlist-message');
+    if (!form) return;
+
+    function say(text, kind) {
+      if (!messageEl) return;
+      messageEl.textContent = text;
+      messageEl.className = 'form-message ' + kind;
+      messageEl.style.display = 'block';
+    }
+    function resetTurnstile() {
+      var widget = form.querySelector('.cf-turnstile');
+      if (!widget || typeof window.turnstile === 'undefined') return;
+      try { window.turnstile.reset(widget); } catch (_) {}
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Joining…'; }
+      if (messageEl) { messageEl.style.display = 'none'; messageEl.className = 'form-message'; messageEl.textContent = ''; }
+
+      var plan = fieldValue(form, 'plan');
+      var use = fieldValue(form, 'use');
+      var lines = ['Call Assistant waitlist signup.'];
+      lines.push('Interested plan: ' + (plan || '(none selected)'));
+      if (use) lines.push('Would use it for: ' + use);
+
+      var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
+      var payload = {
+        // Name is optional on the waitlist, but /api/contact requires one, so
+        // fall back to a label rather than reject an anonymous signup.
+        name: fieldValue(form, 'name') || 'Waitlist signup',
+        email: fieldValue(form, 'email'),
+        subject: 'Call Assistant — Waitlist signup',
+        message: lines.join('\n'),
+        turnstileToken: tokenEl ? tokenEl.value : ''
+      };
+
+      fetch(CONTACT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) {
+          return res.json().then(
+            function (data) { return { ok: res.ok, data: data }; },
+            function () { return { ok: false, data: null }; }
+          );
+        })
+        .then(function (result) {
+          var data = result.data;
+          if (result.ok && data && data.ok === true) {
+            say("You're on the list — we'll be in touch. Thanks!", 'success');
+            form.reset();
+            resetTurnstile();
+            return;
+          }
+          say((data && data.error) || 'Something went wrong. Please try again, or email us directly.', 'error');
+          resetTurnstile();
+        })
+        .catch(function () {
+          say('Could not reach the server. Please check your connection, or email us directly.', 'error');
+          resetTurnstile();
+        })
+        .finally(function () {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Join the waitlist'; }
+        });
+    });
+  }
+
   // ——— Logo expand (click header logo to show larger) ———
   function initLogoExpand() {
     var logoImg = document.querySelector('.logo-link .logo-img');
@@ -474,4 +553,5 @@
   window.initAppsPage = initAppsPage;
   window.initContactForm = initContactForm;
   window.initCheckoutForm = initCheckoutForm;
+  window.initWaitlistForm = initWaitlistForm;
 })();
