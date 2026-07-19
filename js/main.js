@@ -109,24 +109,39 @@
       return '<li>' + escapeHtml(tag) + '</li>';
     }).join('');
 
+    // Internal links (same site, e.g. /vpathcallassistant) navigate in the same
+    // tab; external links open in a new tab.
+    function linkAttrs(url) {
+      return /^https?:\/\//i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : '';
+    }
+
     var linksHtml = '';
     if (hasLinks) {
       if (links.website) {
-        linksHtml += '<a href="' + escapeAttr(links.website) + '" target="_blank" rel="noopener noreferrer">Website</a>';
+        linksHtml += '<a href="' + escapeAttr(links.website) + '"' + linkAttrs(links.website) + '>Website</a>';
       }
       if (links.demo) {
-        linksHtml += '<a href="' + escapeAttr(links.demo) + '" target="_blank" rel="noopener noreferrer">Demo</a>';
+        linksHtml += '<a href="' + escapeAttr(links.demo) + '"' + linkAttrs(links.demo) + '>Demo</a>';
       }
       if (links.github) {
-        linksHtml += '<a href="' + escapeAttr(links.github) + '" target="_blank" rel="noopener noreferrer">GitHub</a>';
+        linksHtml += '<a href="' + escapeAttr(links.github) + '"' + linkAttrs(links.github) + '>GitHub</a>';
       }
     } else {
       linksHtml = '<span class="coming-soon">Coming soon</span>';
     }
 
+    // Wire the whole tile: the title links to the app's primary destination
+    // (website preferred), and a stretched ::after over the card makes the
+    // entire tile clickable. The explicit links below stay independently
+    // clickable (they sit above the stretched overlay).
+    var primary = links.website || links.demo || links.github;
+    var titleHtml = primary
+      ? '<h3><a class="app-card-link" href="' + escapeAttr(primary) + '"' + linkAttrs(primary) + '>' + escapeHtml(app.name) + '</a></h3>'
+      : '<h3>' + escapeHtml(app.name) + '</h3>';
+
     return (
-      '<article class="app-card">' +
-        '<h3>' + escapeHtml(app.name) + '</h3>' +
+      '<article class="app-card' + (primary ? ' app-card--linked' : '') + '">' +
+        titleHtml +
         '<p class="app-description">' + escapeHtml(app.description || '') + '</p>' +
         '<div class="app-meta">' +
           '<span class="badge ' + statusClass + '">' + escapeHtml(app.status || 'In development') + '</span>' +

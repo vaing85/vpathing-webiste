@@ -778,6 +778,29 @@ h1.section-title {
   color: var(--color-text);
 }
 
+/* Clickable tile: the title anchor stretches over the whole card so clicking
+   anywhere on a linked tile opens its page. Explicit links below stay on top. */
+.app-card--linked .app-card-link {
+  color: inherit;
+  text-decoration: none;
+}
+.app-card--linked .app-card-link:hover {
+  color: var(--color-accent);
+}
+.app-card--linked .app-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.app-card--linked:hover {
+  cursor: pointer;
+}
+.app-card .app-links {
+  position: relative;
+  z-index: 2;
+}
+
 .app-card .app-description {
   margin: 0 0 var(--space-4);
   font-size: var(--text-sm);
