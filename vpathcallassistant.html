@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Call Assistant — AI call screening &amp; virtual receptionist</title>
-  <meta name="description" content="Call Assistant is an AI that answers and screens your calls, takes messages, and texts you a summary — a personal spam screener and a full business receptionist in one. Join the waitlist.">
+  <meta name="description" content="Call Assistant is an AI that answers and screens your calls, takes messages, and texts you a summary — a personal spam screener and a full business receptionist in one. Plans from $25/mo.">
   <meta property="og:title" content="Call Assistant — AI call screening &amp; virtual receptionist">
   <meta property="og:description" content="An AI that answers and screens your calls, takes messages, and connects the ones that matter. Personal screener and business receptionist in one.">
   <meta property="og:image" content="https://www.vpathingenterprisellc.site/assets/social-card.png">
@@ -86,7 +86,7 @@
         <p class="tagline">An AI that answers and screens your calls — so you never miss what matters, and never pick up what doesn't.</p>
         <p class="intro">It picks up the calls you'd otherwise miss, finds out who's calling and why, texts you a summary, and connects the ones worth your time. A personal spam screener and a full business receptionist in one.</p>
         <div class="ca-hero-actions">
-          <a href="#waitlist" class="btn btn-primary">Join the waitlist</a>
+          <a href="#checkout" class="btn btn-primary">Get started</a>
           <a href="#how" class="btn">See how it works</a>
         </div>
       </section>
@@ -128,7 +128,7 @@
               <li>Text &amp; push summaries of who called</li>
               <li>Call transcripts &amp; recordings in the app</li>
             </ul>
-            <a href="#waitlist" class="btn btn-primary" data-plan="Basic">Join waitlist</a>
+            <a href="#checkout" class="btn btn-primary" data-plan="Basic">Choose Basic</a>
           </li>
           <li class="service-card ca-plan is-featured">
             <span class="ca-badge">Most popular</span>
@@ -141,7 +141,7 @@
               <li>Live handoff — connect real callers to your phone</li>
               <li>Availability modes: in a meeting, busy, call back</li>
             </ul>
-            <a href="#waitlist" class="btn btn-primary" data-plan="Pro">Join waitlist</a>
+            <a href="#checkout" class="btn btn-primary" data-plan="Pro">Choose Pro</a>
           </li>
           <li class="service-card ca-plan">
             <h3>Secretary</h3>
@@ -153,43 +153,38 @@
               <li>Listen in, steer, or take over live calls</li>
               <li>Priority support</li>
             </ul>
-            <a href="#waitlist" class="btn btn-primary" data-plan="Secretary">Join waitlist</a>
+            <a href="#checkout" class="btn btn-primary" data-plan="Secretary">Choose Secretary</a>
           </li>
         </ul>
         <p class="ca-note" style="margin-top:var(--space-4);">Payments are processed by Stripe. Subscriptions renew until canceled; see our <a href="/refund">Refund &amp; Cancellation Policy</a>. Full pricing details are on our <a href="/pricing">Pricing</a> page.</p>
       </section>
 
-      <section class="section" id="waitlist" aria-labelledby="waitlist-heading">
-        <h2 id="waitlist-heading" class="section-title">Join the waitlist</h2>
-        <p class="section-subtitle">We're opening access in stages. Leave your email and we'll let you know the moment your spot is ready.</p>
+      <section class="section" id="checkout" aria-labelledby="checkout-heading">
+        <h2 id="checkout-heading" class="section-title">Get started</h2>
+        <p class="section-subtitle">Choose a plan and continue to secure checkout. Payments are processed by Stripe; you can cancel anytime, and we offer a 30-day money-back guarantee.</p>
         <div class="contact-form-wrap">
-          <!-- FormSubmit.cloud handles delivery and runs its own captcha on submit.
-               It has no AJAX/JSON endpoint, so this is a native form POST: it
-               navigates to FormSubmit, the visitor completes the captcha, then
-               returns to _next. Spam is covered by that captcha + the _gotcha
-               honeypot. -->
-          <form class="contact-form ca-waitlist" method="POST"
-                action="https://formsubmit.cloud/f/82c14528-aed4-47bb-9ba1-ecab04c5a54d/"
-                aria-label="Call Assistant waitlist">
-            <!-- Honeypot: bots fill this hidden field; real visitors never see it. -->
-            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
-            <input type="hidden" name="_subject" value="Call Assistant — Waitlist signup">
-            <input type="hidden" name="_next" value="https://www.vpathingenterprisellc.site/vpathcallassistant?joined=1">
-            <label for="wl-name">Name <span class="ca-note">(optional)</span></label>
-            <input type="text" id="wl-name" name="name" autocomplete="name" placeholder="Your name">
-            <label for="wl-email">Email</label>
-            <input type="email" id="wl-email" name="email" required autocomplete="email" placeholder="your@email.com">
-            <label for="wl-use">I'd use it for</label>
-            <select id="wl-use" name="use">
-              <option value="Personal">Personal — screen my own calls</option>
-              <option value="Business">Business — receptionist for my company</option>
-              <option value="Both">Both</option>
+          <form class="contact-form ca-waitlist" id="checkout-form" aria-label="Call Assistant checkout">
+            <label for="co-email">Email</label>
+            <input type="email" id="co-email" name="email" required autocomplete="email" placeholder="your@email.com">
+            <label for="co-plan">Plan</label>
+            <select id="co-plan" name="plan">
+              <option value="basic">Basic — $25/mo · personal screening</option>
+              <option value="pro">Pro — $50/mo · business receptionist</option>
+              <option value="secretary">Secretary — $75/mo · live interaction + multi-line</option>
             </select>
-            <input type="hidden" id="wl-plan" name="plan" value="">
+            <label for="co-term">Billing term</label>
+            <select id="co-term" name="term">
+              <option value="monthly">Monthly</option>
+              <option value="six_month">Every 6 months</option>
+              <option value="yearly">Yearly</option>
+            </select>
+            <!-- Turnstile proves the request is human before the Worker calls the
+                 checkout backend. Same site key as the contact form. -->
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAD2kE9SbYOzT4JP1" style="margin-top:var(--space-3);"></div>
             <div class="form-actions">
-              <button type="submit" class="btn btn-primary">Join the waitlist</button>
+              <button type="submit" class="btn btn-primary" id="checkout-submit">Continue to secure checkout</button>
             </div>
-            <div id="waitlist-message" class="form-message" role="status" aria-live="polite" style="display:none;"></div>
+            <div id="checkout-message" class="form-message" role="status" aria-live="polite" style="display:none;"></div>
           </form>
         </div>
       </section>
@@ -204,30 +199,81 @@
     </div>
   </footer>
 
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <script src="/js/main.js"></script>
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-    // Plan buttons pre-fill the hidden plan field before jumping to the form.
+    var planSelect = document.getElementById('co-plan');
+
+    // Pricing-card buttons preselect the plan, then jump to the checkout form.
     document.querySelectorAll('a[data-plan]').forEach(function (a) {
       a.addEventListener('click', function () {
-        var planEl = document.getElementById('wl-plan');
-        if (planEl) planEl.value = a.getAttribute('data-plan') || '';
+        var plan = (a.getAttribute('data-plan') || '').toLowerCase();
+        if (planSelect && plan) planSelect.value = plan;
       });
     });
 
-    // FormSubmit returns here via _next with ?joined=1 after a successful signup —
-    // show the confirmation and scroll to it.
+    function showCheckoutMessage(text, kind) {
+      var msg = document.getElementById('checkout-message');
+      if (!msg) return;
+      msg.textContent = text;
+      msg.className = 'form-message' + (kind ? ' ' + kind : '');
+      msg.style.display = 'block';
+    }
+
+    // Checkout: verify Turnstile server-side (via /api/checkout), get a Stripe
+    // Checkout Session URL, and redirect the browser to it.
+    var form = document.getElementById('checkout-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var btn = document.getElementById('checkout-submit');
+        var email = document.getElementById('co-email').value.trim();
+        var plan = planSelect.value;
+        var term = document.getElementById('co-term').value;
+        var token = (window.turnstile && window.turnstile.getResponse()) || '';
+        if (!token) {
+          showCheckoutMessage('Please complete the spam check and try again.', 'error');
+          return;
+        }
+        btn.disabled = true;
+        showCheckoutMessage('Starting secure checkout…', '');
+        fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, plan: plan, term: term, turnstileToken: token }),
+        })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data && data.ok && data.url) {
+              window.location.href = data.url;
+              return;
+            }
+            showCheckoutMessage((data && data.error) || 'Something went wrong. Please try again.', 'error');
+            btn.disabled = false;
+            if (window.turnstile) window.turnstile.reset();
+          })
+          .catch(function () {
+            showCheckoutMessage('Network error. Please try again.', 'error');
+            btn.disabled = false;
+            if (window.turnstile) window.turnstile.reset();
+          });
+      });
+    }
+
+    // Returns from Stripe: ?subscribed=1 (success) or ?canceled=1 (canceled).
     (function () {
-      if (!/[?&]joined=1/.test(window.location.search)) return;
-      var msg = document.getElementById('waitlist-message');
-      if (msg) {
-        msg.textContent = "You're on the list — we'll be in touch. Thanks!";
-        msg.className = 'form-message success';
-        msg.style.display = 'block';
+      var s = window.location.search;
+      if (/[?&]subscribed=1/.test(s)) {
+        showCheckoutMessage("You're subscribed — thank you! Check your email for the receipt, then sign in to the app.", 'success');
+      } else if (/[?&]canceled=1/.test(s)) {
+        showCheckoutMessage('Checkout canceled — no charge was made. You can try again anytime.', '');
+      } else {
+        return;
       }
-      var wl = document.getElementById('waitlist');
-      if (wl) wl.scrollIntoView();
+      var el = document.getElementById('checkout');
+      if (el) el.scrollIntoView();
     })();
   </script>
 </body>
