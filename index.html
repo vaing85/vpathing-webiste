@@ -53,9 +53,11 @@
         <h1>VPathing Enterprise LLC</h1>
         <p class="tagline">Building practical apps for real-world operations.</p>
         <p class="intro">We design and build web applications, automation tools, dashboards, and integrations that help teams and businesses run more effectively.</p>
-        <p class="hero-actions" style="margin-top: var(--space-6);">
-          <a href="/vpathcallassistant" class="btn btn-primary">Meet Call Assistant — AI call screening</a>
-        </p>
+      </section>
+
+      <section class="section" aria-labelledby="home-apps-heading" style="margin-top: var(--space-8);">
+        <h2 id="home-apps-heading" class="section-title">Our apps</h2>
+        <div id="home-apps" class="apps-grid"></div>
       </section>
     </div>
   </main>
@@ -74,6 +76,9 @@
   <script src="/js/main.js"></script>
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
+    if (window.renderWiredApps) {
+      window.renderWiredApps(document.getElementById('home-apps'));
+    }
   </script>
 </body>
 </html>

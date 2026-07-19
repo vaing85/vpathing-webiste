@@ -139,8 +139,13 @@
       ? '<h3><a class="app-card-link" href="' + escapeAttr(primary) + '"' + linkAttrs(primary) + '>' + escapeHtml(app.name) + '</a></h3>'
       : '<h3>' + escapeHtml(app.name) + '</h3>';
 
+    var cornerBadge = app.badge
+      ? '<span class="app-card-badge">' + escapeHtml(app.badge) + '</span>'
+      : '';
+
     return (
       '<article class="app-card' + (primary ? ' app-card--linked' : '') + '">' +
+        cornerBadge +
         titleHtml +
         '<p class="app-description">' + escapeHtml(app.description || '') + '</p>' +
         '<div class="app-meta">' +
@@ -178,6 +183,22 @@
     if (!container) return;
     fetchApps().then(function (apps) {
       var list = apps.slice(0, limit || 4);
+      container.innerHTML = list.map(renderAppCard).join('');
+      container.querySelectorAll('.app-card').forEach(observeReveal);
+    });
+  }
+
+  /**
+   * Render only the apps that link to a real page (links.website), as clickable
+   * tiles. Used on the homepage so every tile shown is wired to somewhere.
+   * @param {HTMLElement} container - Element to append cards to
+   */
+  function renderWiredApps(container) {
+    if (!container) return;
+    fetchApps().then(function (apps) {
+      var list = apps.filter(function (app) {
+        return app.links && app.links.website;
+      });
       container.innerHTML = list.map(renderAppCard).join('');
       container.querySelectorAll('.app-card').forEach(observeReveal);
     });
@@ -376,6 +397,7 @@
 
   window.observeReveal = observeReveal;
   window.renderFeaturedApps = renderFeaturedApps;
+  window.renderWiredApps = renderWiredApps;
   window.initAppsPage = initAppsPage;
   window.initContactForm = initContactForm;
 })();

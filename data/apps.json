@@ -12,6 +12,7 @@
     "name": "Call Assistant",
     "description": "AI call-screening assistant that answers and screens incoming calls, takes voicemails, and texts you an SMS summary of who called and why. A personal spam screener and business receptionist in one.",
     "status": "MVP",
+    "badge": "New",
     "tags": ["AI", "telephony", "call screening", "SMS"],
     "links": { "website": "/vpathcallassistant" }
   },
