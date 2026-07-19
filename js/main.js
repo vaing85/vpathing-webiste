@@ -356,6 +356,79 @@
     });
   }
 
+  // ——— Checkout form (Worker /api/checkout + Turnstile -> Stripe) ———
+  var CHECKOUT_URL = '/api/checkout';
+
+  /**
+   * Posts {email, plan, term, turnstileToken} to our Worker, which verifies
+   * Turnstile and asks the backend to create a Stripe Checkout Session, then
+   * returns its URL. On success we redirect the browser to Stripe; on any
+   * failure we surface the Worker's reason and reset the (now-spent) token.
+   */
+  function initCheckoutForm() {
+    var form = document.getElementById('checkout-form');
+    var messageEl = document.getElementById('checkout-message');
+    if (!form) return;
+
+    function say(text, kind) {
+      if (!messageEl) return;
+      messageEl.textContent = text;
+      messageEl.className = 'form-message ' + kind;
+      messageEl.style.display = 'block';
+    }
+    function resetTurnstile() {
+      var widget = form.querySelector('.cf-turnstile');
+      if (!widget || typeof window.turnstile === 'undefined') return;
+      try { window.turnstile.reset(widget); } catch (_) {}
+    }
+    function reenable(btn) {
+      if (btn) { btn.disabled = false; btn.textContent = 'Continue to checkout'; }
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Starting checkout…'; }
+      if (messageEl) { messageEl.style.display = 'none'; messageEl.className = 'form-message'; messageEl.textContent = ''; }
+
+      var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
+      var payload = {
+        email: fieldValue(form, 'email'),
+        plan: fieldValue(form, 'plan'),
+        term: fieldValue(form, 'term'),
+        turnstileToken: tokenEl ? tokenEl.value : ''
+      };
+
+      fetch(CHECKOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) {
+          return res.json().then(
+            function (data) { return { ok: res.ok, data: data }; },
+            function () { return { ok: false, data: null }; }
+          );
+        })
+        .then(function (result) {
+          var data = result.data;
+          if (result.ok && data && data.ok === true && data.url) {
+            say('Redirecting to secure checkout…', 'success');
+            window.location.href = data.url;
+            return; // page navigates away — leave the button disabled
+          }
+          say((data && data.error) || 'Something went wrong starting checkout. Please try again.', 'error');
+          resetTurnstile();
+          reenable(submitBtn);
+        })
+        .catch(function () {
+          say('Could not reach the server. Please check your connection and try again.', 'error');
+          resetTurnstile();
+          reenable(submitBtn);
+        });
+    });
+  }
+
   function fieldValue(form, name) {
     var el = form.querySelector('[name="' + name + '"]');
     return el ? el.value : '';
@@ -400,4 +473,5 @@
   window.renderWiredApps = renderWiredApps;
   window.initAppsPage = initAppsPage;
   window.initContactForm = initContactForm;
+  window.initCheckoutForm = initCheckoutForm;
 })();
