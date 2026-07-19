@@ -34,6 +34,15 @@ const FIELD_LIMITS = { name: 200, email: 320, subject: 300, message: 5000 };
 const GENERIC_FAILURE =
   'Something went wrong sending your message. Please try again, or email us directly.';
 
+const GENERIC_CHECKOUT_FAILURE =
+  'Something went wrong starting checkout. Please try again in a moment.';
+
+// The Call Assistant backend that mints Stripe Checkout Sessions. Overridable
+// via the CALL_ASSISTANT_API binding; defaults to the production host.
+const DEFAULT_API_BASE = 'https://call-assistant.217.77.0.211.sslip.io';
+const CHECKOUT_PLANS = ['basic', 'pro', 'secretary'];
+const CHECKOUT_TERMS = ['monthly', 'six_month', 'yearly'];
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -46,6 +55,15 @@ export default {
         // is only ever read as JSON by the client.
         console.error('contact: unhandled', err && err.stack ? err.stack : String(err));
         return json({ ok: false, error: GENERIC_FAILURE }, 500);
+      }
+    }
+
+    if (url.pathname === '/api/checkout') {
+      try {
+        return await handleCheckout(request, env);
+      } catch (err) {
+        console.error('checkout: unhandled', err && err.stack ? err.stack : String(err));
+        return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 500);
       }
     }
 
@@ -102,24 +120,100 @@ async function handleForm(request, env, target, label) {
   }
 
   const verdict = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, request.headers.get('CF-Connecting-IP'));
-  if (!verdict.success) {
-    const codes = verdict['error-codes'] || [];
-    console.warn(label + ': turnstile rejected', codes.join(',') || 'unknown');
-    // A stale token is the one failure a visitor can actually act on — the
-    // widget expires them after 300s, which a slowly-filled form will hit.
-    const expired = codes.indexOf('timeout-or-duplicate') !== -1;
-    return json(
-      {
-        ok: false,
-        error: expired
-          ? 'Your spam check expired. Please complete it again and resend.'
-          : 'We could not verify you are human. Please complete the spam check and try again.',
-      },
-      403
-    );
-  }
+  if (!verdict.success) return turnstileRejection(verdict, label);
 
   return await forwardToFormSubmit(fields, target);
+}
+
+/**
+ * Web checkout handler. Verifies Turnstile, then calls the Call Assistant
+ * backend's POST /billing/web-checkout (authenticated with the shared
+ * WEB_CHECKOUT_TOKEN) to mint a Stripe Checkout Session, and returns its URL
+ * for the browser to redirect to. The token never reaches the browser.
+ */
+async function handleCheckout(request, env) {
+  if (request.method !== 'POST') {
+    return json({ ok: false, error: 'Method not allowed.' }, 405, { Allow: 'POST' });
+  }
+  if (!env.TURNSTILE_SECRET_KEY || !env.WEB_CHECKOUT_TOKEN) {
+    console.error('checkout: missing binding', {
+      turnstileSecret: Boolean(env.TURNSTILE_SECRET_KEY),
+      webCheckoutToken: Boolean(env.WEB_CHECKOUT_TOKEN),
+    });
+    return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 500);
+  }
+
+  let body;
+  try {
+    body = await readJsonBody(request);
+  } catch (err) {
+    return json({ ok: false, error: err.message }, 400);
+  }
+
+  const email = str(body.email);
+  const plan = str(body.plan);
+  const term = str(body.term);
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return json({ ok: false, error: 'Please enter a valid email address.' }, 400);
+  }
+  if (CHECKOUT_PLANS.indexOf(plan) === -1 || CHECKOUT_TERMS.indexOf(term) === -1) {
+    return json({ ok: false, error: 'Please choose a plan and billing term.' }, 400);
+  }
+
+  const token = str(body.turnstileToken);
+  if (!token) {
+    return json({ ok: false, error: 'Please complete the spam check and try again.' }, 400);
+  }
+  const verdict = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, request.headers.get('CF-Connecting-IP'));
+  if (!verdict.success) return turnstileRejection(verdict, 'checkout');
+
+  const apiBase = (env.CALL_ASSISTANT_API || DEFAULT_API_BASE).replace(/\/$/, '');
+  let res;
+  try {
+    res = await fetch(apiBase + '/billing/web-checkout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'x-web-checkout-token': env.WEB_CHECKOUT_TOKEN,
+      },
+      body: JSON.stringify({ email: email, plan: plan, term: term }),
+    });
+  } catch (err) {
+    console.error('checkout: backend unreachable', String(err));
+    return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
+  }
+
+  let data = null;
+  try {
+    data = await res.json();
+  } catch (_) {
+    console.error('checkout: backend non-JSON response, http ' + res.status);
+    return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
+  }
+  if (!res.ok || !data || !data.url) {
+    console.error('checkout: backend rejected http ' + res.status, data ? JSON.stringify(data) : '');
+    return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
+  }
+  return json({ ok: true, url: data.url });
+}
+
+/** Shared Turnstile-failure response for the form + checkout handlers. */
+function turnstileRejection(verdict, label) {
+  const codes = verdict['error-codes'] || [];
+  console.warn(label + ': turnstile rejected', codes.join(',') || 'unknown');
+  // A stale token is the one failure a visitor can actually act on — the widget
+  // expires them after 300s, which a slowly-filled form will hit.
+  const expired = codes.indexOf('timeout-or-duplicate') !== -1;
+  return json(
+    {
+      ok: false,
+      error: expired
+        ? 'Your spam check expired. Please complete it again and resend.'
+        : 'We could not verify you are human. Please complete the spam check and try again.',
+    },
+    403
+  );
 }
 
 /**
