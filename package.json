@@ -9,6 +9,6 @@
     "@fontsource/ibm-plex-mono": "^5.2.7",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/space-grotesk": "^5.2.10",
-    "sharp": "^0.33.5"
+    "sharp": "^0.35.0"
   }
 }
