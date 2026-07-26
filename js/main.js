@@ -392,12 +392,15 @@
       if (messageEl) { messageEl.style.display = 'none'; messageEl.className = 'form-message'; messageEl.textContent = ''; }
 
       var tokenEl = form.querySelector('[name="cf-turnstile-response"]');
+      // Comp/beta link (?comp=1): ask the Worker to enable the promo-code field
+      // on any term so a comp code (e.g. Secretary) can be redeemed on monthly.
       var payload = {
         email: fieldValue(form, 'email'),
         plan: fieldValue(form, 'plan'),
         term: fieldValue(form, 'term'),
         turnstileToken: tokenEl ? tokenEl.value : ''
       };
+      if (/[?&]comp=(1|true)\b/i.test(window.location.search)) payload.comp = true;
 
       fetch(CHECKOUT_URL, {
         method: 'POST',
