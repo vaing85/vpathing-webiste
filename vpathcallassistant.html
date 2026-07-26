@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Call Assistant — AI call screening &amp; virtual receptionist</title>
-  <meta name="description" content="Call Assistant is an AI that answers and screens your calls, takes messages, and texts you a summary — a personal spam screener and a full business receptionist in one. Join the waitlist.">
+  <meta name="description" content="Call Assistant is an AI that answers and screens your calls, takes messages, and texts you a summary — a personal spam screener and a full business receptionist in one. Subscribe from $25/month.">
   <meta property="og:title" content="Call Assistant — AI call screening &amp; virtual receptionist">
   <meta property="og:description" content="An AI that answers and screens your calls, takes messages, and connects the ones that matter. Personal screener and business receptionist in one.">
   <meta property="og:image" content="https://www.vpathingenterprisellc.site/assets/social-card.png">
@@ -17,8 +17,7 @@
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="canonical" href="https://www.vpathingenterprisellc.site/vpathcallassistant">
-  <!-- Turnstile: the waitlist form is verified server-side by our Worker before
-       any signup is forwarded (same path as the contact form). -->
+  <!-- Cloudflare Turnstile (spam protection for the checkout call) -->
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     /* Page-scoped styles so styles.css stays untouched. */
@@ -89,7 +88,7 @@
         <p class="tagline">An AI that answers and screens your calls — so you never miss what matters, and never pick up what doesn't.</p>
         <p class="intro">It picks up the calls you'd otherwise miss, finds out who's calling and why, texts you a summary, and connects the ones worth your time. A personal spam screener and a full business receptionist in one.</p>
         <div class="ca-hero-actions">
-          <a href="#waitlist" class="btn btn-primary">Join the waitlist</a>
+          <a href="#checkout" class="btn btn-primary">Get Call Assistant</a>
           <a href="#how" class="btn">See how it works</a>
         </div>
       </section>
@@ -119,7 +118,7 @@
 
       <section class="section" id="pricing" aria-labelledby="pricing-heading">
         <h2 id="pricing-heading" class="section-title">Plans</h2>
-        <p class="section-subtitle">Simple monthly pricing in U.S. dollars. 6-month and annual plans will also be available. Prices shown are planned launch pricing.</p>
+        <p class="section-subtitle">Simple pricing in U.S. dollars — choose monthly, 6-month, or annual at checkout. Monthly plans get 25% off for the first 6 months at launch.</p>
         <ul class="ca-pricing">
           <li class="service-card ca-plan">
             <h3>Basic</h3>
@@ -131,7 +130,7 @@
               <li>Text &amp; push summaries of who called</li>
               <li>Call transcripts &amp; recordings in the app</li>
             </ul>
-            <a href="#waitlist" class="btn btn-primary" data-plan="Basic">Join waitlist</a>
+            <a href="#checkout" class="btn btn-primary" data-plan="basic">Choose Basic</a>
           </li>
           <li class="service-card ca-plan is-featured">
             <span class="ca-badge">Most popular</span>
@@ -144,7 +143,7 @@
               <li>Live handoff — connect real callers to your phone</li>
               <li>Availability modes: in a meeting, busy, call back</li>
             </ul>
-            <a href="#waitlist" class="btn btn-primary" data-plan="Pro">Join waitlist</a>
+            <a href="#checkout" class="btn btn-primary" data-plan="pro">Choose Pro</a>
           </li>
           <li class="service-card ca-plan">
             <h3>Secretary</h3>
@@ -156,38 +155,41 @@
               <li>Listen in, steer, or take over live calls</li>
               <li>Priority support</li>
             </ul>
-            <a href="#waitlist" class="btn btn-primary" data-plan="Secretary">Join waitlist</a>
+            <a href="#checkout" class="btn btn-primary" data-plan="secretary">Choose Secretary</a>
           </li>
         </ul>
         <p class="ca-note" style="margin-top:var(--space-4);">Payments are processed by Stripe. Subscriptions renew until canceled; see our <a href="/refund">Refund &amp; Cancellation Policy</a>. Full pricing details are on our <a href="/pricing">Pricing</a> page.</p>
       </section>
 
-      <section class="section" id="waitlist" aria-labelledby="waitlist-heading">
-        <h2 id="waitlist-heading" class="section-title">Join the waitlist</h2>
-        <p class="section-subtitle">We're opening access in stages. Leave your email and we'll let you know the moment your spot is ready.</p>
+      <section class="section" id="checkout" aria-labelledby="checkout-heading">
+        <h2 id="checkout-heading" class="section-title">Get Call Assistant</h2>
+        <p class="section-subtitle">Pick your plan and billing term, enter your email, and continue to secure checkout. Payment is handled by Stripe — we never see your card details.</p>
         <div class="contact-form-wrap">
-          <!-- Submits through our Cloudflare Worker (/api/contact), which verifies
-               the Turnstile token server-side before forwarding the signup — the
-               same proven path the contact form uses. (The old version posted
-               straight to FormSubmit with no server-side verification.) -->
-          <form class="contact-form ca-waitlist" id="waitlist-form" aria-label="Call Assistant waitlist">
-            <label for="wl-name">Name <span class="ca-note">(optional)</span></label>
-            <input type="text" id="wl-name" name="name" autocomplete="name" placeholder="Your name">
-            <label for="wl-email">Email</label>
-            <input type="email" id="wl-email" name="email" required autocomplete="email" placeholder="your@email.com">
-            <label for="wl-use">I'd use it for</label>
-            <select id="wl-use" name="use">
-              <option value="Personal">Personal — screen my own calls</option>
-              <option value="Business">Business — receptionist for my company</option>
-              <option value="Both">Both</option>
+          <!-- Posts JSON to our own Worker (src/index.js) /api/checkout, which
+               verifies the Turnstile token and asks the backend to create a
+               Stripe Checkout Session, then returns its URL for the redirect. -->
+          <form class="contact-form ca-waitlist" id="checkout-form" aria-label="Call Assistant checkout">
+            <label for="co-plan">Plan</label>
+            <select id="co-plan" name="plan" required>
+              <option value="basic">Basic — $25/mo · personal call screening</option>
+              <option value="pro">Pro — $50/mo · business receptionist</option>
+              <option value="secretary">Secretary — $75/mo · full front desk</option>
             </select>
-            <input type="hidden" id="wl-plan" name="plan" value="">
+            <label for="co-term">Billing term</label>
+            <select id="co-term" name="term" required>
+              <option value="monthly">Monthly (25% off first 6 months at launch)</option>
+              <option value="six_month">6 months</option>
+              <option value="yearly">Yearly</option>
+            </select>
+            <label for="co-email">Email</label>
+            <input type="email" id="co-email" name="email" required autocomplete="email" placeholder="your@email.com">
             <div class="cf-turnstile" data-sitekey="0x4AAAAAAD2kE9SbYOzT4JP1" style="margin-top:var(--space-3);"></div>
             <div class="form-actions" style="margin-top:var(--space-3);">
-              <button type="submit" class="btn btn-primary">Join the waitlist</button>
+              <button type="submit" class="btn btn-primary">Continue to checkout</button>
             </div>
-            <div id="waitlist-message" class="form-message" role="status" aria-live="polite" style="display:none;"></div>
+            <div id="checkout-message" class="form-message" role="status" aria-live="polite" style="display:none;"></div>
           </form>
+          <p class="ca-note" style="margin-top:var(--space-3);">Secure payment by Stripe. Subscriptions renew until canceled — cancel anytime; see our <a href="/refund">Refund &amp; Cancellation Policy</a>.</p>
         </div>
       </section>
 
@@ -205,15 +207,35 @@
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 
-    // Plan buttons pre-fill the hidden plan field before jumping to the form.
+    // Plan buttons pre-select the plan in the checkout form before scrolling.
     document.querySelectorAll('a[data-plan]').forEach(function (a) {
       a.addEventListener('click', function () {
-        var planEl = document.getElementById('wl-plan');
-        if (planEl) planEl.value = a.getAttribute('data-plan') || '';
+        var planEl = document.getElementById('co-plan');
+        if (planEl) planEl.value = a.getAttribute('data-plan') || planEl.value;
       });
     });
 
-    if (window.initWaitlistForm) window.initWaitlistForm();
+    // Wire the checkout form (Worker /api/checkout + Turnstile -> Stripe).
+    if (window.initCheckoutForm) window.initCheckoutForm();
+
+    // Stripe redirects back here after checkout: ?subscribed=1 (success) or
+    // ?canceled=1 (abandoned). Show a banner and scroll to it.
+    (function () {
+      var s = window.location.search;
+      var msg = document.getElementById('checkout-message');
+      if (!msg) return;
+      if (/[?&]subscribed=1/.test(s)) {
+        msg.textContent = "You're subscribed — welcome to Call Assistant! Check your email for next steps.";
+        msg.className = 'form-message success';
+        msg.style.display = 'block';
+        document.getElementById('checkout').scrollIntoView();
+      } else if (/[?&]canceled=1/.test(s)) {
+        msg.textContent = 'Checkout canceled — no charge was made. You can pick a plan and try again anytime.';
+        msg.className = 'form-message';
+        msg.style.display = 'block';
+        document.getElementById('checkout').scrollIntoView();
+      }
+    })();
   </script>
 </body>
 </html>
