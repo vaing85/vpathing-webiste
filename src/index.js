@@ -160,6 +160,12 @@ async function handleCheckout(request, env) {
     return json({ ok: false, error: 'Please choose a plan and billing term.' }, 400);
   }
 
+  // Comp/beta checkout (set by the ?comp=1 beta link on the page). Tells the
+  // backend to show the manual promo-code field and skip the auto-applied
+  // launch coupon, so a comp code can be redeemed on ANY term — including
+  // monthly, where the launch coupon would otherwise hide the promo field.
+  const comp = body.comp === true;
+
   const token = str(body.turnstileToken);
   if (!token) {
     return json({ ok: false, error: 'Please complete the spam check and try again.' }, 400);
@@ -177,7 +183,7 @@ async function handleCheckout(request, env) {
         Accept: 'application/json',
         'x-web-checkout-token': env.WEB_CHECKOUT_TOKEN,
       },
-      body: JSON.stringify({ email: email, plan: plan, term: term }),
+      body: JSON.stringify(comp ? { email: email, plan: plan, term: term, comp: true } : { email: email, plan: plan, term: term }),
     });
   } catch (err) {
     console.error('checkout: backend unreachable', String(err));

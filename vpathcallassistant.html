@@ -234,6 +234,11 @@
         msg.className = 'form-message';
         msg.style.display = 'block';
         document.getElementById('checkout').scrollIntoView();
+      } else if (/[?&]comp=(1|true)\b/i.test(s)) {
+        // Beta/comp link: tell the tester the promo field will be available.
+        msg.textContent = 'Beta access: pick a plan and continue — you can enter your access code on the secure checkout page.';
+        msg.className = 'form-message';
+        msg.style.display = 'block';
       }
     })();
   </script>
