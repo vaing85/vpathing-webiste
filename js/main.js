@@ -102,7 +102,7 @@
 
   function renderAppCard(app) {
     var links = app.links || {};
-    var hasLinks = links.website || links.demo || links.github;
+    var hasLinks = links.signup || links.website || links.demo || links.github;
     var statusClass = getStatusClass(app.status);
 
     var tagsHtml = (app.tags || []).map(function (tag) {
@@ -117,6 +117,9 @@
 
     var linksHtml = '';
     if (hasLinks) {
+      if (links.signup) {
+        linksHtml += '<a href="' + escapeAttr(links.signup) + '"' + linkAttrs(links.signup) + '>Sign up</a>';
+      }
       if (links.website) {
         linksHtml += '<a href="' + escapeAttr(links.website) + '"' + linkAttrs(links.website) + '>Website</a>';
       }
@@ -134,7 +137,7 @@
     // (website preferred), and a stretched ::after over the card makes the
     // entire tile clickable. The explicit links below stay independently
     // clickable (they sit above the stretched overlay).
-    var primary = links.website || links.demo || links.github;
+    var primary = links.signup || links.website || links.demo || links.github;
     var titleHtml = primary
       ? '<h3><a class="app-card-link" href="' + escapeAttr(primary) + '"' + linkAttrs(primary) + '>' + escapeHtml(app.name) + '</a></h3>'
       : '<h3>' + escapeHtml(app.name) + '</h3>';
@@ -197,7 +200,7 @@
     if (!container) return;
     fetchApps().then(function (apps) {
       var list = apps.filter(function (app) {
-        return app.links && app.links.website;
+        return app.links && (app.links.website || app.links.signup);
       });
       container.innerHTML = list.map(renderAppCard).join('');
       container.querySelectorAll('.app-card').forEach(observeReveal);

@@ -56,11 +56,15 @@
     "links": {}
   },
   {
-    "name": "Helpdesk",
-    "description": "Support desk and ticketing platform for managing customer requests and conversations.",
-    "status": "In development",
+    "name": "DeskPath",
+    "description": "Multi-tenant support desk and ticketing SaaS — manage customer emails, tickets, and conversations in one shared inbox. Start a 14-day free trial.",
+    "status": "Live",
+    "badge": "New",
     "tags": ["support", "helpdesk", "ticketing", "saas"],
-    "links": {}
+    "links": {
+      "signup": "https://deskpath.vpathingenterprisellc.site/signup",
+      "website": "https://deskpath.vpathingenterprisellc.site"
+    }
   },
   {
     "name": "Zappay",
