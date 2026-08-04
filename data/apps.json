@@ -30,7 +30,7 @@
     "description": "Peer-to-peer car-sharing marketplace connecting vehicle owners with renters — listings, bookings, deposits, host–renter messaging, and reviews.",
     "status": "In development",
     "tags": ["marketplace", "car sharing", "rentals", "bookings"],
-    "links": {}
+    "links": { "website": "https://www.carshare.site" }
   },
   {
     "name": "Nestura",
@@ -92,7 +92,7 @@
     "description": "Gaming platform: slots, table games, tournaments, live dealer, and mobile-friendly casino experience.",
     "status": "In development",
     "tags": ["gaming", "casino", "slots", "tournaments"],
-    "links": {}
+    "links": { "website": "https://www.greenwoodgames.site" }
   },
   {
     "name": "VoxArena",
