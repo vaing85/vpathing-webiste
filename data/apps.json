@@ -37,7 +37,7 @@
     "description": "Peer-to-peer accommodation booking: property listings, reservations, payments, and host–guest messaging in one platform.",
     "status": "In development",
     "tags": ["booking", "rentals", "accommodation", "payments"],
-    "links": {}
+    "links": { "website": "https://www.nestura.site" }
   },
   {
     "name": "Open Source Connections",
@@ -74,6 +74,13 @@
     "links": {}
   },
   {
+    "name": "ZapRoute",
+    "description": "Delivery, food, and rideshare on one platform — order from local stores and restaurants or book a ride, with shared dispatch and live tracking across all three services.",
+    "status": "In development",
+    "tags": ["delivery", "food", "rideshare", "logistics"],
+    "links": { "website": "https://www.zaproute.site" }
+  },
+  {
     "name": "Pharmacy Delivery",
     "description": "Last-mile pharmacy delivery: product catalog, orders, driver assignment, and real-time delivery tracking.",
     "status": "In development",
@@ -92,7 +99,7 @@
     "description": "Competitive singing game: sing along, battle other players, and climb the leaderboard in a live vocal showdown.",
     "status": "In development",
     "tags": ["music", "singing", "competition", "game"],
-    "links": {}
+    "links": { "website": "https://www.voxarena.studio" }
   },
   {
     "name": "Tower Defense",
