@@ -217,12 +217,43 @@
     var statusSelect = document.getElementById('apps-status');
     if (!grid) return;
 
+    // Group apps by status so the dashboard reads clearly (Live apps together,
+    // Coming soon / In development together) instead of interleaved.
+    var STATUS_ORDER = ['Live', 'MVP', 'Deployment', 'In development'];
+
+    function groupByStatus(list) {
+      var buckets = {};
+      var seen = [];
+      list.forEach(function (app) {
+        var status = (app.status || 'In development').trim();
+        if (!buckets[status]) { buckets[status] = []; seen.push(status); }
+        buckets[status].push(app);
+      });
+      seen.sort(function (a, b) {
+        var ia = STATUS_ORDER.indexOf(a); if (ia === -1) ia = STATUS_ORDER.length;
+        var ib = STATUS_ORDER.indexOf(b); if (ib === -1) ib = STATUS_ORDER.length;
+        return ia - ib;
+      });
+      return seen.map(function (status) {
+        return { status: status, apps: buckets[status] };
+      });
+    }
+
     function render(list) {
-      grid.innerHTML = list.map(renderAppCard).join('');
-      grid.querySelectorAll('.app-card').forEach(observeReveal);
       if (emptyEl) {
         emptyEl.style.display = list.length ? 'none' : 'block';
       }
+      grid.innerHTML = groupByStatus(list).map(function (group) {
+        return (
+          '<section class="apps-group">' +
+            '<h3 class="apps-group-title">' + escapeHtml(group.status) +
+              ' <span class="apps-group-count">' + group.apps.length + '</span>' +
+            '</h3>' +
+            '<div class="apps-grid">' + group.apps.map(renderAppCard).join('') + '</div>' +
+          '</section>'
+        );
+      }).join('');
+      grid.querySelectorAll('.app-card').forEach(observeReveal);
     }
 
     function applyFilters() {

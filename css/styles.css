@@ -766,6 +766,37 @@ h1.section-title {
   gap: var(--space-6);
 }
 
+/* Status-grouped dashboard (All apps): each status is its own labeled block */
+.apps-groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.apps-group-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.apps-group-count {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+}
+
 .app-card {
   position: relative;
   background: var(--color-surface);
