@@ -178,14 +178,18 @@
   }
 
   /**
-   * Render featured apps on the homepage (top N).
+   * Render featured apps: only Live apps, so the featured strip never
+   * surfaces a Coming soon / in-progress app.
    * @param {HTMLElement} container - Element to append cards to
-   * @param {number} limit - Max number of apps (e.g. 4)
+   * @param {number} [limit] - Optional cap on how many Live apps to show
    */
   function renderFeaturedApps(container, limit) {
     if (!container) return;
     fetchApps().then(function (apps) {
-      var list = apps.slice(0, limit || 4);
+      var list = apps.filter(function (app) {
+        return (app.status || '').trim().toLowerCase() === 'live';
+      });
+      if (limit) list = list.slice(0, limit);
       container.innerHTML = list.map(renderAppCard).join('');
       container.querySelectorAll('.app-card').forEach(observeReveal);
     });

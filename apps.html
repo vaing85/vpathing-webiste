@@ -53,7 +53,7 @@
         <h2 id="featured-apps-heading" class="section-title">Featured apps</h2>
         <p class="section-subtitle">A selection of our current apps and projects.</p>
         <div id="featured-apps-grid" class="apps-grid">
-          <!-- Populated by main.js (first 4 from data/apps.json) -->
+          <!-- Populated by main.js (Live apps from data/apps.json) -->
         </div>
       </section>
 
@@ -96,7 +96,7 @@
       document.getElementById('footer-year').textContent = new Date().getFullYear();
       var featuredGrid = document.getElementById('featured-apps-grid');
       if (featuredGrid && window.renderFeaturedApps) {
-        window.renderFeaturedApps(featuredGrid, 4);
+        window.renderFeaturedApps(featuredGrid);
       }
       if (window.initAppsPage) {
         window.initAppsPage();
