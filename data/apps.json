@@ -30,23 +30,21 @@
     "description": "Peer-to-peer car-sharing marketplace connecting vehicle owners with renters — listings, bookings, deposits, host–renter messaging, and reviews.",
     "status": "In development",
     "tags": ["marketplace", "car sharing", "rentals", "bookings"],
-    "links": { "website": "https://www.carshare.site" }
+    "links": {}
   },
   {
     "name": "Nestura",
     "description": "Peer-to-peer accommodation booking: property listings, reservations, payments, and host–guest messaging in one platform.",
     "status": "In development",
     "tags": ["booking", "rentals", "accommodation", "payments"],
-    "links": { "website": "https://www.nestura.site" }
+    "links": {}
   },
   {
     "name": "Open Source Connections",
     "description": "Platform for building meaningful connections within the open source community.",
     "status": "In development",
     "tags": ["community", "networking", "open source", "connections"],
-    "links": {
-      "website": "https://www.opensourceconnection.site"
-    }
+    "links": {}
   },
   {
     "name": "Pathing MDM",
@@ -78,7 +76,7 @@
     "description": "Delivery, food, and rideshare on one platform — order from local stores and restaurants or book a ride, with shared dispatch and live tracking across all three services.",
     "status": "In development",
     "tags": ["delivery", "food", "rideshare", "logistics"],
-    "links": { "website": "https://www.zaproute.site" }
+    "links": {}
   },
   {
     "name": "Pharmacy Delivery",
@@ -106,8 +104,6 @@
     "description": "Tower defense game: build towers, defend against waves of enemies, and strategize to survive.",
     "status": "In development",
     "tags": ["games", "tower defense", "strategy"],
-    "links": {
-      "github": "https://github.com/vaing85/tower-defense"
-    }
+    "links": {}
   }
 ]
