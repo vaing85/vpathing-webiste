@@ -97,7 +97,7 @@
     "description": "Competitive singing game: sing along, battle other players, and climb the leaderboard in a live vocal showdown.",
     "status": "In development",
     "tags": ["music", "singing", "competition", "game"],
-    "links": { "website": "https://www.voxarena.studio" }
+    "links": {}
   },
   {
     "name": "Tower Defense",
