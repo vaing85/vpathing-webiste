@@ -11,7 +11,7 @@
   {
     "name": "Call Assistant",
     "description": "AI call-screening assistant that answers and screens incoming calls, takes voicemails, and texts you an SMS summary of who called and why. A personal spam screener and business receptionist in one.",
-    "status": "MVP",
+    "status": "Live",
     "badge": "New",
     "tags": ["AI", "telephony", "call screening", "SMS"],
     "links": { "website": "/vpathcallassistant" }
@@ -19,7 +19,7 @@
   {
     "name": "UMechanics",
     "description": "Your trusted companion for DIY vehicle maintenance — repair guides, vehicle management, and step-by-step support for car owners.",
-    "status": "In development",
+    "status": "Live",
     "tags": ["automotive", "DIY", "vehicle", "maintenance", "repair"],
     "links": {
       "website": "https://www.umechanics.site"
@@ -88,7 +88,7 @@
   {
     "name": "Greenwoods Games",
     "description": "Gaming platform: slots, table games, tournaments, live dealer, and mobile-friendly casino experience.",
-    "status": "In development",
+    "status": "Live",
     "tags": ["gaming", "casino", "slots", "tournaments"],
     "links": { "website": "https://www.greenwoodgames.site" }
   },
