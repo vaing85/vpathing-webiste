@@ -43,9 +43,20 @@ const DEFAULT_API_BASE = 'https://call-assistant.217.77.0.211.sslip.io';
 const CHECKOUT_PLANS = ['basic', 'pro', 'secretary'];
 const CHECKOUT_TERMS = ['monthly', 'six_month', 'yearly'];
 
+// civic-platform deploys separately (Coolify Docker containers, not this
+// Worker) at its own subdomain. This just redirects the branded path there —
+// see wrangler.toml's run_worker_first for why the Worker sees this path at
+// all.
+const CIVIC_PLATFORM_ORIGIN = 'https://civicplatform.vpathingenterprisellc.site';
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.pathname === '/civicplatform' || url.pathname.startsWith('/civicplatform/')) {
+      const rest = url.pathname.slice('/civicplatform'.length);
+      return Response.redirect(CIVIC_PLATFORM_ORIGIN + rest + url.search, 301);
+    }
 
     if (url.pathname === '/api/contact') {
       try {
