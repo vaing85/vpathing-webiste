@@ -109,8 +109,9 @@
   {
     "name": "Civic Platform",
     "description": "All-in-one operations hub for small towns — utility billing, municipal court, code enforcement, and public safety records in one multi-tenant system with a shared database and a single login.",
-    "status": "In development",
+    "status": "Live",
+    "badge": "New",
     "tags": ["govtech", "saas", "multi-tenant", "operations"],
-    "links": {}
+    "links": { "website": "/civicplatform" }
   }
 ]
