@@ -27,10 +27,7 @@ not_found_handling = "404-page"
 # Required, and easy to miss: not_found_handling = "404-page" *overrides* the
 # default behaviour of invoking the Worker when no asset matches. Without this
 # line, POST /api/contact matches no file and is answered with 404.html — the
-# Worker never runs and the contact form silently 404s. /civicplatform* is
-# listed for the same reason: civic-platform deploys separately (Coolify, not
-# this Worker), so /civicplatform needs the Worker to redirect it there —
-# without this it would 404 (no matching static file) before ever reaching
-# the redirect check in src/index.js. Every other path keeps the asset-first
+# Worker never runs and the contact form silently 404s. Listing /api/* routes
+# those requests to the Worker first; every other path keeps the asset-first
 # behaviour above.
-run_worker_first = ["/api/*", "/civicplatform*"]
+run_worker_first = ["/api/*"]
