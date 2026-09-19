@@ -36,9 +36,9 @@
         <ul class="nav-list">
           <li><a href="/">Home</a></li>
           <li><a href="/apps">Apps</a></li>
-          <li><a href="/pricing">Pricing</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
+          <li><a href="/apps" class="btn btn-primary nav-cta">Browse apps</a></li>
         </ul>
       </nav>
     </div>
@@ -46,18 +46,23 @@
 
   <main class="main" id="main-content">
     <div class="container">
-      <h1 class="section-title" style="margin-top: 0;">Apps & Projects</h1>
-      <p class="section-subtitle">Our current and in-progress applications.</p>
+      <section class="hero hero--split" aria-labelledby="apps-heading">
+        <span class="label-mono">Apps</span>
+        <h1 id="apps-heading"><span data-app-count="total">13</span> products, <span class="hero-accent">one path</span></h1>
+        <p class="intro">Everything we run and everything we're building — from live in production to still on the bench.</p>
+      </section>
 
       <section class="section" id="featured-apps" aria-labelledby="featured-apps-heading">
-        <h2 id="featured-apps-heading" class="section-title">Featured apps</h2>
-        <p class="section-subtitle">A selection of our current apps and projects.</p>
+        <span class="label-mono">01 · Featured</span>
+        <h2 id="featured-apps-heading" class="section-title">Live in production</h2>
+        <p class="section-subtitle"><span data-app-count="live">6</span> apps serving real users today.</p>
         <div id="featured-apps-grid" class="apps-grid">
           <!-- Populated by main.js (Live apps from data/apps.json) -->
         </div>
       </section>
 
-      <h2 class="section-title">All apps</h2>
+      <span class="label-mono">02 · The roadmap</span>
+      <h2 class="section-title">Shipped, shipping, and next</h2>
       <p class="section-subtitle">Filter by status or search by name or description.</p>
       <div class="filters">
         <label for="apps-search" class="visually-hidden">Search apps</label>
@@ -94,6 +99,9 @@
   <script>
     (function () {
       document.getElementById('footer-year').textContent = new Date().getFullYear();
+      if (window.renderAppCounts) {
+        window.renderAppCounts();
+      }
       var featuredGrid = document.getElementById('featured-apps-grid');
       if (featuredGrid && window.renderFeaturedApps) {
         window.renderFeaturedApps(featuredGrid);

@@ -1528,3 +1528,15 @@ h1.section-title {
   font-size: var(--text-sm);
   color: var(--color-text-muted);
 }
+
+/* ---- Price line on the contact page's cost cards ----
+   Sits last in a `.service-card`, pushed to the bottom so the figures line up
+   across cards whose descriptions differ in length. */
+.price-tag {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-accent-2);
+}

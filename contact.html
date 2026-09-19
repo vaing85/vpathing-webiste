@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — VPathing Enterprise LLC</title>
-  <meta name="description" content="Contact VPathing Enterprise LLC. Send us a message using the form below.">
+  <meta name="description" content="Contact VPathing Enterprise LLC — reach us by email or phone, see what things cost, or send a message with the form.">
   <meta property="og:title" content="Contact — VPathing Enterprise LLC">
-  <meta property="og:description" content="Contact VPathing Enterprise LLC. Send us a message using the form below.">
+  <meta property="og:description" content="Reach us by email or phone, see what things cost, or send a message with the form.">
   <meta property="og:image" content="https://www.vpathingenterprisellc.site/assets/social-card.png">
   <meta property="og:url" content="https://www.vpathingenterprisellc.site/contact">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Contact — VPathing Enterprise LLC">
-  <meta name="twitter:description" content="Contact VPathing Enterprise LLC. Send us a message using the form below.">
+  <meta name="twitter:description" content="Reach us by email or phone, see what things cost, or send a message with the form.">
   <meta name="twitter:image" content="https://www.vpathingenterprisellc.site/assets/social-card.png">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   <link rel="stylesheet" href="/css/styles.css">
@@ -38,9 +38,9 @@
         <ul class="nav-list">
           <li><a href="/">Home</a></li>
           <li><a href="/apps">Apps</a></li>
-          <li><a href="/pricing">Pricing</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
+          <li><a href="/apps" class="btn btn-primary nav-cta">Browse apps</a></li>
         </ul>
       </nav>
     </div>
@@ -48,59 +48,94 @@
 
   <main class="main" id="main-content">
     <div class="container">
-      <h1 class="section-title" style="margin-top: 0;">Contact</h1>
-      <p class="section-subtitle">Reach our support team using the details below, or send a message with the form.</p>
+      <section class="hero hero--split" aria-labelledby="contact-heading">
+        <span class="label-mono">Contact</span>
+        <h1 id="contact-heading">Let's talk about your build</h1>
+        <p class="intro">Reach us directly or send a message — we aim to respond within 1&ndash;2 business days.</p>
+      </section>
 
-      <section class="section" aria-labelledby="support-heading">
-        <h2 id="support-heading" class="section-title">Customer support &amp; business information</h2>
+      <section class="section" aria-labelledby="reach-heading">
+        <h2 id="reach-heading" class="visually-hidden">How to reach us</h2>
         <ul class="services-grid" style="list-style: none; padding: 0; margin: 0;">
           <li class="service-card">
-            <h3>Business</h3>
-            <p>VPathing Enterprise LLC<br>A U.S. limited liability company</p>
+            <span class="label-mono">Email</span>
+            <p><a href="mailto:villa.aing@vpathingenterprisellc.site">villa.aing@vpathingenterprisellc.site</a><br>Response within 1&ndash;2 business days.</p>
           </li>
           <li class="service-card">
-            <h3>Support email</h3>
-            <p><a href="mailto:villa.aing@vpathingenterprisellc.site">villa.aing@vpathingenterprisellc.site</a><br>We aim to respond within 1&ndash;2 business days.</p>
-          </li>
-          <li class="service-card">
-            <h3>Phone</h3>
+            <span class="label-mono">Phone</span>
             <p><a href="tel:+13464911200">+1 (346) 491-1200</a><br>Mon&ndash;Fri, 9:00 AM&ndash;5:00 PM (CST)</p>
           </li>
           <li class="service-card">
-            <h3>Mailing address</h3>
-            <p>VPathing Enterprise LLC<br>2911 W Greens Rd<br>Houston, TX 77067<br>United States</p>
+            <span class="label-mono">Business</span>
+            <p>VPathing Enterprise LLC<br>A U.S. limited liability company<br>Houston, Texas</p>
           </li>
         </ul>
       </section>
 
-      <h2 class="section-title">Send us a message</h2>
-      <div class="contact-form-wrap">
-        <!-- Posts to our own Worker (src/index.js), which verifies the Turnstile
-             token before forwarding to FormSubmit. The form backend and its
-             options live server-side now: keeping the endpoint out of the page
-             is what stops a bot posting straight to it and skipping Turnstile. -->
-        <form
-          id="contact-form"
-          class="contact-form"
-          method="POST"
-          action="/api/contact"
-          aria-label="Contact form"
-        >
-          <label for="contact-name">Name</label>
-          <input type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Your name">
-          <label for="contact-email">Email</label>
-          <input type="email" id="contact-email" name="email" required autocomplete="email" placeholder="your@email.com">
-          <label for="contact-subject">Subject</label>
-          <input type="text" id="contact-subject" name="subject" placeholder="Subject of your message">
-          <label for="contact-message">Message</label>
-          <textarea id="contact-message" name="message" required placeholder="Your message"></textarea>
-          <div class="cf-turnstile" data-sitekey="0x4AAAAAAD2kE9SbYOzT4JP1"></div>
-          <div class="form-actions">
-            <button type="submit" class="btn btn-primary">Send message</button>
-          </div>
-          <div id="form-message" class="form-message" role="status" aria-live="polite" style="display: none;"></div>
-        </form>
-      </div>
+      <section class="section" aria-labelledby="pricing-heading">
+        <span class="label-mono">Pricing</span>
+        <h2 id="pricing-heading" class="section-title">What things cost</h2>
+        <p class="section-subtitle">Every engagement is confirmed with a written quote, order summary, or checkout total before you're charged — so you always know the exact amount and currency in advance. All prices in USD.</p>
+        <ul class="services-grid" style="list-style: none; padding: 0; margin: 0;">
+          <li class="service-card">
+            <h3>Custom software</h3>
+            <p>Web apps, automation, dashboards, integrations, and MVP builds. Priced per project or per hour, quoted before any work begins.</p>
+            <p class="price-tag">from $1,500</p>
+          </li>
+          <li class="service-card">
+            <h3>Subscriptions</h3>
+            <p>Selected hosted applications on a recurring monthly or annual plan. Price and interval shown at sign-up and on your receipt.</p>
+            <p class="price-tag">from $9 / month</p>
+          </li>
+          <li class="service-card">
+            <h3>One-time purchases</h3>
+            <p>Certain products and licenses are available for a single fee, shown at checkout before you pay.</p>
+            <p class="price-tag">shown at checkout</p>
+          </li>
+        </ul>
+        <div class="mission-block" style="margin-top: var(--space-8);">
+          <p><strong>Payments.</strong> Processed securely by Stripe. We accept Visa, Mastercard, American Express, and Discover. We do not store full card details.</p>
+          <p><strong>Taxes &amp; renewals.</strong> Prices exclude applicable taxes, calculated at checkout. Subscriptions renew automatically until canceled.</p>
+          <p><strong>Statement descriptor.</strong> Charges appear as <code>VPATHING ENTERPRISE</code>.</p>
+          <!-- The summary above is the short version. /pricing still carries the
+               full billing terms — currency, advance notice of price changes,
+               cancellation — which the checkout flow needs to stay reachable
+               even though Pricing has left the nav. -->
+          <p><a href="/pricing">Full pricing &amp; billing terms</a> · <a href="/refund">Refund &amp; Cancellation Policy</a></p>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="message-heading">
+        <span class="label-mono">Send a message</span>
+        <h2 id="message-heading" class="section-title">Tell us what you need</h2>
+        <div class="contact-form-wrap">
+          <!-- Posts to our own Worker (src/index.js), which verifies the Turnstile
+               token before forwarding to FormSubmit. The form backend and its
+               options live server-side now: keeping the endpoint out of the page
+               is what stops a bot posting straight to it and skipping Turnstile. -->
+          <form
+            id="contact-form"
+            class="contact-form"
+            method="POST"
+            action="/api/contact"
+            aria-label="Contact form"
+          >
+            <label for="contact-name">Name</label>
+            <input type="text" id="contact-name" name="name" required autocomplete="name" placeholder="Your name">
+            <label for="contact-email">Email</label>
+            <input type="email" id="contact-email" name="email" required autocomplete="email" placeholder="your@email.com">
+            <label for="contact-subject">Subject</label>
+            <input type="text" id="contact-subject" name="subject" placeholder="Subject of your message">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" required placeholder="Your message"></textarea>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAAD2kE9SbYOzT4JP1"></div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Send message</button>
+            </div>
+            <div id="form-message" class="form-message" role="status" aria-live="polite" style="display: none;"></div>
+          </form>
+        </div>
+      </section>
     </div>
   </main>
 
