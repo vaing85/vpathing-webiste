@@ -119,10 +119,22 @@
   --color-accent-light: rgba(47, 107, 255, 0.14);
 
   /* Gradients — brand sheet 04 specifies 90° · #2F6BFF → #22D3EE.
-     --grad-brand paints under text, so it uses the bright variant;
-     --grad-brand-strong sits beneath white text and uses the canonical. */
+     --grad-brand paints under text, so it uses the bright variant. */
   --grad-brand: linear-gradient(90deg, var(--brand-blue-bright) 0%, var(--brand-cyan) 100%);
-  --grad-brand-strong: linear-gradient(90deg, var(--brand-blue) 0%, var(--brand-cyan) 100%);
+
+  /* --grad-brand-strong sits *beneath* white text, which the sheet's ramp
+     cannot carry: white on #22D3EE measures 1.81:1, and even the #2F6BFF end
+     only reaches 4.50:1 — the AA threshold exactly, with nothing spare. The
+     cyan end is what made the header button look washed out.
+
+     These stops are the sheet's ramp walked down until the *whole* length
+     clears AA, not just the ends: sampled every 10%, the worst point is
+     5.21:1. Deeper stops score higher but drift further from the brand blue,
+     so this is the shallowest correction that holds.
+
+     Decorative gradients should keep using --grad-brand; this one is only for
+     surfaces carrying white text. */
+  --grad-brand-strong: linear-gradient(90deg, #2a62ea 0%, #1673a0 100%);
 
   /* Status */
   --color-success: #2dd4bf;
@@ -1494,9 +1506,29 @@ h1.section-title {
 /* ---- Header call-to-action ----
    The nav's last item is a button rather than a link. `.btn` sets its own
    padding and font-size, so this only trims it to nav scale. */
-.nav-cta {
+/* The header CTA is a `.btn` living inside `.nav-list`, and `.nav-list a`
+   (0,1,1) outranks `.btn-primary` (0,1,0) — so the button quietly inherited
+   the nav's muted grey and weight 500 instead of white and 600. Grey on the
+   button gradient measures 1.79:1, which is what made it look washed out;
+   white on the corrected gradient is 5.21:1.
+
+   These selectors match the nav rules' specificity so the button keeps its
+   own styling. `.nav-list a:hover` also sets a flat grey `background`, which
+   would replace the gradient outright rather than tint it, so the hover and
+   current-page states are restated here too. */
+.nav-list a.nav-cta {
   padding: var(--space-2) var(--space-5);
   font-size: var(--text-sm);
+  font-weight: 600;
+  color: #fff;
+}
+
+.nav-list a.nav-cta:hover,
+.nav-list a.nav-cta:focus-visible,
+.nav-list a.nav-cta[aria-current="page"] {
+  color: #fff;
+  background: var(--grad-brand-strong);
+  box-shadow: 0 14px 34px rgba(47, 107, 255, 0.5);
 }
 
 /* ---- Founder sign-off ---- */
