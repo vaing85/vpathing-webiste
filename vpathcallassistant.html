@@ -21,10 +21,10 @@
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     /* Page-scoped styles so styles.css stays untouched. */
-    .ca-hero { text-align: center; }
-    .ca-hero .tagline { max-width: 46ch; margin-left: auto; margin-right: auto; }
-    .ca-hero .intro { max-width: 60ch; margin-left: auto; margin-right: auto; }
-    .ca-hero-actions { margin-top: var(--space-6); display: flex; gap: var(--space-3); justify-content: center; flex-wrap: wrap; }
+    .ca-hero .tagline, .ca-hero .intro { margin-left: 0; margin-right: 0; }
+    .ca-hero .tagline { max-width: 46ch; }
+    .ca-hero .intro { max-width: 60ch; }
+    .ca-hero-actions { margin-top: var(--space-6); display: flex; gap: var(--space-3); justify-content: flex-start; flex-wrap: wrap; }
     .ca-steps { counter-reset: step; }
     .ca-step h3::before {
       counter-increment: step; content: counter(step);
@@ -84,7 +84,8 @@
   <main class="main" id="main-content">
     <div class="container">
 
-      <section class="hero ca-hero">
+      <section class="hero hero--split ca-hero">
+        <span class="label-mono">Product · AI telephony</span>
         <h1>Call Assistant</h1>
         <p class="tagline">An AI that answers and screens your calls — so you never miss what matters, and never pick up what doesn't.</p>
         <p class="intro">It picks up the calls you'd otherwise miss, finds out who's calling and why, texts you a summary, and connects the ones worth your time. A personal spam screener and a full business receptionist in one.</p>
