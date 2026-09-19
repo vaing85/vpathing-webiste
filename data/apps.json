@@ -78,7 +78,9 @@
       "open source",
       "connections"
     ],
-    "links": {}
+    "links": {
+      "website": "https://opensourceconnection.site"
+    }
   },
   {
     "name": "PathFam",
@@ -131,7 +133,9 @@
       "rideshare",
       "logistics"
     ],
-    "links": {}
+    "links": {
+      "website": "https://www.zaproute.site"
+    }
   },
   {
     "name": "Pharmacy Delivery",
@@ -170,7 +174,9 @@
       "competition",
       "game"
     ],
-    "links": {}
+    "links": {
+      "website": "https://voxarena.studio"
+    }
   },
   {
     "name": "Tower Defense",
