@@ -1312,3 +1312,219 @@ h1.section-title {
     transform: none;
   }
 }
+
+/* ============================================
+   Split hero + stat panel  (core-pages redesign)
+
+   The centred `.hero` above still serves the ten pages that have not been
+   restyled yet. `.hero--split` is the new two-column treatment: copy on the
+   left, a live-counts panel on the right.
+
+   Colours come from the tokens rather than the mockup's raw hexes on purpose —
+   the mockup hard-codes #94A5BD/#6E819C for body text, and the token values
+   are the ones measured against WCAG AA further up this file.
+   ============================================ */
+
+.hero--split {
+  text-align: left;
+  padding: var(--space-20) 0 var(--space-16);
+  overflow: hidden;
+}
+
+/* The two radial washes that give the hero its depth. Decorative only, so it
+   is painted behind content and hidden from assistive tech. */
+.hero--split::before {
+  content: "";
+  position: absolute;
+  inset: -10% -20% auto;
+  height: 150%;
+  pointer-events: none;
+  background:
+    radial-gradient(760px 420px at 50% -10%, rgba(34, 211, 238, 0.19), transparent 64%),
+    radial-gradient(620px 380px at 88% 30%, rgba(47, 107, 255, 0.16), transparent 62%);
+}
+
+.hero-layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  gap: var(--space-12);
+  align-items: center;
+}
+
+.hero--split h1 {
+  font-size: clamp(var(--text-4xl), 6.5vw, 4.125rem);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  /* The white-to-cyan wash on `.hero h1` runs across the whole heading. Here
+     only the final line carries the gradient, so the base is plain white and
+     `.hero-accent` paints itself. */
+  background: none;
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+}
+
+.hero-accent {
+  background: linear-gradient(100deg, var(--brand-blue-bright), var(--brand-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.hero--split .tagline,
+.hero--split .intro {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 52ch;
+}
+
+.hero--split .hero-ctas {
+  justify-content: flex-start;
+}
+
+/* ---- Counts panel ---- */
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.stat-card {
+  padding: var(--space-6);
+  background: linear-gradient(160deg, #10203c, #0b1322);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.stat-card--accent {
+  border-color: rgba(34, 211, 238, 0.24);
+}
+
+.stat-card--wide {
+  grid-column: 1 / -1;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-4xl);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.stat-card--accent .stat-value {
+  color: var(--color-accent-2);
+}
+
+.stat-label {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.stat-card--wide .stat-label {
+  margin-top: 0;
+  margin-bottom: var(--space-3);
+}
+
+/* Sector chips. `.tags` further up is an <ul> with its own list reset; these
+   sit inline in the panel, so they get their own lighter treatment. */
+.stat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stat-tags li {
+  padding: var(--space-1) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text);
+  background: rgba(124, 154, 196, 0.13);
+  border-radius: 6px;
+}
+
+/* ---- Numbered section labels ("01 · FEATURED") ---- */
+
+.label-mono {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-accent-2);
+}
+
+/* ---- Section heading with a trailing link ---- */
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-bottom: var(--space-8);
+}
+
+.section-head .section-title,
+.section-head .section-subtitle {
+  margin-bottom: 0;
+}
+
+.section-head-link {
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .hero-stats {
+    grid-template-columns: 1fr;
+  }
+  .stat-card--wide {
+    grid-column: auto;
+  }
+}
+
+/* ---- Header call-to-action ----
+   The nav's last item is a button rather than a link. `.btn` sets its own
+   padding and font-size, so this only trims it to nav scale. */
+.nav-cta {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+}
+
+/* ---- Founder sign-off ---- */
+
+.founder-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.founder-line img {
+  flex: none;
+}
+
+.founder-name,
+.founder-role {
+  display: block;
+}
+
+.founder-name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.founder-role {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}

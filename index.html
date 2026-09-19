@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VPathing Enterprise LLC — Building practical apps for real-world operations</title>
-  <meta name="description" content="VPathing Enterprise LLC builds practical apps for real-world operations. Web development, automation, dashboards, integrations, and MVP builds.">
+  <meta name="description" content="VPathing Enterprise LLC builds and runs practical software for real-world operations — web apps, automation, dashboards, integrations, and MVP builds.">
   <!-- Social preview image: assets/social-card.png (1200×630). Regenerate with: npm run build-social-card -->
   <meta property="og:title" content="VPathing Enterprise LLC">
   <meta property="og:description" content="Building practical apps for real-world operations.">
@@ -39,25 +39,119 @@
         <ul class="nav-list">
           <li><a href="/">Home</a></li>
           <li><a href="/apps">Apps</a></li>
-          <li><a href="/pricing">Pricing</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/contact">Contact</a></li>
+          <li><a href="/apps" class="btn btn-primary nav-cta">Browse apps</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
   <main class="main" id="main-content">
+    <section class="hero hero--split" aria-labelledby="hero-heading">
+      <div class="container">
+        <div class="hero-layout">
+          <div>
+            <span class="label-mono">Product studio · Houston, TX</span>
+            <h1 id="hero-heading">
+              <span data-app-count="total">13</span> apps.<br>
+              One studio.<br>
+              <span class="hero-accent">Built for how work actually runs.</span>
+            </h1>
+            <p class="intro">We design, ship, and operate our own software — and take on custom builds for teams that need one.</p>
+            <div class="hero-ctas">
+              <a href="/apps" class="btn btn-primary">Browse the apps →</a>
+              <a href="/contact" class="btn btn-secondary">Request a quote</a>
+            </div>
+          </div>
+
+          <!-- Counts are filled from data/apps.json by renderAppCounts() so they
+               cannot drift from the grids below. The markup values are the
+               current truth, and double as a fallback if the fetch fails. -->
+          <div class="hero-stats">
+            <div class="stat-card stat-card--accent">
+              <div class="stat-value" data-app-count="live">6</div>
+              <div class="stat-label">live in production</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" data-app-count="pipeline">7</div>
+              <div class="stat-label">in the pipeline</div>
+            </div>
+            <div class="stat-card stat-card--wide">
+              <div class="stat-label">Across</div>
+              <ul class="stat-tags">
+                <li>govtech</li>
+                <li>fintech</li>
+                <li>logistics</li>
+                <li>support</li>
+                <li>consumer</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class="container">
-      <section class="hero">
-        <h1>VPathing Enterprise LLC</h1>
-        <p class="tagline">Building practical apps for real-world operations.</p>
-        <p class="intro">We design and build web applications, automation tools, dashboards, and integrations that help teams and businesses run more effectively.</p>
+      <section class="section" aria-labelledby="featured-heading">
+        <div class="section-head">
+          <div>
+            <span class="label-mono">01 · Featured</span>
+            <h2 id="featured-heading" class="section-title">Newest live apps</h2>
+          </div>
+          <a href="/apps" class="section-head-link">All <span data-app-count="total">13</span> apps →</a>
+        </div>
+        <div id="home-featured" class="apps-grid"></div>
       </section>
 
-      <section class="section" aria-labelledby="home-apps-heading" style="margin-top: var(--space-8);">
-        <h2 id="home-apps-heading" class="section-title">Our apps</h2>
-        <div id="home-apps" class="apps-grid"></div>
+      <section class="section" aria-labelledby="roadmap-heading">
+        <span class="label-mono">02 · The roadmap</span>
+        <h2 id="roadmap-heading" class="section-title">Shipped, shipping, and next</h2>
+        <p class="section-subtitle">Every product on one path — from live in production to still on the bench.</p>
+        <div id="home-apps" class="apps-groups"></div>
+      </section>
+
+      <section class="section" aria-labelledby="services-heading">
+        <span class="label-mono">03 · Services</span>
+        <h2 id="services-heading" class="section-title">We also build for you</h2>
+        <ul class="services-grid" style="list-style: none; padding: 0; margin: 0;">
+          <li class="service-card">
+            <h3>Web development</h3>
+            <p>Custom web apps built for performance, accessibility, and maintainability.</p>
+          </li>
+          <li class="service-card">
+            <h3>Automation</h3>
+            <p>Workflows and tools that reduce manual work and streamline operations.</p>
+          </li>
+          <li class="service-card">
+            <h3>Integrations</h3>
+            <p>Connecting systems and third-party services so data flows where it's needed.</p>
+          </li>
+          <li class="service-card">
+            <h3>Dashboards</h3>
+            <p>Clear, actionable dashboards for monitoring, reporting, and decisions.</p>
+          </li>
+          <li class="service-card">
+            <h3>MVP builds</h3>
+            <p>Focused minimum viable products to validate ideas and reach market faster.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="about-heading">
+        <span class="label-mono">04 · About</span>
+        <h2 id="about-heading" class="section-title">Why we build</h2>
+        <div class="mission-block">
+          <p>We build practical software for real-world operations — web apps, automation, dashboards, and integrations that help teams run more effectively, without unnecessary complexity.</p>
+          <p>Every product here started the same way: watching people fight their own tools. We ship in clear phases — discover, build, launch, improve — and hand off with documentation so you can run it yourself.</p>
+          <p class="founder-line">
+            <img src="/assets/brand/vpe-mark-gradient.svg" alt="" width="40" height="29">
+            <span>
+              <span class="founder-name">Villa Aing</span>
+              <span class="founder-role">Founder, VPathing Enterprise LLC</span>
+            </span>
+          </p>
+        </div>
       </section>
     </div>
   </main>
@@ -65,7 +159,7 @@
   <footer class="site-footer" role="contentinfo">
     <div class="footer-inner">
       <p>© <span id="footer-year"></span> VPathing Enterprise LLC. All rights reserved.</p>
-      <p><a href="/pricing">Pricing</a> · <a href="/refund">Refund &amp; Cancellation Policy</a> · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms &amp; Conditions</a></p>
+      <p><a href="/refund">Refund &amp; Cancellation Policy</a> · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms &amp; Conditions</a></p>
     </div>
   </footer>
 
@@ -76,8 +170,12 @@
   <script src="/js/main.js"></script>
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
-    if (window.renderWiredApps) {
-      window.renderWiredApps(document.getElementById('home-apps'));
+    if (window.renderAppCounts) window.renderAppCounts();
+    if (window.renderPickedApps) {
+      window.renderPickedApps(document.getElementById('home-featured'));
+    }
+    if (window.renderGroupedApps) {
+      window.renderGroupedApps(document.getElementById('home-apps'));
     }
   </script>
 </body>

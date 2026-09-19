@@ -75,7 +75,13 @@
       .then(function (res) { return res.ok ? res.json() : []; })
       .catch(function () { return []; })
       .then(function (apps) {
-        _appsCache = Array.isArray(apps) ? apps : [];
+        // Archived apps stay in apps.json so the history is not lost, but they
+        // are filtered out here — at the single source — so every consumer
+        // (featured strip, roadmap, apps grid, the homepage counts) agrees on
+        // what "our apps" means without each one repeating the check.
+        _appsCache = Array.isArray(apps)
+          ? apps.filter(function (app) { return !app.archived; })
+          : [];
         return _appsCache;
       });
     return _appsFetchPromise;
@@ -196,6 +202,60 @@
   }
 
   /**
+   * Render the homepage's "Newest live apps" strip: the Live apps flagged
+   * `"featured": true` in apps.json, newest first.
+   *
+   * Which three appear is an editorial call, so it lives in the data rather
+   * than in the markup — changing the strip means flipping a flag, not editing
+   * HTML. "Newest" is position in apps.json (appended as they ship), so the
+   * list is reversed. With nothing flagged this falls back to the first three
+   * Live apps, which is what the strip did before.
+   *
+   * @param {HTMLElement} container - Element to fill with cards
+   */
+  function renderPickedApps(container) {
+    if (!container) return;
+    fetchApps().then(function (apps) {
+      var live = apps.filter(function (app) {
+        return (app.status || '').trim().toLowerCase() === 'live';
+      });
+      var picked = live.filter(function (app) { return app.featured; }).reverse();
+      var list = picked.length ? picked : live.slice(0, 3);
+      container.innerHTML = list.map(renderAppCard).join('');
+      container.querySelectorAll('.app-card').forEach(observeReveal);
+    });
+  }
+
+  /**
+   * Fill the homepage's headline counts from apps.json.
+   *
+   * The hero claims a number of apps, a number live, and a number in the
+   * pipeline. Hard-coding those in the markup means they go stale the first
+   * time an app ships or is archived — and the hero is the one place a wrong
+   * number is most visible. Reading them from the same data the grids use
+   * keeps them honest for free.
+   *
+   * Elements are addressed by `data-app-count`: "total", "live" or "pipeline".
+   */
+  function renderAppCounts(root) {
+    var scope = root || document;
+    var targets = scope.querySelectorAll('[data-app-count]');
+    if (!targets.length) return;
+    fetchApps().then(function (apps) {
+      var live = apps.filter(function (app) {
+        return (app.status || '').trim().toLowerCase() === 'live';
+      }).length;
+      var counts = { total: apps.length, live: live, pipeline: apps.length - live };
+      targets.forEach(function (el) {
+        var key = el.getAttribute('data-app-count');
+        if (Object.prototype.hasOwnProperty.call(counts, key)) {
+          el.textContent = counts[key];
+        }
+      });
+    });
+  }
+
+  /**
    * Render only the apps that link to a real page (links.website), as clickable
    * tiles. Used on the homepage so every tile shown is wired to somewhere.
    * @param {HTMLElement} container - Element to append cards to
@@ -214,6 +274,58 @@
   /**
    * Initialize apps page: load apps, render grid, wire filters.
    */
+  // Group apps by status so the dashboard reads clearly (Live apps together,
+  // Coming soon / In development together) instead of interleaved.
+  //
+  // These three live at module level rather than inside initAppsPage because
+  // the homepage roadmap needs the same grouping. Duplicating the order and
+  // the markup would mean the two pages could drift apart on a status rename.
+  var STATUS_ORDER = ['Live', 'MVP', 'Deployment', 'In development'];
+
+  function groupByStatus(list) {
+    var buckets = {};
+    var seen = [];
+    list.forEach(function (app) {
+      var status = (app.status || 'In development').trim();
+      if (!buckets[status]) { buckets[status] = []; seen.push(status); }
+      buckets[status].push(app);
+    });
+    seen.sort(function (a, b) {
+      var ia = STATUS_ORDER.indexOf(a); if (ia === -1) ia = STATUS_ORDER.length;
+      var ib = STATUS_ORDER.indexOf(b); if (ib === -1) ib = STATUS_ORDER.length;
+      return ia - ib;
+    });
+    return seen.map(function (status) {
+      return { status: status, apps: buckets[status] };
+    });
+  }
+
+  function groupsHtml(list) {
+    return groupByStatus(list).map(function (group) {
+      return (
+        '<section class="apps-group">' +
+          '<h3 class="apps-group-title">' + escapeHtml(group.status) +
+            ' <span class="apps-group-count">' + group.apps.length + '</span>' +
+          '</h3>' +
+          '<div class="apps-grid">' + group.apps.map(renderAppCard).join('') + '</div>' +
+        '</section>'
+      );
+    }).join('');
+  }
+
+  /**
+   * Render every app, grouped by status — the homepage roadmap. Same markup as
+   * the apps page produces, minus the search and status filters.
+   * @param {HTMLElement} container - Element to fill
+   */
+  function renderGroupedApps(container) {
+    if (!container) return;
+    fetchApps().then(function (apps) {
+      container.innerHTML = groupsHtml(apps);
+      container.querySelectorAll('.app-card').forEach(observeReveal);
+    });
+  }
+
   function initAppsPage() {
     var grid = document.getElementById('apps-grid');
     var emptyEl = document.getElementById('apps-empty');
@@ -221,42 +333,11 @@
     var statusSelect = document.getElementById('apps-status');
     if (!grid) return;
 
-    // Group apps by status so the dashboard reads clearly (Live apps together,
-    // Coming soon / In development together) instead of interleaved.
-    var STATUS_ORDER = ['Live', 'MVP', 'Deployment', 'In development'];
-
-    function groupByStatus(list) {
-      var buckets = {};
-      var seen = [];
-      list.forEach(function (app) {
-        var status = (app.status || 'In development').trim();
-        if (!buckets[status]) { buckets[status] = []; seen.push(status); }
-        buckets[status].push(app);
-      });
-      seen.sort(function (a, b) {
-        var ia = STATUS_ORDER.indexOf(a); if (ia === -1) ia = STATUS_ORDER.length;
-        var ib = STATUS_ORDER.indexOf(b); if (ib === -1) ib = STATUS_ORDER.length;
-        return ia - ib;
-      });
-      return seen.map(function (status) {
-        return { status: status, apps: buckets[status] };
-      });
-    }
-
     function render(list) {
       if (emptyEl) {
         emptyEl.style.display = list.length ? 'none' : 'block';
       }
-      grid.innerHTML = groupByStatus(list).map(function (group) {
-        return (
-          '<section class="apps-group">' +
-            '<h3 class="apps-group-title">' + escapeHtml(group.status) +
-              ' <span class="apps-group-count">' + group.apps.length + '</span>' +
-            '</h3>' +
-            '<div class="apps-grid">' + group.apps.map(renderAppCard).join('') + '</div>' +
-          '</section>'
-        );
-      }).join('');
+      grid.innerHTML = groupsHtml(list);
       grid.querySelectorAll('.app-card').forEach(observeReveal);
     }
 
@@ -590,6 +671,9 @@
 
   window.observeReveal = observeReveal;
   window.renderFeaturedApps = renderFeaturedApps;
+  window.renderPickedApps = renderPickedApps;
+  window.renderGroupedApps = renderGroupedApps;
+  window.renderAppCounts = renderAppCounts;
   window.renderWiredApps = renderWiredApps;
   window.initAppsPage = initAppsPage;
   window.initContactForm = initContactForm;
