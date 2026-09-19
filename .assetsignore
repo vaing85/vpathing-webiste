@@ -30,6 +30,7 @@ package.json
 package-lock.json
 
 # Docs
+AGENTS.md
 README.md
 
 # Local editor workspace (gitignored, so never in a build — listed so local
