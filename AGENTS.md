@@ -19,11 +19,20 @@ to it immediately instead of explaining around it.
 ## Deploying
 
 Unlike the backend, this repo **auto-deploys on merge to `main`** — within a
-couple of minutes, through **both** pipelines at once: GitHub **Pages** serves
-the static HTML, and **Cloudflare Workers Build** deploys the Worker that serves
-`/api/*`. So a merge ships itself; there is no manual deploy step. (Cloudflare
+couple of minutes, through **Cloudflare Workers Build**. The Worker serves the
+whole site: the static HTML through the `[assets]` binding (`directory = "."`)
+and `/api/*` through `src/index.js`. So a merge ships itself; there is no manual
+deploy step, and **Workers Builds is the check that matters**. (Cloudflare
 reports status via GitHub **check-runs**, not the legacy commit-status API — a
 `pending`/empty combined status is not a failure.)
+
+GitHub **Pages** is still configured, and `.github/workflows/deploy.yml` still
+succeeds on every push — but it serves **no live traffic**. The `CNAME` file
+points Pages at the custom domain, so `vaing85.github.io/vpathing-webiste/` just
+301s there, and that domain resolves to Cloudflare, where the Worker answers.
+Quick way to confirm: `GET /api/contact` on the live site returns the Worker's
+own `405 {"ok":false,"error":"Method not allowed."}`, which Pages cannot
+produce. Don't wait on a Pages run to decide whether a change shipped.
 
 ## Related repos
 
