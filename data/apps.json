@@ -3,7 +3,12 @@
     "name": "VPathing Rewards",
     "description": "Cashback and loyalty platform — earn rewards on everyday purchases through partnered merchants. Features cashback, referral bonuses, and a secure rewards dashboard.",
     "status": "Live",
-    "tags": ["rewards", "cashback", "engagement", "loyalty"],
+    "tags": [
+      "rewards",
+      "cashback",
+      "engagement",
+      "loyalty"
+    ],
     "links": {
       "website": "https://www.vpathrewards.store"
     }
@@ -13,14 +18,28 @@
     "description": "AI call-screening assistant that answers and screens incoming calls, takes voicemails, and texts you an SMS summary of who called and why. A personal spam screener and business receptionist in one.",
     "status": "Live",
     "badge": "New",
-    "tags": ["AI", "telephony", "call screening", "SMS"],
-    "links": { "website": "/vpathcallassistant" }
+    "tags": [
+      "AI",
+      "telephony",
+      "call screening",
+      "SMS"
+    ],
+    "links": {
+      "website": "/vpathcallassistant"
+    },
+    "featured": true
   },
   {
     "name": "UMechanics",
     "description": "Your trusted companion for DIY vehicle maintenance — repair guides, vehicle management, and step-by-step support for car owners.",
     "status": "Live",
-    "tags": ["automotive", "DIY", "vehicle", "maintenance", "repair"],
+    "tags": [
+      "automotive",
+      "DIY",
+      "vehicle",
+      "maintenance",
+      "repair"
+    ],
     "links": {
       "website": "https://www.umechanics.site"
     }
@@ -29,28 +48,48 @@
     "name": "CarShare",
     "description": "Peer-to-peer car-sharing marketplace connecting vehicle owners with renters — listings, bookings, deposits, host–renter messaging, and reviews.",
     "status": "In development",
-    "tags": ["marketplace", "car sharing", "rentals", "bookings"],
+    "tags": [
+      "marketplace",
+      "car sharing",
+      "rentals",
+      "bookings"
+    ],
     "links": {}
   },
   {
     "name": "Nestura",
     "description": "Peer-to-peer accommodation booking: property listings, reservations, payments, and host–guest messaging in one platform.",
     "status": "In development",
-    "tags": ["booking", "rentals", "accommodation", "payments"],
+    "tags": [
+      "booking",
+      "rentals",
+      "accommodation",
+      "payments"
+    ],
     "links": {}
   },
   {
     "name": "Open Source Connections",
     "description": "Platform for building meaningful connections within the open source community.",
     "status": "In development",
-    "tags": ["community", "networking", "open source", "connections"],
+    "tags": [
+      "community",
+      "networking",
+      "open source",
+      "connections"
+    ],
     "links": {}
   },
   {
     "name": "PathFam",
     "description": "Mobile device management: enroll devices, apply compliance policies, and send remote commands from a web dashboard — plus Family Connect, a friendly way for families to monitor a loved one's phone health and respond to help requests.",
     "status": "MVP",
-    "tags": ["mdm", "devices", "monitoring", "family"],
+    "tags": [
+      "mdm",
+      "devices",
+      "monitoring",
+      "family"
+    ],
     "links": {}
   },
   {
@@ -58,60 +97,107 @@
     "description": "Multi-tenant support desk and ticketing SaaS — manage customer emails, tickets, and conversations in one shared inbox. Start a 14-day free trial.",
     "status": "Live",
     "badge": "New",
-    "tags": ["support", "helpdesk", "ticketing", "saas"],
+    "tags": [
+      "support",
+      "helpdesk",
+      "ticketing",
+      "saas"
+    ],
     "links": {
       "signup": "https://www.vpathingenterprisellc.site/deskpath/signup",
       "website": "https://www.vpathingenterprisellc.site/deskpath"
-    }
+    },
+    "featured": true
   },
   {
     "name": "Zappay",
     "description": "Peer-to-peer payments app — send and request money, split bills with groups, and pay by QR code.",
     "status": "In development",
-    "tags": ["payments", "fintech", "peer-to-peer", "wallet"],
+    "tags": [
+      "payments",
+      "fintech",
+      "peer-to-peer",
+      "wallet"
+    ],
     "links": {}
   },
   {
     "name": "ZapRoute",
     "description": "Delivery, food, and rideshare on one platform — order from local stores and restaurants or book a ride, with shared dispatch and live tracking across all three services.",
     "status": "In development",
-    "tags": ["delivery", "food", "rideshare", "logistics"],
+    "tags": [
+      "delivery",
+      "food",
+      "rideshare",
+      "logistics"
+    ],
     "links": {}
   },
   {
     "name": "Pharmacy Delivery",
     "description": "Last-mile pharmacy delivery: product catalog, orders, driver assignment, and real-time delivery tracking.",
     "status": "In development",
-    "tags": ["delivery", "pharmacy", "operations", "tracking"],
-    "links": {}
+    "tags": [
+      "delivery",
+      "pharmacy",
+      "operations",
+      "tracking"
+    ],
+    "links": {},
+    "archived": true
   },
   {
     "name": "Greenwoods Games",
     "description": "Gaming platform: slots, table games, tournaments, live dealer, and mobile-friendly casino experience.",
     "status": "Live",
-    "tags": ["gaming", "casino", "slots", "tournaments"],
-    "links": { "website": "https://www.greenwoodgames.site" }
+    "tags": [
+      "gaming",
+      "casino",
+      "slots",
+      "tournaments"
+    ],
+    "links": {
+      "website": "https://www.greenwoodgames.site"
+    }
   },
   {
     "name": "VoxArena",
     "description": "Competitive singing game: sing along, battle other players, and climb the leaderboard in a live vocal showdown.",
     "status": "In development",
-    "tags": ["music", "singing", "competition", "game"],
+    "tags": [
+      "music",
+      "singing",
+      "competition",
+      "game"
+    ],
     "links": {}
   },
   {
     "name": "Tower Defense",
     "description": "Tower defense game: build towers, defend against waves of enemies, and strategize to survive.",
     "status": "In development",
-    "tags": ["games", "tower defense", "strategy"],
-    "links": {}
+    "tags": [
+      "games",
+      "tower defense",
+      "strategy"
+    ],
+    "links": {},
+    "archived": true
   },
   {
     "name": "Civic Platform",
     "description": "All-in-one operations hub for small towns — utility billing, municipal court, code enforcement, and public safety records in one multi-tenant system with a shared database and a single login.",
     "status": "Live",
     "badge": "New",
-    "tags": ["govtech", "saas", "multi-tenant", "operations"],
-    "links": { "website": "/civicplatform" }
+    "tags": [
+      "govtech",
+      "saas",
+      "multi-tenant",
+      "operations"
+    ],
+    "links": {
+      "website": "/civicplatform"
+    },
+    "featured": true
   }
 ]
