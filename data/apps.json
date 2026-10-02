@@ -192,7 +192,7 @@
   },
   {
     "name": "Civic Platform",
-    "description": "All-in-one operations hub for small towns — utility billing, municipal court, code enforcement, and public safety records in one multi-tenant system with a shared database and a single login.",
+    "description": "All-in-one operations hub for small towns — utility billing, municipal court, code enforcement, property tax, and a resident portal with 311 requests, in one multi-tenant system with a shared database and a single login.",
     "status": "Live",
     "badge": "New",
     "tags": [
