@@ -6,9 +6,9 @@ Claude reviews every PR first, then Copilot. The order is the point: the owner
 marks a PR ready only after Claude's review is done, so Copilot's review lands
 on code that has already had one, rather than racing it.
 
-In a cloud session `gh`'s GraphQL calls are refused, so use the GitHub MCP
-tools there: `create_pull_request` (with `draft: true`), `update_pull_request`
-for the body, and `pull_request_read` for check runs.
+In a cloud session `gh`'s GraphQL calls are refused (HTTP 403), so use the
+GitHub MCP tools there: `create_pull_request` (with `draft: true`),
+`update_pull_request` for the body, and `pull_request_read` for check runs.
 
 1. **Open it as a draft** -- `gh pr create --draft`, or `draft: true`. Leave it
    out and the PR opens ready.
@@ -17,16 +17,24 @@ for the body, and `pull_request_read` for check runs.
      the draft. For one that does not, say why. Record both under a
      `## Code review (draft)` heading in the PR body, so the owner can see
      what was found before marking it ready.
-   - Then, after the last fix: this repo has no CI on pull requests, and a
-     merge to `main` deploys itself (see `AGENTS.md`), so say in the PR body
-     what you checked by hand before the owner merges.
+   - Then, after the last fix: the only check on pull requests is Cloudflare's
+     `Workers Builds: vpathing-webiste` (`AGENTS.md` calls it the check that
+     matters): see it green on the PR's latest commit. A merge to `main`
+     deploys itself, so also say in the PR body what you checked by hand
+     before the owner merges.
+   - If you push again after telling the owner the draft is done, run the
+     review again, update that section, and tell the owner.
 3. **Do not mark it ready, and do not request a Copilot review.** Both are the
-   owner's call. Marking it ready is what requests Copilot's review. Copilot is
-   set not to review drafts; if it ever reviews one, tell the owner, because
-   the repo's Copilot rule then needs "Review draft pull requests" off.
-   Copilot reviews are billed per review, so one per PR is the budget.
-4. **After it is marked ready:** Copilot reviews it. Fix what holds up and push
-   the fixes together, in one push, in case new pushes also trigger a review.
+   owner's call: no `gh pr ready`, and no `draft: false` on
+   `update_pull_request`. Marking it ready is what requests Copilot's review
+   (GitHub's automatic review runs when a draft is first marked ready; seen on
+   dev-verify#39). If Copilot ever reviews a draft, tell the owner: "Review
+   draft pull requests" is on somewhere -- in this repo's ruleset or in their
+   own Copilot settings. Copilot reviews are billed per review (the owner's
+   records: $124 in three days of re-reviews), so one per PR is the budget.
+4. **After it is marked ready:** Copilot reviews it. If no review arrives,
+   tell the owner rather than requesting one. Fix what holds up and push the
+   fixes together, in one push, in case new pushes also trigger a review.
    Answer every finding on its own thread -- fixed in which commit, or why
    not -- and resolve it. Then run `/code-review high <PR number>` on the new
    head, see the checks green again, and tell the owner what changed since
@@ -35,5 +43,6 @@ for the body, and `pull_request_read` for check runs.
 
 A PR opened ready by mistake has already had Copilot's review. Leave it ready:
 converting it to a draft only means another ready transition later, which may
-request, and bill, another review. Run step 2's `/code-review` on it anyway,
-answer Copilot's threads as in step 4, and tell the owner the order was missed.
+request, and bill, another review. Run `/code-review high <PR number>` on it
+anyway, answer Copilot's threads as in step 4, and tell the owner the order was
+missed.
