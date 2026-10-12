@@ -41,8 +41,8 @@ GitHub MCP tools there: `create_pull_request` (with `draft: true`),
    Copilot's review. Never request a Copilot re-review; that is the owner's
    call.
 
-A PR opened ready by mistake has already had Copilot's review. Leave it ready:
-converting it to a draft only means another ready transition later, which may
-request, and bill, another review. Run `/code-review high <PR number>` on it
-anyway, answer Copilot's threads as in step 4, and tell the owner the order was
-missed.
+A PR opened ready by mistake has already requested Copilot's review. Leave it
+ready: converting it to a draft only means another ready transition later,
+which may request, and bill, another review. Run `/code-review high <PR number>`
+on it anyway, answer Copilot's threads as in step 4 once its review arrives (if
+none does, tell the owner), and tell the owner the order was missed.
