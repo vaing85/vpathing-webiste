@@ -1,6 +1,7 @@
-# Cloudflare Workers — static site plus a single contact endpoint.
-# The site itself is still just files; src/index.js exists only to verify
-# Turnstile server-side for POST /api/contact. See src/index.js for why.
+# Cloudflare Workers — static site plus two endpoints.
+# The site itself is still just files; src/index.js handles POST /api/contact
+# (Turnstile-verified contact form) and POST /api/checkout (Stripe checkout via
+# the Call Assistant backend, at CALL_ASSISTANT_API below). See src/index.js.
 name = "vpathing-webiste"
 main = "src/index.js"
 compatibility_date = "2026-07-15"
@@ -26,8 +27,8 @@ not_found_handling = "404-page"
 
 # Required, and easy to miss: not_found_handling = "404-page" *overrides* the
 # default behaviour of invoking the Worker when no asset matches. Without this
-# line, POST /api/contact matches no file and is answered with 404.html — the
-# Worker never runs and the contact form silently 404s. Listing /api/* routes
+# line, POST /api/contact and /api/checkout match no file and are answered with
+# 404.html — the Worker never runs and both forms silently 404. Listing /api/* routes
 # those requests to the Worker first; every other path keeps the asset-first
 # behaviour above.
 run_worker_first = ["/api/*"]

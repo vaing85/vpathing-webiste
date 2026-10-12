@@ -125,9 +125,10 @@ anything. The first send triggers a confirmation link to the destination
 address — click it once, and later sends go through.
 
 Without `TURNSTILE_SECRET_KEY` or `FORMSUBMIT_CODE` the contact endpoint returns
-a 500 and the form tells the visitor to email instead. Without
-`WEB_CHECKOUT_TOKEN`, `/api/checkout` returns a 500 before it contacts the
-backend. It never claims a message was sent when it was not.
+a 500 and the form tells the visitor to email instead; it never claims a
+message was sent when it was not. Without `WEB_CHECKOUT_TOKEN` (or
+`CALL_ASSISTANT_API`), `/api/checkout` returns a 500 before it contacts the
+backend.
 
 ### Turnstile widget
 
@@ -152,8 +153,11 @@ WEB_CHECKOUT_TOKEN=local-dev-placeholder
 
 With the placeholder token, a local checkout reaches the production backend
 (`CALL_ASSISTANT_API` from `wrangler.toml`) and is refused with a 401, which
-is expected. Override `CALL_ASSISTANT_API` in `.dev.vars` to point at a local
-backend instead.
+is expected. **Never put the real `WEB_CHECKOUT_TOKEN` in `.dev.vars`:**
+together with the always-pass Turnstile key, every local test checkout would
+create a real user and a live Stripe Checkout Session. To test checkout end to
+end, set `CALL_ASSISTANT_API` in `.dev.vars` to a local backend (for example
+`http://localhost:8080`) and use that backend's token.
 
 The `worker` config in `.claude/launch.json` passes `--persist-to` a directory
 outside the repo. That is not optional: `[assets] directory = "."` makes

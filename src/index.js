@@ -24,8 +24,8 @@
  *                                  FormSubmit directly and skipping this Worker.
  *   WEB_CHECKOUT_TOKEN    secret · shared token the backend's /billing/web-checkout
  *                                  requires (x-web-checkout-token)
- *   CALL_ASSISTANT_API    var    · backend base URL, set in wrangler.toml [vars];
- *                                  DEFAULT_API_BASE is only the fallback
+ *   CALL_ASSISTANT_API    var    · Call Assistant backend base URL, set in
+ *                                  wrangler.toml [vars] (the one place it lives)
  */
 
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -43,11 +43,6 @@ const GENERIC_FAILURE =
 const GENERIC_CHECKOUT_FAILURE =
   'Something went wrong starting checkout. Please try again in a moment.';
 
-// The Call Assistant backend that mints Stripe Checkout Sessions. Overridable
-// via the CALL_ASSISTANT_API binding; defaults to the production host, reached
-// through Cloudflare. Not the sslip.io origin host: that one goes around
-// Cloudflare and is being retired.
-const DEFAULT_API_BASE = 'https://app.vpathingenterprisellc.site';
 const CHECKOUT_PLANS = ['basic', 'pro', 'secretary'];
 const CHECKOUT_TERMS = ['monthly', 'six_month', 'yearly'];
 
@@ -143,10 +138,11 @@ async function handleCheckout(request, env) {
   if (request.method !== 'POST') {
     return json({ ok: false, error: 'Method not allowed.' }, 405, { Allow: 'POST' });
   }
-  if (!env.TURNSTILE_SECRET_KEY || !env.WEB_CHECKOUT_TOKEN) {
+  if (!env.TURNSTILE_SECRET_KEY || !env.WEB_CHECKOUT_TOKEN || !env.CALL_ASSISTANT_API) {
     console.error('checkout: missing binding', {
       turnstileSecret: Boolean(env.TURNSTILE_SECRET_KEY),
       webCheckoutToken: Boolean(env.WEB_CHECKOUT_TOKEN),
+      callAssistantApi: Boolean(env.CALL_ASSISTANT_API),
     });
     return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 500);
   }
@@ -181,9 +177,12 @@ async function handleCheckout(request, env) {
   const verdict = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, request.headers.get('CF-Connecting-IP'));
   if (!verdict.success) return turnstileRejection(verdict, 'checkout');
 
-  const apiBase = (env.CALL_ASSISTANT_API || DEFAULT_API_BASE).replace(/\/$/, '');
+  const apiBase = env.CALL_ASSISTANT_API.replace(/\/$/, '');
   // Logged on every failure, so a log line says which backend host answered.
-  const apiHost = new URL(apiBase).host;
+  // A malformed value is logged as-is rather than thrown, so the
+  // misconfiguration still lands on the host-tagged 'backend unreachable' line.
+  let apiHost = apiBase;
+  try { apiHost = new URL(apiBase).host; } catch (_) { /* keep the raw value */ }
   let res;
   try {
     res = await fetch(apiBase + '/billing/web-checkout', {
@@ -208,7 +207,7 @@ async function handleCheckout(request, env) {
     return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
   }
   if (!res.ok || !data || !data.url) {
-    console.error('checkout: backend ' + apiHost + ' rejected http ' + res.status,data ? JSON.stringify(data) : '');
+    console.error('checkout: backend ' + apiHost + ' rejected http ' + res.status, data ? JSON.stringify(data) : '');
     return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
   }
   return json({ ok: true, url: data.url });
