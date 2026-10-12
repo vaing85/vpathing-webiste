@@ -103,25 +103,32 @@ out of the HTML, so a bot cannot post straight to it and skip the check.
 
 ### Required secrets
 
-Neither value belongs in the repo. Set both with `wrangler secret put` — they
-are stored by Cloudflare and never printed back:
+None of these belongs in the repo. Set all three with `wrangler secret put` —
+they are stored by Cloudflare and never printed back:
 
 ```sh
 npx wrangler secret put TURNSTILE_SECRET_KEY   # paste when prompted
 npx wrangler secret put FORMSUBMIT_CODE
+npx wrangler secret put WEB_CHECKOUT_TOKEN     # must match the backend's value
 ```
 
 | Secret | Where it comes from |
 |---|---|
 | `TURNSTILE_SECRET_KEY` | Cloudflare Dashboard → **Turnstile** → your widget → **Secret key**. Pairs with the `data-sitekey` in contact.html. |
 | `FORMSUBMIT_CODE` | FormSubmit dashboard, after activating the destination address. Prefer their **hash** (e.g. `abc123…`) over the raw email: the hash is not guessable, so bots cannot post to your FormSubmit endpoint directly. |
+| `WEB_CHECKOUT_TOKEN` | Shared with the Call Assistant backend, which requires it on `/billing/web-checkout`. Used by `/api/checkout`. |
+
+`/api/checkout` also reads `CALL_ASSISTANT_API`, the backend's base URL. It is a plain variable, not a secret, and is set in `wrangler.toml` `[vars]` so every deploy sets it.
 
 **Activation:** FormSubmit needs one confirmed submission before it delivers
 anything. The first send triggers a confirmation link to the destination
 address — click it once, and later sends go through.
 
-Without either secret the endpoint returns a 500 and the form tells the visitor
-to email instead. It never claims a message was sent when it was not.
+Without `TURNSTILE_SECRET_KEY` or `FORMSUBMIT_CODE` the contact endpoint returns
+a 500 and the form tells the visitor to email instead; it never claims a
+message was sent when it was not. Without `WEB_CHECKOUT_TOKEN` (or
+`CALL_ASSISTANT_API`), `/api/checkout` returns a 500 before it contacts the
+backend.
 
 ### Turnstile widget
 
@@ -141,7 +148,16 @@ always passes and `2x0000000000000000000000000000000AA` always fails:
 # .dev.vars
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 FORMSUBMIT_CODE=local-dev-placeholder
+WEB_CHECKOUT_TOKEN=local-dev-placeholder
 ```
+
+With the placeholder token, a local checkout reaches the production backend
+(`CALL_ASSISTANT_API` from `wrangler.toml`) and is refused with a 401, which
+is expected. **Never put the real `WEB_CHECKOUT_TOKEN` in `.dev.vars`:**
+together with the always-pass Turnstile key, every local test checkout would
+create a real user and a live Stripe Checkout Session. To test checkout end to
+end, set `CALL_ASSISTANT_API` in `.dev.vars` to a local backend (for example
+`http://localhost:8080`) and use that backend's token.
 
 The `worker` config in `.claude/launch.json` passes `--persist-to` a directory
 outside the repo. That is not optional: `[assets] directory = "."` makes
