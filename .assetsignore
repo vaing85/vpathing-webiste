@@ -31,6 +31,7 @@ package-lock.json
 
 # Docs
 AGENTS.md
+CLAUDE.md
 README.md
 
 # Local editor workspace (gitignored, so never in a build — listed so local
