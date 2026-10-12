@@ -38,8 +38,10 @@ const GENERIC_CHECKOUT_FAILURE =
   'Something went wrong starting checkout. Please try again in a moment.';
 
 // The Call Assistant backend that mints Stripe Checkout Sessions. Overridable
-// via the CALL_ASSISTANT_API binding; defaults to the production host.
-const DEFAULT_API_BASE = 'https://call-assistant.217.77.0.211.sslip.io';
+// via the CALL_ASSISTANT_API binding; defaults to the production host, reached
+// through Cloudflare. Not the sslip.io origin host: that one goes around
+// Cloudflare and is being retired.
+const DEFAULT_API_BASE = 'https://app.vpathingenterprisellc.site';
 const CHECKOUT_PLANS = ['basic', 'pro', 'secretary'];
 const CHECKOUT_TERMS = ['monthly', 'six_month', 'yearly'];
 
