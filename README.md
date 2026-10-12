@@ -103,12 +103,13 @@ out of the HTML, so a bot cannot post straight to it and skip the check.
 
 ### Required secrets
 
-Neither value belongs in the repo. Set both with `wrangler secret put` — they
-are stored by Cloudflare and never printed back:
+None of these belongs in the repo. Set all three with `wrangler secret put` —
+they are stored by Cloudflare and never printed back:
 
 ```sh
 npx wrangler secret put TURNSTILE_SECRET_KEY   # paste when prompted
 npx wrangler secret put FORMSUBMIT_CODE
+npx wrangler secret put WEB_CHECKOUT_TOKEN     # must match the backend's value
 ```
 
 | Secret | Where it comes from |
@@ -123,8 +124,10 @@ npx wrangler secret put FORMSUBMIT_CODE
 anything. The first send triggers a confirmation link to the destination
 address — click it once, and later sends go through.
 
-Without either secret the endpoint returns a 500 and the form tells the visitor
-to email instead. It never claims a message was sent when it was not.
+Without `TURNSTILE_SECRET_KEY` or `FORMSUBMIT_CODE` the contact endpoint returns
+a 500 and the form tells the visitor to email instead. Without
+`WEB_CHECKOUT_TOKEN`, `/api/checkout` returns a 500 before it contacts the
+backend. It never claims a message was sent when it was not.
 
 ### Turnstile widget
 
@@ -144,7 +147,13 @@ always passes and `2x0000000000000000000000000000000AA` always fails:
 # .dev.vars
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
 FORMSUBMIT_CODE=local-dev-placeholder
+WEB_CHECKOUT_TOKEN=local-dev-placeholder
 ```
+
+With the placeholder token, a local checkout reaches the production backend
+(`CALL_ASSISTANT_API` from `wrangler.toml`) and is refused with a 401, which
+is expected. Override `CALL_ASSISTANT_API` in `.dev.vars` to point at a local
+backend instead.
 
 The `worker` config in `.claude/launch.json` passes `--persist-to` a directory
 outside the repo. That is not optional: `[assets] directory = "."` makes
