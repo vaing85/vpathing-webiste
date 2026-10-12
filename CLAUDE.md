@@ -37,7 +37,7 @@ GitHub MCP tools there: `create_pull_request` (with `draft: true`),
    fixes together, in one push, in case new pushes also trigger a review.
    Answer every finding on its own thread -- fixed in which commit, or why
    not -- and resolve it. Then run `/code-review high <PR number>` on the new
-   head, see the checks green again, and tell the owner what changed since
+   head, repeat step 2's checks on it, and tell the owner what changed since
    Copilot's review. Never request a Copilot re-review; that is the owner's
    call.
 
