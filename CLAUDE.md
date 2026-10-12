@@ -46,4 +46,5 @@ ready -- converting it to a draft only means another ready transition later,
 which may request, and bill, another review -- and tell the owner the order was
 missed. Then follow step 4, with one addition: also run
 `/code-review high <PR number>`, record its outcome in the PR body as in step
-2, and put its fixes in step 4's one push alongside Copilot's.
+2, and put its fixes in step 4's one push alongside Copilot's -- or, if no
+Copilot review arrives, hold them until the owner says to push.
