@@ -115,6 +115,9 @@ npx wrangler secret put FORMSUBMIT_CODE
 |---|---|
 | `TURNSTILE_SECRET_KEY` | Cloudflare Dashboard → **Turnstile** → your widget → **Secret key**. Pairs with the `data-sitekey` in contact.html. |
 | `FORMSUBMIT_CODE` | FormSubmit dashboard, after activating the destination address. Prefer their **hash** (e.g. `abc123…`) over the raw email: the hash is not guessable, so bots cannot post to your FormSubmit endpoint directly. |
+| `WEB_CHECKOUT_TOKEN` | Shared with the Call Assistant backend, which requires it on `/billing/web-checkout`. Used by `/api/checkout`. |
+
+`/api/checkout` also reads `CALL_ASSISTANT_API`, the backend's base URL. It is a plain variable, not a secret, and is set in `wrangler.toml` `[vars]` so every deploy sets it.
 
 **Activation:** FormSubmit needs one confirmed submission before it delivers
 anything. The first send triggers a confirmation link to the destination

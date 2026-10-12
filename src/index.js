@@ -1,7 +1,9 @@
 /**
- * VPathing Enterprise LLC — contact endpoint.
+ * VPathing Enterprise LLC — contact + checkout endpoints.
  *
- * The site is otherwise static; this Worker exists only for POST /api/contact.
+ * The site is otherwise static; this Worker exists only for POST /api/contact
+ * and POST /api/checkout (which mints a Stripe Checkout Session through the
+ * Call Assistant backend).
  *
  * Why it exists: Turnstile's widget proves nothing on its own. The token it
  * mints has to be posted to siteverify from somewhere holding the secret key,
@@ -10,7 +12,7 @@
  * protection it did not have.
  *
  * Routing: [assets] not_found_handling = "404-page" answers any unmatched path
- * with 404.html *without* invoking this Worker, so /api/contact would never
+ * with 404.html *without* invoking this Worker, so /api/* would never
  * arrive here on its own. assets.run_worker_first = ["/api/*"] is what routes
  * it in; every other path still hits the asset worker first and is unaffected.
  *
@@ -20,6 +22,10 @@
  *                                  The destination email also works, but the
  *                                  hash is what keeps bots from posting to
  *                                  FormSubmit directly and skipping this Worker.
+ *   WEB_CHECKOUT_TOKEN    secret · shared token the backend's /billing/web-checkout
+ *                                  requires (x-web-checkout-token)
+ *   CALL_ASSISTANT_API    var    · backend base URL, set in wrangler.toml [vars];
+ *                                  DEFAULT_API_BASE is only the fallback
  */
 
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
@@ -176,6 +182,8 @@ async function handleCheckout(request, env) {
   if (!verdict.success) return turnstileRejection(verdict, 'checkout');
 
   const apiBase = (env.CALL_ASSISTANT_API || DEFAULT_API_BASE).replace(/\/$/, '');
+  // Logged on every failure, so a log line says which backend host answered.
+  const apiHost = new URL(apiBase).host;
   let res;
   try {
     res = await fetch(apiBase + '/billing/web-checkout', {
@@ -188,7 +196,7 @@ async function handleCheckout(request, env) {
       body: JSON.stringify(comp ? { email: email, plan: plan, term: term, comp: true } : { email: email, plan: plan, term: term }),
     });
   } catch (err) {
-    console.error('checkout: backend unreachable', String(err));
+    console.error('checkout: backend unreachable', apiHost, String(err));
     return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
   }
 
@@ -196,11 +204,11 @@ async function handleCheckout(request, env) {
   try {
     data = await res.json();
   } catch (_) {
-    console.error('checkout: backend non-JSON response, http ' + res.status);
+    console.error('checkout: backend non-JSON response from ' + apiHost + ', http ' + res.status);
     return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
   }
   if (!res.ok || !data || !data.url) {
-    console.error('checkout: backend rejected http ' + res.status, data ? JSON.stringify(data) : '');
+    console.error('checkout: backend ' + apiHost + ' rejected http ' + res.status,data ? JSON.stringify(data) : '');
     return json({ ok: false, error: GENERIC_CHECKOUT_FAILURE }, 502);
   }
   return json({ ok: true, url: data.url });

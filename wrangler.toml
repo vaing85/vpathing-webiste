@@ -31,3 +31,9 @@ not_found_handling = "404-page"
 # those requests to the Worker first; every other path keeps the asset-first
 # behaviour above.
 run_worker_first = ["/api/*"]
+
+# Call Assistant backend that /api/checkout calls. Declared here so every
+# deploy sets it explicitly and the repo says what production runs. It goes
+# through Cloudflare; the old sslip.io host went around it and is being retired.
+[vars]
+CALL_ASSISTANT_API = "https://app.vpathingenterprisellc.site"
