@@ -42,9 +42,8 @@ GitHub MCP tools there: `create_pull_request` (with `draft: true`),
    call.
 
 A PR opened ready by mistake has already requested Copilot's review. Leave it
-ready: converting it to a draft only means another ready transition later,
-which may request, and bill, another review. Run `/code-review high <PR number>`
-on it anyway and record the outcome in the PR body as in step 2, but hold any
-fixes until Copilot's review arrives -- or, if none does, until the owner says
-to push. Then handle Copilot's review as in step 4, and tell the owner the
-order was missed.
+ready -- converting it to a draft only means another ready transition later,
+which may request, and bill, another review -- and tell the owner the order was
+missed. Then follow step 4, with one addition: also run
+`/code-review high <PR number>`, record its outcome in the PR body as in step
+2, and put its fixes in step 4's one push alongside Copilot's.
