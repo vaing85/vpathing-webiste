@@ -34,14 +34,21 @@ session answer each thread and ask the owner to resolve them.
      head, and keep going until a round finds nothing that holds up. Record
      every round under a `## Code review (draft)` heading in the PR body, so
      the owner can see what was found before marking it ready.
-   - Then, after the last fix: the only check on pull requests is Cloudflare's
+   - Then, after the last fix: run `npx wrangler deploy --dry-run`, which
+     builds the Worker the way Cloudflare does on the PR, without uploading.
+     Then see every check on the PR green on its latest commit: Cloudflare's
      `Workers Builds: vpathing-webiste` (`AGENTS.md` calls it the check that
-     matters): see it green on the PR's latest commit. No check running is not
-     the same as green: say so. A merge to `main` deploys itself, so also say
-     in the PR body what you checked by hand before the owner merges. If a check
-     fails and fixing it changes the PR, review the fix until a round finds
-     nothing that holds up, as above, then run these checks again on the new
-     head.
+     matters) and, once the owner has requested it, Copilot's
+     `copilot-pull-request-reviewer`. Cloudflare leaves an older Workers
+     Builds run `in_progress` next to the finished one on the same commit;
+     the newest run is the one that counts. No check running is not the same
+     as green: say so. Neither check exercises the contact form or checkout,
+     and a merge to `main` deploys itself, so also say in the PR body what
+     you checked by hand. After the merge in step 6, see Workers Builds green
+     on the merge commit -- not the Pages `deploy.yml` run, which serves no
+     traffic. If a check fails and fixing it changes the PR, review the fix
+     until a round finds nothing that holds up, as above, then run these
+     checks again on the new head.
    - If you push again after telling the owner the draft is done, review it
      again until it is clean, repeat the checks above, update that section,
      and tell the owner.
