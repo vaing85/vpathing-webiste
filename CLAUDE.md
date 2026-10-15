@@ -37,18 +37,17 @@ session answer each thread and ask the owner to resolve them.
    - Then, after the last fix: run `npx wrangler@4.151.0 deploy --dry-run`.
      It bundles the Worker locally without uploading it: a local smoke check,
      not a copy of Workers Builds, which may run another command and version.
-     Then see every check on the PR green on its latest commit: Cloudflare's
-     `Workers Builds: vpathing-webiste` (`AGENTS.md` calls it the check that
-     matters). Copilot's `copilot-pull-request-reviewer` check appears only
-     on the commit Copilot reviewed, so look for it there, not on a later
-     head. Cloudflare leaves an older Workers Builds run `in_progress` next
-     to the finished one on the same commit, so `gh pr checks` can say
-     pending; the newest run is the one that counts. No check running is not
-     the same as green: say so. Neither check exercises the contact form or
-     checkout, and a merge to `main` deploys itself, so also say in the PR
-     body what you checked by hand. If a check fails and fixing it changes
-     the PR, review the fix until a round finds nothing that holds up, as
-     above, then run these checks again on the new head.
+     Then see every check on the PR green on its latest commit, Cloudflare's
+     `Workers Builds: vpathing-webiste` among them (`AGENTS.md` calls it the
+     check that matters). On every commit checked in October 2026, Cloudflare
+     also left an older Workers Builds run `in_progress` next to the finished
+     one, so `gh pr checks` can say pending; the newest run is the one that
+     counts. No check running is not the same as green: say so. No check
+     exercises the contact form or checkout, and a merge to `main` deploys
+     itself, so also say in the PR body what you checked by hand. If a check
+     fails and fixing it changes the PR, review the fix until a round finds
+     nothing that holds up, as above, then run these checks again on the new
+     head.
    - If you push again after telling the owner the draft is done, review it
      again until it is clean, repeat the checks above, update that section,
      and tell the owner.
