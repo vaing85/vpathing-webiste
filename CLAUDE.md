@@ -46,13 +46,9 @@ session answer each thread and ask the owner to resolve them.
      pending; the newest run is the one that counts. No check running is not
      the same as green: say so. Neither check exercises the contact form or
      checkout, and a merge to `main` deploys itself, so also say in the PR
-     body what you checked by hand. After the merge in step 6, see Workers
-     Builds green on the merge commit -- not the Pages `deploy.yml` run,
-     which serves no traffic -- and tell the owner what it showed; if it is
-     red, say so, and don't tell the owner what is live without checking the
-     site. If a check fails and fixing it changes the PR, review the fix
-     until a round finds nothing that holds up, as above, then run these
-     checks again on the new head.
+     body what you checked by hand. If a check fails and fixing it changes
+     the PR, review the fix until a round finds nothing that holds up, as
+     above, then run these checks again on the new head.
    - If you push again after telling the owner the draft is done, review it
      again until it is clean, repeat the checks above, update that section,
      and tell the owner.
