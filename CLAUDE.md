@@ -3,12 +3,12 @@
 ## Pull requests: Claude reviews the draft, Copilot reviews it once it is ready
 
 The order, set by the owner on 2026-10-13: Claude reviews the draft until a
-round finds nothing that holds up. The owner marks it ready and requests one
-Copilot review. Claude addresses that review, then reviews again until a
-round finds nothing that holds up, and only then is the PR squash-merged and
-its branch deleted. The order is the point: Copilot's one review lands on code
-that has already had Claude's, rather than racing it, and what merges is a
-head that Claude's review has cleared.
+round finds nothing that blocks (step 2 says what blocks). The owner marks it
+ready and requests one Copilot review. Claude addresses that review, then
+reviews again until a round finds nothing that blocks, and only then is the PR
+squash-merged and its branch deleted. The order is the point: Copilot's one
+review lands on code that has already had Claude's, rather than racing it, and
+what merges is a head that Claude's review has cleared.
 
 Automatic Copilot review is off. The owner turned it off in their own Copilot
 settings on 2026-10-13, and on that day no ruleset in this repo had a
@@ -29,11 +29,24 @@ session answer each thread and ask the owner to resolve them.
 1. **Open it as a draft** -- `gh pr create --draft`, or `draft: true`. Leave it
    out and the PR opens ready.
 2. **While it is a draft, review it until it is clean:**
-   - Run `/code-review high <PR number>`. Fix each finding that holds up, in
-     the draft. For one that does not, say why. Then run it again on the new
-     head, and keep going until a round finds nothing that holds up. Record
-     every round under a `## Code review (draft)` heading in the PR body, so
-     the owner can see what was found before marking it ready.
+   - Run `/code-review high <PR number>`. For a finding that does not hold up,
+     say why. One that holds up blocks if, in a realistic case, the code would
+     do the wrong thing (merge, delete, deploy, write data, put a call through
+     or drop it, send a user a message, or charge or refund money when it
+     shouldn't, or fail to when it should; crash where a user would hit it; or
+     request a billed Copilot review), report the wrong thing (say merged or
+     green when it isn't), open a security hole, or give an instruction that is
+     simply wrong -- in help text or a `next:` line too (the owner's rule,
+     2026-10-14; calls, messages, money and crashes added 2026-10-15). A rare
+     case where it already stops safely and tells the owner does not block, nor
+     does efficiency, wording or a tidy-up. Fix the blocking ones in the draft.
+     List the rest, one line each, under a `Deferred (non-blocking)` heading in
+     the PR body, unfixed. Then run it again on the new head, and keep going
+     until a round finds nothing that blocks: that round ends the rounds,
+     however much it defers, and "clean" below means that, with the deferred
+     count said alongside. Record every round under a `## Code review (draft)`
+     heading in the PR body, so the owner can see what was found before marking
+     it ready.
    - Then, after the last fix: run `npx wrangler@4.151.0 deploy --dry-run`.
      It bundles the Worker locally without uploading it: a local smoke check,
      not a copy of Workers Builds, which may run another command and version.
@@ -46,7 +59,7 @@ session answer each thread and ask the owner to resolve them.
      exercises the contact form or checkout, and a merge to `main` deploys
      itself, so also say in the PR body what you checked by hand. If a check
      fails and fixing it changes the PR, review the fix until a round finds
-     nothing that holds up, as above, then run these checks again on the new
+     nothing that blocks, as above, then run these checks again on the new
      head.
    - If you push again after telling the owner the draft is done, review it
      again until it is clean, repeat the checks above, update that section,
@@ -66,27 +79,28 @@ session answer each thread and ask the owner to resolve them.
    the budget.
 4. **After it is marked ready, address Copilot's review.** It usually lands
    within minutes of the owner's request. If none has arrived by the time you
-   next look at the PR, tell the owner rather than requesting one, and go on
-   to step 5 only if they say to skip it. Fix what holds up, and answer every
-   finding on its own thread -- fixed in which commit, or why not -- and
-   resolve it. Record the same under a `## After Copilot's review` heading in
-   the PR body. Never request a Copilot re-review; the one review is the
-   budget, and only the owner requests it.
+   next look at the PR, tell the owner rather than requesting one, and go on to
+   step 5 only if they say to skip it. Fix what blocks (step 2's rule; defer
+   the rest the same way), and answer every finding on its own thread -- fixed
+   in which commit, or why not -- and resolve it. Record the same under a
+   `## After Copilot's review` heading in the PR body. Never request a Copilot
+   re-review; the one review is the budget, and only the owner requests it.
 5. **Then review it again until it is clean.** Run
-   `/code-review high <PR number>` on the new head, fix what holds up, and
-   repeat until a round finds nothing that holds up. Record the rounds under a
-   `## Code review (after Copilot)` heading in the PR body. Then repeat step
-   2's checks on the final head (a round that a failing check forces is
-   recorded under this heading too), and tell the owner what changed since
-   Copilot's review.
-6. **Squash-merge it and delete the branch, when the owner says so.** Run
+   `/code-review high <PR number>` on the new head, fix what blocks and defer
+   the rest as in step 2, and repeat until a round finds nothing that blocks.
+   Record the rounds under a `## Code review (after Copilot)` heading in the
+   PR body. Then repeat step 2's checks on the final head (a round that a
+   failing check forces is recorded under this heading too), and tell the
+   owner what changed since Copilot's review.
+6. **Squash-merge it and delete the branch, when the owner says so** -- for
+   the head they saw: after a new push, ask again once step 5 clears it. Run
    dev-verify's `squash-merge.sh`, in bash (Git Bash on Windows), with the
    full 40-character head SHA that step 5 cleared. Not `gh pr merge`, in any
    session: it needs GraphQL, which a cloud session is refused; the script
    uses REST only. Each run fetches the copy on dev-verify's `main`, so every
    repo runs the tested one, and runs it only if the fetch worked. The temp
    copy is left behind on purpose: several repos' guards refuse a forced
-   delete, and two repos' permission rules deny every delete command, so a
+   delete, and some repos' permission rules deny every delete command, so a
    delete in this line would get it refused.
 
    ```
@@ -101,10 +115,14 @@ session answer each thread and ask the owner to resolve them.
    other author of the branch's commits and each such trailer in them, as
    GitHub's own squash message would; `--no-coauthors` turns that off where
    this repo's rules restrict trailers. It merges nothing unless every check
-   and status on `<sha>` finished green -- for an Actions workflow, the
-   newest run for each event that triggered it, and the checks in that run
-   -- and nothing with merge conflicts. Read the dry run's title, message,
-   branch plan and any warning, then run the same line without `--dry-run`.
+   and status on `<sha>` finished green (a check run or workflow run that
+   ended `neutral` or `skipped` does not block, though it is not green, but a
+   head whose only checks were skipped runs, with no status, is refused; its
+   checks line says how many check runs were skipped or neutral, and does not
+   count workflow runs) -- for an Actions workflow, the newest run for each
+   event that triggered it, and the checks in that run -- and nothing with
+   merge conflicts. Read the dry run's title, message, branch plan and any
+   warning, then run the same line without `--dry-run`.
 
    Every run that finishes ends with a line starting `next:` that says what the
    result means and what to do about it -- follow that line, and tell the owner
