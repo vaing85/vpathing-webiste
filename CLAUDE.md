@@ -97,8 +97,9 @@ session answer each thread and ask the owner to resolve them.
      suite, so `gh pr checks` can say pending. Within one check suite only a
      check's newest run counts (`squash-merge.sh` reads it that way), so that
      run does not block; an unfinished run in a suite of its own still does.
-     `gh pr checks` does not show suites; this does:
-     `gh api 'repos/vaing85/vpathing-webiste/commits/<sha>/check-runs?filter=all' --jq '.check_runs[] | [.name, .status, .conclusion, .check_suite.id] | @tsv'`.
+     `gh pr checks` does not show suites; this does, with each run's id (the
+     higher id is the newer run, as the script compares them):
+     `gh api --paginate 'repos/vaing85/vpathing-webiste/commits/<sha>/check-runs?filter=all&per_page=100' --jq '.check_runs[] | [.name, .check_suite.id, .id, .status, .conclusion] | @tsv'`.
      No check running, or none green, is not the same as green: say so. No
      check exercises the contact form or checkout, and a merge to `main`
      deploys itself, so also say in the PR body what you checked by hand. If a
